@@ -1,0 +1,20 @@
+# Dependency Folders (The big ones!)
+node_modules/
+venv/
+env/
+
+# Python "Junk" Files
+__pycache__/
+*.py[cod]
+
+# React/Vite Build Output
+dist/
+dist-ssr/
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Secrets & Config
+.env
+.vscode/

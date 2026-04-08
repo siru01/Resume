@@ -10,13 +10,15 @@ export default function App() {
   const [page, setPage] = useState('home')
 
   return (
-    <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 1.5rem' }}>
+    <>
       <Navbar page={page} setPage={setPage} />
-      {page === 'home' && <Home />}
-      {page === 'experience' && <Experience />}
-      {page === 'projects' && <Projects />}
-      {page === 'blog' && <Blog />}
-      {page === 'resume' && <Resume />}   
-    </div>
+      <div style={{ paddingLeft: '350px', paddingRight: '350px', boxSizing: 'border-box', marginTop: '70px' }}>
+        {page === 'home' && <Home />}
+        {page === 'work' && <Experience />}
+        {page === 'projects' && <Projects />}
+        {page === 'blog' && <Blog />}
+        {page === 'resume' && <Resume />}   
+      </div>
+    </>
   )
 }

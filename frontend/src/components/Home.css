@@ -1,104 +1,177 @@
-/* Profile.module.css */
-
-.Home {
-  margin-bottom: 2.5rem;
-  font-family: 'Georgia', 'Times New Roman', serif;
-}
-
-/* ── Header row ─────────────────────────────────────────── */
-.header {
+.profile {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid;
+  transition: border-color 0.3s;
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 1.5rem;
+  padding: 2rem 0;
 }
 
-.avatar {
-  flex-shrink: 0;
-  width: 60px;
-  height: 60px;
+:root[data-theme="dark"] .profile {
+  border-bottom-color: #1a1a1a;
+}
+
+:root[data-theme="light"] .profile {
+  border-bottom-color: #e0e0e0;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
   border-radius: 8px;
-  background: #1e1e1e;
-  border: 1px solid #333;
+  background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+  border: 2px solid #333;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
-  transition: border-color 0.2s ease;
+  font-size: 45px;
+  flex-shrink: 0;
 }
 
-.avatar:hover {
-  border-color: #555;
+:root[data-theme="light"] .profile-avatar {
+  background: linear-gradient(135deg, #f5f5f5 0%, #efefef 100%);
+  border-color: #ddd;
 }
 
-.info {
+.profile-info {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  justify-content: flex-start;
+  flex: 1;
 }
 
-.name {
+.profile-name {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 22px;
   font-weight: 600;
-  font-size: 18px;
-  color: #fff;
-  letter-spacing: -0.01em;
+  margin: 0 0 0.3rem 0;
+  transition: color 0.3s;
+  line-height: 1.2;
 }
 
-.meta {
-  color: #888;
-  font-size: 13px;
+:root[data-theme="dark"] .profile-name {
+  color: #fff;
+}
+
+:root[data-theme="light"] .profile-name {
+  color: #000;
+}
+
+.profile-meta {
+  font-size: 15px;
+  margin: 0 0 0.8rem 0;
   display: flex;
   align-items: center;
+  gap: 0.4rem;
+  transition: color 0.3s;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-.dot {
+:root[data-theme="dark"] .profile-meta {
+  color: #777;
+}
+
+:root[data-theme="light"] .profile-meta {
+  color: #888;
+}
+
+.meta-separator {
+  opacity: 0.7;
+}
+
+.copy-icon {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.copy-icon:hover {
+  opacity: 1;
+}
+
+.profile-bio {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 1rem 0;
+  transition: color 0.3s;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+:root[data-theme="dark"] .profile-bio {
+  color: #aaa;
+}
+
+:root[data-theme="light"] .profile-bio {
   color: #555;
 }
 
-.email {
-  color: #888;
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.email:hover {
-  color: #bbb;
-}
-
-/* ── Bio ─────────────────────────────────────────────────── */
-.bio {
-  color: #aaa;
-  font-size: 14px;
-  line-height: 1.6;
-  margin: 0 0 1rem;
-}
-
-/* ── Social links ────────────────────────────────────────── */
-.socials {
+.profile-socials {
   display: flex;
+  gap: 0.8rem;
   flex-wrap: wrap;
-  gap: 1rem;
+  margin-top: 0;
 }
 
-.socialLink {
-  color: #666;
-  font-size: 13px;
+.social-link {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
   text-decoration: none;
-  border-bottom: 1px solid #333;
-  padding-bottom: 1px;
-  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.socialLink:hover {
-  color: #ccc;
-  border-color: #666;
+:root[data-theme="dark"] .social-link {
+  color: #444;
 }
 
-/* ── Divider ─────────────────────────────────────────────── */
-.divider {
-  border: none;
-  border-top: 1px solid #222;
-  margin: 1.5rem 0 0;
+:root[data-theme="light"] .social-link {
+  color: #aaa;
+}
+
+/* Twitter/X - Blue glow */
+.social-twitter:hover {
+  color: #1da1f2;
+  transform: scale(1.2);
+}
+
+/* GitHub - White/Black icon */
+.social-github:hover {
+  color: #000;
+  transform: scale(1.2);
+}
+
+:root[data-theme="light"] .social-github:hover {
+  color: #000;
+}
+
+:root[data-theme="dark"] .social-github:hover {
+  color: #fff;
+}
+
+/* LinkedIn - Blue */
+.social-linkedin:hover {
+  color: #0077b5;
+  transform: scale(1.2);
+}
+
+:root[data-theme="light"] .social-github:hover {
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+  color: #000;
+}
+
+/* LinkedIn - Blue color on hover */
+.social-linkedin:hover {
+  box-shadow: 0 0 12px rgba(0, 119, 181, 0.4);
+  color: #0077b5;
+}
+
+:root[data-theme="light"] .social-linkedin:hover {
+  box-shadow: 0 0 12px rgba(0, 119, 181, 0.3);
 }

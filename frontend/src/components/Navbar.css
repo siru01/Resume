@@ -1,32 +1,179 @@
-nav {
+/* Navbar.css */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
-  gap: 2rem;
-  padding: 1.2rem 0;
-  border-bottom: 1px solid #2a2a2a;
-  margin-bottom: 2rem;
-  justify-content: center;
+  justify-content: space-between;
+  padding: 10px 350px;
+  box-sizing: border-box;
+  border-bottom: 1px solid;
+  transition: border-color 0.3s;
+  background: var(--bg-primary);
+  z-index: 1000;
 }
 
-nav button {
+:root[data-theme="light"] .navbar {
+  border-bottom-color: #e0e0e0;
+}
+
+:root[data-theme="dark"] .navbar {
+  border-bottom-color: #1a1a1a;
+}
+
+.nav-links-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-link {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 14px;
-  text-transform: capitalize;
-  padding: 0;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 19px;
+  color: #888;
+  display: flex;
+  align-items: center;
   transition: color 0.2s;
+  text-transform: capitalize;
 }
 
-nav button.active {
+.nav-link:hover, .nav-link.active {
   color: #fff;
 }
 
-nav button:not(.active) {
-  color: #888;
+:root[data-theme="light"] .nav-link {
+  color: #666;
 }
 
-nav button:hover {
-  color: #aaa;
+:root[data-theme="light"] .nav-link:hover,
+:root[data-theme="light"] .nav-link.active {
+  color: #000;
+}
+
+.nav-link:not(:last-child)::after {
+  content: "|";
+  margin-left: 15px;
+  color: #222;
+  font-weight: 100;
+  pointer-events: none;
+}
+
+:root[data-theme="light"] .nav-link:not(:last-child)::after {
+  color: #ddd;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid;
+  border-radius: 4px;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+:root[data-theme="dark"] .search-box {
+  border-color: #2a2a2a;
+}
+
+:root[data-theme="light"] .search-box {
+  border-color: #d0d0d0;
+}
+
+.search-box:hover {
+  border-color: #444;
+}
+
+:root[data-theme="light"] .search-box:hover {
+  border-color: #bbb;
+}
+
+.search-icon {
+  font-size: 13px;
+  color: #666;
+  stroke-width: 2;
+}
+
+:root[data-theme="light"] .search-icon {
+  color: #999;
+}
+
+.search-input {
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  outline: none;
+  width: 80px;
+  transition: color 0.3s;
+}
+
+:root[data-theme="dark"] .search-input {
+  color: #ccc;
+}
+
+:root[data-theme="light"] .search-input {
+  color: #333;
+}
+
+:root[data-theme="dark"] .search-input::placeholder {
+  color: #555;
+}
+
+:root[data-theme="light"] .search-input::placeholder {
+  color: #999;
+}
+
+.search-shortcut {
+  font-size: 11px;
+  margin-left: auto;
+  transition: color 0.3s;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+:root[data-theme="dark"] .search-shortcut {
+  color: #555;
+}
+
+:root[data-theme="light"] .search-shortcut {
+  color: #999;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  padding: 4px;
+}
+
+:root[data-theme="light"] .theme-toggle {
+  color: #999;
+}
+
+.theme-toggle:hover {
+  opacity: 0.7;
+}
+
+.theme-toggle svg {
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
 }

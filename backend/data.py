@@ -2,7 +2,7 @@ profile = {
     "name": "Sirjan Murmu",
     "title": "Engineer · Able",
     "email": "murmu.sirjan10@gmail.com",
-    "bio": "Love to build cool stuff, ship fast, and break things responsibly.",
+    "bio": "Obsessed with the details, focused on the impact, driven by the data.",
     "socials": {
         "twitter": "https://x.com/yourhandle",
         "linkedin": "https://linkedin.com/in/yourprofile",
@@ -11,30 +11,67 @@ profile = {
 }
 
 experience = [
-    {
-        "company": "SuperAlign AI",
-        "status": "Working",
-        "roles": [
-            {"title": "Software Engineer", "start": "August 2025", "end": "Present", "location": "Hyderabad"},
-            {"title": "Software Engineer Intern", "start": "April 2025", "end": "August 2025", "location": "Remote"},
-        ]
-    },
+    
     {
         "company": "KGEN",
         "status": None,
         "roles": [
-            {"title": "Game tester", "start": "May 2024", "end": "Dec 2024", "location": "Remote"},
+            {
+                "title": "Game tester",
+                "start": "May 2024",
+                "end": "Dec 2024",
+                "location": "Remote",
+                "responsibilities": [
+                    "Tested game functionality and reported bugs",
+                    "Provided feedback on gameplay mechanics",
+                    "Documented test results and improvements"
+                ]
+            },
+        ]
+    },
+    {
+        "company": "Codesoft",
+        "status": "Python internship",
+        "roles": [
+            {
+                "title": "Python intern",
+                "start": "April 2023",
+                "end": "August 2023",
+                "location": "Remote",
+                "responsibilities": [
+                    "Built Python applications using modern frameworks",
+                    "Collaborated with team on feature development",
+                    "Participated in code reviews and testing"
+                ]
+            },
         ]
     },
     
 ]
 
 projects = [
+    {
+        "name": "Codesoft",
+        "description": "Python internship",
+        "link": [
+            {
+                "title": "Python intern",
+                "start": "April 2023",
+                "end": "August 2023",
+                "location": "Remote",
+                "responsibilities": [
+                    "Built Python applications using modern frameworks",
+                    "Collaborated with team on feature development",
+                    "Participated in code reviews and testing"
+                ]
+            },
+        ]
+    },
     {"name": "Project Alpha", "description": "A cool AI tool", "link": "https://github.com"},
     {"name": "Project Beta", "description": "Fast data pipeline", "link": "https://github.com"},
 ]
 
 blogs = [
-    {"title": "How I built X", "date": "March 2025", "link": "#"},
-    {"title": "Lessons from shipping fast", "date": "Jan 2025", "link": "#"},
+    {"title": "dgfhzdffbdfb", "date": "6556465", "link": "#"},
+    {"title": "445", "date": "551515", "link": "#"},
 ]

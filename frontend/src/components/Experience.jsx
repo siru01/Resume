@@ -10,25 +10,29 @@ export default function Experience() {
 
   return (
     <section>
-      <h2>Experience</h2>
+      <h2>Work Experience</h2>
       {data.map((exp, i) => (
-        <div key={i} className="experience-item">
-          <div className="company-name">
-            {exp.company}
-            <span className={`company-status ${exp.status === 'Working' ? 'active' : ''}`}>
-              {exp.status || 'Previous'}
-            </span>
-          </div>
-          <div className="roles">
-            {exp.roles.map((role, j) => (
-              <div key={j} className="role">
-                <div className="role-title">{role.title}</div>
-                <div className="role-duration">{role.start} — {role.end}</div>
+        exp.roles.map((role, j) => (
+          <div key={`${i}-${j}`} className="experience-item">
+            <div className="experience-header">
+              <div className="experience-left">
+                <h3 className="role-title">{role.title}</h3>
+                <h4 className="company-name">{exp.company}</h4>
+              </div>
+              <div className="experience-right">
+                <div className="role-duration">{role.start} - {role.end}</div>
                 <div className="role-location">{role.location}</div>
               </div>
-            ))}
+            </div>
+            {role.responsibilities && (
+              <ul className="responsibilities">
+                {role.responsibilities.map((resp, k) => (
+                  <li key={k}>{resp}</li>
+                ))}
+              </ul>
+            )}
           </div>
-        </div>
+        ))
       ))}
     </section>
   )

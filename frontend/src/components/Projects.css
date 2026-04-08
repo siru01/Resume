@@ -1,17 +1,36 @@
 section h2 {
-  font-family: monospace;
   font-size: 25px;
   font-weight: 500;
-  border-left: 3px solid #fff;
+  border-left: 3px solid;
   padding-left: 12px;
   margin-bottom: 1.5rem;
+  transition: color 0.3s, border-color 0.3s;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+:root[data-theme="dark"] section h2 {
   color: #fff;
+  border-left-color: #fff;
+}
+
+:root[data-theme="light"] section h2 {
+  color: #000;
+  border-left-color: #000;
 }
 
 .project-item {
   margin-bottom: 1.2rem;
-  border-bottom: 1px solid #1e1e1e;
+  border-bottom: 1px solid;
   padding-bottom: 1.2rem;
+  transition: border-color 0.3s;
+}
+
+:root[data-theme="dark"] .project-item {
+  border-bottom-color: #1e1e1e;
+}
+
+:root[data-theme="light"] .project-item {
+  border-bottom-color: #e0e0e0;
 }
 
 .project-item:last-child {
@@ -19,19 +38,44 @@ section h2 {
 }
 
 .project-name {
-  color: #fff;
   font-weight: 500;
   display: block;
+  transition: color 0.3s;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+:root[data-theme="dark"] .project-name {
+  color: #fff;
+}
+
+:root[data-theme="light"] .project-name {
+  color: #000;
 }
 
 .project-name:hover {
-  color: #aaa;
   text-decoration: underline;
 }
 
+:root[data-theme="dark"] .project-name:hover {
+  color: #aaa;
+}
+
+:root[data-theme="light"] .project-name:hover {
+  color: #555;
+}
+
 .project-description {
-  color: #777;
   font-size: 13px;
   margin-top: 4px;
   margin-bottom: 0;
+  transition: color 0.3s;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+:root[data-theme="dark"] .project-description {
+  color: #777;
+}
+
+:root[data-theme="light"] .project-description {
+  color: #999;
 }

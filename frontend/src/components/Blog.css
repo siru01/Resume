@@ -1,0 +1,39 @@
+section h2 {
+  font-size: 18px;
+  font-weight: 500;
+  border-left: 3px solid #fff;
+  padding-left: 12px;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.blog-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #1e1e1e;
+  padding-bottom: 1rem;
+}
+
+.blog-item:last-child {
+  border-bottom: none;
+}
+
+.blog-title {
+  color: #ccc;
+  font-size: 14px;
+  flex: 1;
+}
+
+.blog-title:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.blog-date {
+  color: #555;
+  font-size: 13px;
+  white-space: nowrap;
+  margin-left: 1rem;
+}

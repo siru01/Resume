@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import './Projects.css'
 
 export default function Projects() {
   const [data, setData] = useState([])
@@ -9,13 +10,11 @@ export default function Projects() {
 
   return (
     <section>
-      <h2 style={{ fontSize: 18, fontWeight: 500, borderLeft: '3px solid #fff', paddingLeft: 12, marginBottom: '1.5rem', color: '#fff' }}>
-        Projects
-      </h2>
+      <h2>Projects</h2>
       {data.map((p, i) => (
-        <div key={i} style={{ marginBottom: '1.2rem', borderBottom: '1px solid #1e1e1e', paddingBottom: '1.2rem' }}>
-          <a href={p.link} target="_blank" rel="noreferrer" style={{ color: '#fff', fontWeight: 500 }}>{p.name}</a>
-          <p style={{ color: '#777', fontSize: 13, marginTop: 4 }}>{p.description}</p>
+        <div key={i} className="project-item">
+          <a href={p.link} target="_blank" rel="noreferrer" className="project-name">{p.name}</a>
+          <p className="project-description">{p.description}</p>
         </div>
       ))}
     </section>

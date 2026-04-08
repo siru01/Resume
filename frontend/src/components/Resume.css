@@ -1,0 +1,53 @@
+section h2 {
+  font-size: 18px;
+  font-weight: 500;
+  border-left: 3px solid #fff;
+  padding-left: 12px;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.resume-container {
+  padding: 2rem 0;
+}
+
+.resume-section {
+  margin-bottom: 2rem;
+}
+
+.resume-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1rem;
+  border-left: 2px solid #666;
+  padding-left: 10px;
+}
+
+.resume-item {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.resume-item:last-child {
+  border-bottom: none;
+}
+
+.resume-title {
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.resume-meta {
+  color: #888;
+  font-size: 13px;
+  margin-bottom: 0.5rem;
+}
+
+.resume-description {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+}

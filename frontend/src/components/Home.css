@@ -1,0 +1,104 @@
+/* Profile.module.css */
+
+.Home {
+  margin-bottom: 2.5rem;
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+/* ── Header row ─────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition: border-color 0.2s ease;
+}
+
+.avatar:hover {
+  border-color: #555;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  color: #888;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.dot {
+  color: #555;
+}
+
+.email {
+  color: #888;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.email:hover {
+  color: #bbb;
+}
+
+/* ── Bio ─────────────────────────────────────────────────── */
+.bio {
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+/* ── Social links ────────────────────────────────────────── */
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.socialLink {
+  color: #666;
+  font-size: 13px;
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+  padding-bottom: 1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.socialLink:hover {
+  color: #ccc;
+  border-color: #666;
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid #222;
+  margin: 1.5rem 0 0;
+}

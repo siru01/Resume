@@ -1,0 +1,37 @@
+section h2 {
+  font-family: monospace;
+  font-size: 25px;
+  font-weight: 500;
+  border-left: 3px solid #fff;
+  padding-left: 12px;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.project-item {
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid #1e1e1e;
+  padding-bottom: 1.2rem;
+}
+
+.project-item:last-child {
+  border-bottom: none;
+}
+
+.project-name {
+  color: #fff;
+  font-weight: 500;
+  display: block;
+}
+
+.project-name:hover {
+  color: #aaa;
+  text-decoration: underline;
+}
+
+.project-description {
+  color: #777;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: 0;
+}

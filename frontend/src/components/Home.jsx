@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
+import './Home.css'
 
-export default function Profile() {
+export default function Home() {
   const [data, setData] = useState(null)
 
   useEffect(() => {
@@ -10,26 +11,20 @@ export default function Profile() {
   if (!data) return null
 
   return (
-    <div style={{ marginBottom: '2.5rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-        <div style={{
-          width: 60, height: 60, borderRadius: 8,
-          background: '#1e1e1e', border: '1px solid #333',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 22
-        }}>👤</div>
-        <div>
-          <div style={{ fontWeight: 600, fontSize: 18, color: '#fff' }}>{data.name}</div>
-          <div style={{ color: '#888', fontSize: 13 }}>
-            {data.title} · <a href={`mailto:${data.email}`} style={{ color: '#888' }}>{data.email}</a>
-          </div>
+    <div className="profile">
+      <div className="profile-header">
+        <div className="profile-avatar">👤</div>
+        <div className="profile-info">
+          <h1>{data.name}</h1>
+          <p>
+            {data.title} · <a href={`mailto:${data.email}`}>{data.email}</a>
+          </p>
         </div>
       </div>
-      <p style={{ color: '#aaa', fontSize: 14, marginBottom: '1rem' }}>{data.bio}</p>
-      <div style={{ display: 'flex', gap: '1rem' }}>
+      <p className="profile-bio">{data.bio}</p>
+      <div className="profile-socials">
         {Object.entries(data.socials).map(([name, url]) => (
-          <a key={name} href={url} target="_blank" rel="noreferrer"
-            style={{ color: '#666', fontSize: 13, borderBottom: '1px solid #333' }}>
+          <a key={name} href={url} target="_blank" rel="noreferrer">
             {name}
           </a>
         ))}

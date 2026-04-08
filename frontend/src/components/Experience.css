@@ -1,0 +1,61 @@
+section h2 {
+  font-size: 18px;
+  font-weight: 500;
+  border-left: 3px solid #fff;
+  padding-left: 12px;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.experience-item {
+  margin-bottom: 1.5rem;
+}
+
+.company-name {
+  color: #fff;
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 0.5rem;
+}
+
+.company-status {
+  display: inline-block;
+  color: #888;
+  font-size: 12px;
+  margin-left: 0.5rem;
+}
+
+.company-status.active {
+  color: #4ade80;
+}
+
+.roles {
+  margin-left: 1rem;
+}
+
+.role {
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.role:last-child {
+  border-bottom: none;
+}
+
+.role-title {
+  color: #e0e0e0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.role-duration {
+  color: #777;
+  font-size: 13px;
+  margin: 0.25rem 0;
+}
+
+.role-location {
+  color: #666;
+  font-size: 12px;
+}

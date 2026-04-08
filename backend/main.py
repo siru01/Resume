@@ -1,21 +1,28 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from data import profile, experience, projects, blogs
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Changed function name to 'render_home'
-@app.get("/", response_class=HTMLResponse)
-async def read_items(request: Request):
-    return templates.TemplateResponse(
-        request=request, name="index.html", 
-    )
+@app.get("/api/profile")
+def get_profile():
+    return profile
 
-# Kept this as 'read_item'
-@app.get("/items/{item_id}")
-def read_item(item_id: int):
-    return {"item_id": item_id, "status": "active"}
+@app.get("/api/experience")
+def get_experience():
+    return experience
+
+@app.get("/api/projects")
+def get_projects():
+    return projects
+
+@app.get("/api/blogs")
+def get_blogs():
+    return blogs

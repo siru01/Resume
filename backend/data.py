@@ -20,19 +20,13 @@ experience = [
         ]
     },
     {
-        "company": "DataFoundry AI",
+        "company": "KGEN",
         "status": None,
         "roles": [
-            {"title": "Trainee Engineer", "start": "Sept 2024", "end": "March 2025", "location": "Remote"},
+            {"title": "Game tester", "start": "May 2024", "end": "Dec 2024", "location": "Remote"},
         ]
     },
-    {
-        "company": "Dank",
-        "status": None,
-        "roles": [
-            {"title": "Mobile Developer Intern", "start": "Nov 2023", "end": "Feb 2024", "location": "Remote"},
-        ]
-    },
+    
 ]
 
 projects = [

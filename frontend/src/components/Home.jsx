@@ -55,7 +55,7 @@ export default function Home() {
               target="_blank" 
               rel="noreferrer"
               className={`social-link social-${key}`}
-              title={key}
+              
             >
               {key === 'twitter' || key === 'github' || key === 'linkedin' ? (
                 <SocialIcon platform={key} />

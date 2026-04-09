@@ -1,10 +1,9 @@
 .profile {
-  padding-bottom: 2rem;
-  border-bottom: 2px solid ;
+  border-bottom: 2px solid;
   transition: border-color 0.3s;
   display: flex;
   gap: 1.5rem;
-  padding: .8rem 0;
+  padding: .8rem 0 2rem 0;
 }
 
 :root[data-theme="dark"] .profile {
@@ -91,7 +90,7 @@
 
 .profile-bio {
   font-size: 16px;
-  line-height: 0.;
+  line-height: 1.5;
   margin: 0 0 1rem 0;
   transition: color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -112,17 +111,17 @@
   margin-top: 0;
 }
 
+/* Base icon style - dimmed by default */
 .social-link {
   width: 28px;
   height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s;
   background: transparent;
   cursor: pointer;
-  color: inherit;
   text-decoration: none;
+  transition: transform 0.2s ease, color 0.2s ease, filter 0.2s ease;
 }
 
 :root[data-theme="dark"] .social-link {
@@ -133,43 +132,25 @@
   color: #aaa;
 }
 
-/* Twitter/X - Blue glow */
-.social-twitter:hover {
-  color: #1da1f2;
-  transform: scale(1.2);
+/* Twitter - brightens to white on dark, black on light */
+:root[data-theme="dark"] .social-twitter:hover {
+  color: #ffffff;
+  transform: scale(1.25);
 }
 
-/* GitHub - White/Black icon */
+:root[data-theme="light"] .social-twitter:hover {
+  color: #000000;
+  transform: scale(1.25);
+}
+
+/* GitHub - brighten the SVG */
 .social-github:hover {
-  color: #000;
-  transform: scale(1.2);
+  transform: scale(1.25);
+  filter: brightness(3);
 }
 
-:root[data-theme="light"] .social-github:hover {
-  color: #000;
-}
-
-:root[data-theme="dark"] .social-github:hover {
-  color: #fff;
-}
-
-/* LinkedIn - Blue */
+/* LinkedIn - brighten the SVG */
 .social-linkedin:hover {
-  color: #0077b5;
-  transform: scale(1.2);
-}
-
-:root[data-theme="light"] .social-github:hover {
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
-  color: #000;
-}
-
-/* LinkedIn - Blue color on hover */
-.social-linkedin:hover {
-  box-shadow: 0 0 12px rgba(0, 119, 181, 0.4);
-  color: #0077b5;
-}
-
-:root[data-theme="light"] .social-linkedin:hover {
-  box-shadow: 0 0 12px rgba(0, 119, 181, 0.3);
+  transform: scale(1.25);
+  filter: brightness(3);
 }

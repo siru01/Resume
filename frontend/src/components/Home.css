@@ -171,29 +171,33 @@
 .experience {
   width: 100%;
   max-width: 860px;
-  padding: 2rem 0;
+  padding: 0.5rem 0;
+  margin: 0 0 1rem 0;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 .experience-title {
-  font-size: 13px;
+  font-size: 20px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin: 0 0 1.5rem 0;
-  opacity: 0.4;
+  opacity: 1;margin: 0 0 1rem 0;
+
+  
 }
 
 .experience-company {
   display: flex;
   flex-direction: column;
+  font-size: 10px;
+  
 }
 
 .experience-role {
   padding: 1.5rem 0;
-  border-bottom: 1px solid;
+  border-bottom: 3px solid;
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
 }
 
 :root[data-theme="dark"] .experience-role {
@@ -214,6 +218,7 @@
 
 .role-title {
   font-size: 15px;
+  font-weight: 600;
   font-weight: bold;
 }
 
@@ -226,7 +231,7 @@
 }
 
 .role-dates {
-  font-size: 13px;
+  font-size: 15px;
   white-space: nowrap;
   margin-left: 1rem;
 }
@@ -249,7 +254,8 @@
 }
 
 .company-name {
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 :root[data-theme="dark"] .company-name {
@@ -261,7 +267,7 @@
 }
 
 .role-location {
-  font-size: 13px;
+  font-size: 15px;
   white-space: nowrap;
   margin-left: 1rem;
 }
@@ -276,16 +282,17 @@
 
 /* Bullet points */
 .role-responsibilities {
+  font-size: 15px;
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.4rem; 
 }
 
 .role-responsibilities li {
-  font-size: 14px;
+  font-size: 15px;
   padding-left: 1rem;
   position: relative;
 }

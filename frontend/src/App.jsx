@@ -14,7 +14,7 @@ export default function App() {
       <Navbar page={page} setPage={setPage} />
       <div style={{ paddingLeft: '350px', paddingRight: '350px', boxSizing: 'border-box', marginTop: '70px' }}>
         {page === 'home' && <Home />}
-        {page === 'work' && <Experience />}
+        {page === 'experience' && <Experience />}
         {page === 'projects' && <Projects />}
         {page === 'blog' && <Blog />}
         {page === 'resume' && <Resume />}   

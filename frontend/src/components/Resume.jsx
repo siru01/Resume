@@ -1,37 +1,58 @@
+import { useEffect, useState } from 'react'
 import './Resume.css'
 
 export default function Resume() {
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    fetch('/api/resume').then(r => r.json()).then(setData)
+  }, [])
+
+  if (!data) return null
+
   return (
     <section>
       <h2>Resume</h2>
       <div className="resume-container">
-        <div className="resume-section">
-          <h3>Education</h3>
-          <div className="resume-item">
-            <div className="resume-title">Your Degree</div>
-            <div className="resume-meta">University Name · 2020 - 2024</div>
-            <div className="resume-description">Add your educational background here</div>
+        {data.education && data.education.length > 0 && (
+          <div className="resume-section">
+            <h3>Education</h3>
+            {data.education.map((edu, i) => (
+              <div key={i} className="resume-item">
+                <div className="resume-title">{edu.degree}</div>
+                <div className="resume-meta">{edu.school} · {edu.year}</div>
+                <div className="resume-description">{edu.description}</div>
+              </div>
+            ))}
           </div>
-        </div>
+        )}
 
-        <div className="resume-section">
-          <h3>Skills</h3>
-          <div className="resume-item">
-            <div className="resume-title">Technical Skills</div>
-            <div className="resume-description">
-              Add your technical skills here: React, Node.js, Python, etc.
-            </div>
+        {data.skills && data.skills.length > 0 && (
+          <div className="resume-section">
+            <h3>Skills</h3>
+            {data.skills.map((skill, i) => (
+              <div key={i} className="resume-item">
+                <div className="resume-title">{skill.category}</div>
+                <div className="resume-description">
+                  {skill.items.join(', ')}
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
+        )}
 
-        <div className="resume-section">
-          <h3>Certifications</h3>
-          <div className="resume-item">
-            <div className="resume-title">Your Certification</div>
-            <div className="resume-meta">Issuing Organization · 2024</div>
-            <div className="resume-description">Add certification details</div>
+        {data.certifications && data.certifications.length > 0 && (
+          <div className="resume-section">
+            <h3>Certifications</h3>
+            {data.certifications.map((cert, i) => (
+              <div key={i} className="resume-item">
+                <div className="resume-title">{cert.name}</div>
+                <div className="resume-meta">{cert.issuer} · {cert.year}</div>
+                <div className="resume-description">{cert.description}</div>
+              </div>
+            ))}
           </div>
-        </div>
+        )}
       </div>
     </section>
   )

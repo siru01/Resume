@@ -1,11 +1,10 @@
 .profile {
-  margin-bottom: 3rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid;
+  border-bottom: 2px solid ;
   transition: border-color 0.3s;
   display: flex;
   gap: 1.5rem;
-  padding: 2rem 0;
+  padding: .8rem 0;
 }
 
 :root[data-theme="dark"] .profile {
@@ -17,8 +16,8 @@
 }
 
 .profile-avatar {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 8px;
   background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
   border: 2px solid #333;
@@ -44,10 +43,9 @@
 .profile-name {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 22px;
-  font-weight: 600;
-  margin: 0 0 0.3rem 0;
+  margin: 0 0 0.8rem 0;
   transition: color 0.3s;
-  line-height: 1.2;
+  line-height: 1.0;
 }
 
 :root[data-theme="dark"] .profile-name {
@@ -59,7 +57,7 @@
 }
 
 .profile-meta {
-  font-size: 15px;
+  font-size: 16px;
   margin: 0 0 0.8rem 0;
   display: flex;
   align-items: center;
@@ -92,8 +90,8 @@
 }
 
 .profile-bio {
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 16px;
+  line-height: 0.;
   margin: 0 0 1rem 0;
   transition: color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;

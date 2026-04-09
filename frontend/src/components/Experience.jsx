@@ -10,7 +10,7 @@ export default function Experience() {
 
   return (
     <section>
-      <h2>Work Experience</h2>
+      <h2>Companies i have worked for ...</h2>
       {data.map((exp, i) => (
         exp.roles.map((role, j) => (
           <div key={`${i}-${j}`} className="experience-item">

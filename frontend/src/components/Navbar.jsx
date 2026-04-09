@@ -3,7 +3,7 @@ import './Navbar.css'
 
 export default function Navbar({ page, setPage }) {
   const [isDark, setIsDark] = useState(true)
-  const links = ['home', 'work', 'projects', 'blog', 'resume']
+  const links = ['home', 'experience', 'projects', 'blog', 'resume']
 
   useEffect(() => {
     if (isDark) {

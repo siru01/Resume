@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from data import profile, experience, projects, blogs
+from data import profile, experience, projects, blogs , resume
 
 app = FastAPI()
 
@@ -26,3 +26,7 @@ def get_projects():
 @app.get("/api/blogs")
 def get_blogs():
     return blogs
+
+@app.get("/api/resume")
+def get_resume():
+    return resume

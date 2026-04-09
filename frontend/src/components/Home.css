@@ -1,11 +1,11 @@
 .profile {
-  border-bottom: 2px solid;
+  border-bottom: 3px solid whitesmoke;
   transition: border-color 0.3s;
   display: flex;
-  gap: 1.5rem;
-  padding: 0.8rem 0 2rem 0;
+  gap: 1.5rem ;
+  padding: 0rem 0 2rem 0;
   width: 100%;           /* Ensure it tries to take full width */
-  max-width: 100%;       /* Prevent horizontal overflow */
+  max-width: 860px;       /* Prevent horizontal overflow */
   box-sizing: border-box; /* Includes padding in width calculation */
 }
 
@@ -59,7 +59,7 @@
 }
 
 .profile-meta {
-  font-size: 16px;
+  font-size: 16px ;
   margin: 0 0 0.8rem 0;
   display: flex;
   align-items: center;
@@ -67,6 +67,7 @@
   transition: color 0.3s;
   flex-wrap: wrap;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  
 }
 
 :root[data-theme="dark"] .profile-meta {
@@ -152,9 +153,153 @@
   filter: brightness(3);
 }
 
+:root[data-theme="light"] .social-github:hover {
+  color: #000000;
+  transform: scale(1.25);
+}
 /* LinkedIn - brighten the SVG */
 .social-linkedin:hover {
   transform: scale(1.25);
   filter: brightness(3);
 }
 
+:root[data-theme="light"] .social-linkedin:hover {
+  color: #000000;
+  transform: scale(1.25);
+}
+
+.experience {
+  width: 100%;
+  max-width: 860px;
+  padding: 2rem 0;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.experience-title {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 1.5rem 0;
+  opacity: 0.4;
+}
+
+.experience-company {
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-role {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+:root[data-theme="dark"] .experience-role {
+  border-bottom-color: #1a1a1a;
+}
+
+:root[data-theme="light"] .experience-role {
+  border-bottom-color: #e0e0e0;
+}
+
+/* Row 1: Title (left) + Dates (right) */
+.role-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.role-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+:root[data-theme="dark"] .role-title {
+  color: #fff;
+}
+
+:root[data-theme="light"] .role-title {
+  color: #000;
+}
+
+.role-dates {
+  font-size: 13px;
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+
+:root[data-theme="dark"] .role-dates {
+  color: #777;
+}
+
+:root[data-theme="light"] .role-dates {
+  color: #888;
+}
+
+/* Row 2: Company (left) + Location (right) */
+.role-sub {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.8rem;
+}
+
+.company-name {
+  font-size: 13px;
+}
+
+:root[data-theme="dark"] .company-name {
+  color: #777;
+}
+
+:root[data-theme="light"] .company-name {
+  color: #888;
+}
+
+.role-location {
+  font-size: 13px;
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+
+:root[data-theme="dark"] .role-location {
+  color: #777;
+}
+
+:root[data-theme="light"] .role-location {
+  color: #888;
+}
+
+/* Bullet points */
+.role-responsibilities {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.role-responsibilities li {
+  font-size: 14px;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.role-responsibilities li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+}
+
+:root[data-theme="dark"] .role-responsibilities li {
+  color: #aaa;
+}
+
+:root[data-theme="light"] .role-responsibilities li {
+  color: #555;
+}

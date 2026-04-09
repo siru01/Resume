@@ -12,9 +12,9 @@ export default function Projects() {
     <section>
       <h2>Projects</h2>
       {data.map((p, i) => (
-        <div key={i} className="project-item">
-          <a href={p.link} target="_blank" rel="noreferrer" className="project-name">{p.name}</a>
-          <p className="project-description">{p.description}</p>
+        <div key={i} className="projectt-item">
+          <a href={p.link} target="_blank" rel="noreferrer" className="projectt-name">{p.name}</a>
+          <p className="projectt-description">{p.description}</p>
         </div>
       ))}
     </section>

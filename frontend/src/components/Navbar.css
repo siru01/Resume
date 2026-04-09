@@ -3,20 +3,47 @@
   align-items: center;
   height: 52px;
   border-bottom: 2px solid white;
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   box-sizing: border-box;
   /* Fix: constrain to same width as main-content */
   max-width: 860px;
   margin: 0 auto;
-  padding: 1px ;
+  padding: 1px;
   font-size: 20px;
+  background-color: inherit;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
+.navbar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.navbar::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: inherit;
+}
+
+/* Ensure the background is opaque (solid) for each theme */
 :root[data-theme="dark"] .navbar {
+  background-color: #0d0d0d;
+  /* Matches your body background */
   border-bottom-color: #1a1a1a;
 }
 
 :root[data-theme="light"] .navbar {
+  background-color: #ffffff;
+  /* Matches your white background */
   border-bottom-color: #e0e0e0;
 }
 
@@ -53,8 +80,8 @@
   padding: 0.9rem 0.9rem;
   font-size: 16px;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  transition: color 0.2s;
-  position: relative; 
+  transition: color 0.3s;
+  position: relative;
   display: flex;
   align-items: center;
 }
@@ -62,10 +89,12 @@
 .nav-link:not(:last-child)::after {
   content: "|";
   position: absolute;
-  right: -5px;         /* Fine-tuned to center between paddings */
+  right: -5px;
+  /* Fine-tuned to center between paddings */
   opacity: 0.2;
   pointer-events: none;
-  font-weight: bold; /* Ensures the bar doesn't get bold when link is active */
+  font-weight: bold;
+  /* Ensures the bar doesn't get bold when link is active */
 }
 
 :root[data-theme="dark"] .nav-link:not(:last-child)::after {
@@ -77,11 +106,23 @@
 }
 
 /* --- Theme colors for links --- */
-:root[data-theme="dark"] .nav-link { color: #777; }
-:root[data-theme="light"] .nav-link { color: #888; }
+:root[data-theme="dark"] .nav-link {
+  color: #777;
+}
 
-:root[data-theme="dark"] .nav-link.active { color: #fff; font-weight: 600; }
-:root[data-theme="light"] .nav-link.active { color: #000; font-weight: 600; }
+:root[data-theme="light"] .nav-link {
+  color: #888;
+}
+
+:root[data-theme="dark"] .nav-link.active {
+  color: #fff;
+  font-weight: 600;
+}
+
+:root[data-theme="light"] .nav-link.active {
+  color: #000;
+  font-weight: 600;
+}
 
 :root[data-theme="dark"] .nav-link {
   color: #777;
@@ -169,7 +210,7 @@
   align-items: center;
   justify-content: center;
   opacity: 0.7;
-  transition: opacity 0.2s;
+  transition: opacity 0.3s;
 }
 
 .theme-toggle:hover {
@@ -233,7 +274,7 @@
   text-align: left;
   font-size: 16px;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  transition: color 0.2s;
+  transition: color 0.3s;
   width: 100%;
 }
 

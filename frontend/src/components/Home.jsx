@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './Home.css'
 
 const profileData = {
@@ -6,12 +7,13 @@ const profileData = {
   email: "murmu.sirjan10@gmail.com",
   bio: "Obsessed with the details, focused on the impact, driven by the data.",
   socials: {
-    twitter: "https://x.com/yourhandle",
-    linkedin: "https://linkedin.com/in/yourprofile",
-    github: "https://github.com/yourprofile",
+    twitter: "https://x.com/Siruishere",
+    linkedin: "https://www.linkedin.com/in/sirjanmurmu",
+    github: "https://github.com/siru01",
+    mail: "murmu.sirjan10@gmail.com",
   }
 }
-
+ 
 const experienceData = [
   {
     company: "KGeN [INDGG]",
@@ -49,7 +51,31 @@ const experienceData = [
   }
 ]
 
-export default function Home() {
+
+const projectsData = [
+  {
+    title: "Alziermers-Diseases-Detection",
+    description: "Developed an AI-based diagnostic tool using machine learning to detect early-stage Alzheimer . It's detection and classification with MRI data accuray is very high using a good dataset, from OASIS and ADNI.",
+    link: "https://github.com/siru01/Alziermers-Diseases-Detection.git",
+    Live: null,
+  }, 
+  {
+    title: "E-Book Reader [Shelf]",
+    description: "Shelf is a sophisticated, minimalist web application designed for the modern reader. It transforms the way you interact with your book collection by providing a seamless interface to explore new titles, manage your reading progress, and maintain a virtual rack of every book you've ever touched.",
+    link: "https://github.com/siru01/e-book.git",
+    Live: null,
+  }
+]
+
+
+export default function Home({ setPage }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(profileData.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const SocialIcon = ({ platform }) => {
     switch (platform) {
@@ -65,6 +91,13 @@ export default function Home() {
         return (
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.722-2.004 1.418-.103.249-.129.597-.129.946v5.441h-3.554s.05-8.736 0-9.646h3.554v1.348c.42-.648 1.36-1.573 3.322-1.573 2.429 0 4.251 1.574 4.251 4.963v5.908zM5.337 9.433c-1.144 0-1.915-.758-1.915-1.7 0-.943.77-1.7 1.916-1.7 1.144 0 1.915.757 1.915 1.7 0 .942-.771 1.7-1.915 1.7zm1.583 11.019H3.754V8.787h3.166v11.665zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+          </svg>
+        )
+      case 'mail':
+        return (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
           </svg>
         )
       default:
@@ -86,19 +119,36 @@ export default function Home() {
           <div className="profile-meta">
             <span>{profileData.title}</span>
             <span className="meta-separator">·</span>
-            <span>{profileData.email}</span>
+            <span className="profile-email-container">
+              <span>{profileData.email}</span>
+              <span className="copy-wrapper" onClick={handleCopyEmail} title="Copy Email">
+                {copied ? (
+                  <span className="copied-text">Copied!</span>
+                ) : (
+                  <svg className="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                )}
+              </span>
+            </span>
           </div>
           <p className="profile-bio">{profileData.bio}</p>
           <div className="profile-socials">
-  {Object.entries(profileData.socials).map(([key, url]) => (
-    <a key={key} href={url} target="_blank" rel="noreferrer" className={`social-link social-${key}`}>
-      {['twitter', 'github', 'linkedin'].includes(key) ? (
-        <SocialIcon platform={key} />
-      ) : (
-        '🔗'
-      )}
-    </a>
-  ))}
+  {Object.entries(profileData.socials).map(([key, url]) => {
+    const isMail = key === 'mail';
+    const href = isMail ? `mailto:${url}` : url;
+    
+    return (
+      <a key={key} href={href} target={isMail ? '_self' : '_blank'} rel="noreferrer" className={`social-link social-${key}`}>
+        {['twitter', 'github', 'linkedin', 'mail'].includes(key) ? (
+          <SocialIcon platform={key} />
+        ) : (
+          '🔗'
+        )}
+      </a>
+    );
+  })}
 </div>
         </div>
       </div>
@@ -128,9 +178,67 @@ export default function Home() {
     </div>
   ))}
 </div>
-</div>
 
+{/* ── Projects Section ── */}
+<div className="projects-container">
+  <h2 className="project-section-title">Projects</h2>
+  
+  {projectsData.map((project, i) => (
+    <div key={i} className="project-item">
+      
+      {/* Row 1: Title */}
+      <div className="project-header">
+        <span className="project-title">{project.title}</span>
+      </div>
 
+      {/* Row 2: Description & Live Link */}
+      <div className="project-description-row">
+        <p className="project-description">
+          {project.description}
+        </p>
+        
+        {/* Only renders "Live Demo" if the link is not null */}
+        {project.Live && (
+          <a 
+            href={project.Live} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="project-live-link"
+          >
+            Live Demo ↗
+          </a>
+        )}
+      </div>
 
-  )
+      {/* Row 3: Project Links (GitHub Icon) */}
+      <div className="project-actions">
+        <a href={project.link} target="_blank" rel="noreferrer" className="project-github-icon" title="View Source Code">
+          <SocialIcon platform="github" />
+        </a>
+      </div>
+
+    </div>
+  ))}
+    </div>
+
+    <div className="show-all-container">
+      <div className="show-all-box" onClick={() => setPage('projects')}>
+        Show all Projects
+      </div>
+    </div>
+
+    {/* Section Divider Line */}
+    <div className="section-divider"></div>
+    
+    {/* ── Toast Notification ── */}
+    {copied && (
+      <div className="toast-notification">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Email copied!</span>
+      </div>
+    )}
+  </div>
+)
 }

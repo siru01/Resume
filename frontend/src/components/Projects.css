@@ -18,14 +18,14 @@ section h2 {
   border-left-color: #000;
 }
 
-.project-item {
+.projectt-item {
   margin-bottom: 1.2rem;
   border-bottom: 1px solid;
   padding-bottom: 1.2rem;
   transition: border-color 0.3s;
 }
 
-:root[data-theme="dark"] .project-item {
+:root[data-theme="dark"] .projectt-item {
   border-bottom-color: #1e1e1e;
 }
 
@@ -33,39 +33,40 @@ section h2 {
   border-bottom-color: #e0e0e0;
 }
 
-.project-item:last-child {
+.projectt-item:last-child {
   border-bottom: none;
 }
 
-.project-name {
+.projectt-name {
   font-weight: 500;
   display: block;
   transition: color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-:root[data-theme="dark"] .project-name {
+:root[data-theme="dark"] .projectt-name {
   color: #fff;
 }
 
-:root[data-theme="light"] .project-name {
+:root[data-theme="light"] .projectt-name {
   color: #000;
 }
 
-.project-name:hover {
+.projectt-name:hover {
   text-decoration: underline;
 }
 
-:root[data-theme="dark"] .project-name:hover {
+:root[data-theme="dark"] .projectt-name:hover {
   color: #aaa;
 }
 
-:root[data-theme="light"] .project-name:hover {
+:root[data-theme="light"] .projectt-name:hover {
   color: #555;
 }
 
-.project-description {
-  font-size: 13px;
+.projectt-description {
+  font-size: 15px;
+  line-height: 1.7;
   margin-top: 4px;
   margin-bottom: 0;
   transition: color 0.3s;

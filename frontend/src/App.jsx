@@ -13,7 +13,7 @@ export default function App() {
     <>
       <Navbar page={page} setPage={setPage} />
       <div className="main-content">
-        {page === 'home' && <Home />}
+        {page === 'home' && <Home setPage={setPage} />}
         {page === 'experience' && <Experience />}
         {page === 'projects' && <Projects />}
         {page === 'blog' && <Blog />}

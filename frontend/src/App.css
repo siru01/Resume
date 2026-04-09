@@ -183,3 +183,17 @@
     border-right-color: var(--border);
   }
 }
+
+.main-content {
+  max-width: 860px;
+  margin: 70px auto 0 auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 0 1rem;
+    margin-top: 55px;
+  }
+}

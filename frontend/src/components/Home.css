@@ -3,7 +3,10 @@
   transition: border-color 0.3s;
   display: flex;
   gap: 1.5rem;
-  padding: .8rem 0 2rem 0;
+  padding: 0.8rem 0 2rem 0;
+  width: 100%;           /* Ensure it tries to take full width */
+  max-width: 100%;       /* Prevent horizontal overflow */
+  box-sizing: border-box; /* Includes padding in width calculation */
 }
 
 :root[data-theme="dark"] .profile {
@@ -154,3 +157,4 @@
   transform: scale(1.25);
   filter: brightness(3);
 }
+

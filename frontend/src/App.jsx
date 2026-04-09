@@ -12,7 +12,7 @@ export default function App() {
   return (
     <>
       <Navbar page={page} setPage={setPage} />
-      <div style={{ paddingLeft: '350px', paddingRight: '350px', boxSizing: 'border-box', marginTop: '70px' }}>
+      <div className="main-content">
         {page === 'home' && <Home />}
         {page === 'experience' && <Experience />}
         {page === 'projects' && <Projects />}

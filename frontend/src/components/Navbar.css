@@ -1,123 +1,123 @@
-/* Navbar.css */
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 350px;
-  box-sizing: border-box;
+  height: 48px;
   border-bottom: 1px solid;
-  transition: border-color 0.3s;
-  background: var(--bg-primary);
-  z-index: 1000;
-}
-
-:root[data-theme="light"] .navbar {
-  border-bottom-color: #e0e0e0;
+  position: relative;
+  box-sizing: border-box;
+  /* Fix: constrain to same width as main-content */
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 5px 2rem;
+  font-size: 22px;
 }
 
 :root[data-theme="dark"] .navbar {
   border-bottom-color: #1a1a1a;
 }
 
-.nav-links-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+:root[data-theme="light"] .navbar {
+  border-bottom-color: #e0e0e0;
 }
 
-.nav-link {
-  background: none;
-  border: none;
-  cursor: pointer;
+/* Brand - hidden on desktop, shown on mobile */
+.nav-brand {
+  display: none;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 17px;
-  color: #888;
-  display: flex;
-  align-items: center;
-  transition: color 0.2s;
-  text-transform: capitalize;
+  font-size: 16px;
+  font-weight: 600;
+  flex: 1;
 }
 
-.nav-link:hover, .nav-link.active {
+:root[data-theme="dark"] .nav-brand {
   color: #fff;
 }
 
-:root[data-theme="light"] .nav-link {
-  color: #666;
-}
-
-:root[data-theme="light"] .nav-link:hover,
-:root[data-theme="light"] .nav-link.active {
+:root[data-theme="light"] .nav-brand {
   color: #000;
 }
 
-.nav-link:not(:last-child)::after {
-  content: "|";
-  margin-left: 15px;
-  color: #222;
-  font-weight: 100;
-  pointer-events: none;
+/* Desktop nav links */
+.nav-links-group {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  flex: 1;
 }
 
-:root[data-theme="light"] .nav-link:not(:last-child)::after {
-  color: #ddd;
+.nav-link {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  font-size: 14px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  transition: color 0.2s;
 }
 
+:root[data-theme="dark"] .nav-link {
+  color: #777;
+}
+
+:root[data-theme="light"] .nav-link {
+  color: #888;
+}
+
+:root[data-theme="dark"] .nav-link.active {
+  color: #fff;
+  font-weight: 600;
+}
+
+:root[data-theme="light"] .nav-link.active {
+  color: #000;
+  font-weight: 600;
+}
+
+:root[data-theme="dark"] .nav-link:hover {
+  color: #ccc;
+}
+
+:root[data-theme="light"] .nav-link:hover {
+  color: #333;
+}
+
+/* Right side */
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 0.6rem;
+  margin-left: auto;
 }
 
 .search-box {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
+  gap: 0.4rem;
   border: 1px solid;
   border-radius: 4px;
-  background: transparent;
-  transition: border-color 0.2s;
+  padding: 0.3rem 0.6rem;
 }
 
 :root[data-theme="dark"] .search-box {
-  border-color: #2a2a2a;
+  border-color: #333;
 }
 
 :root[data-theme="light"] .search-box {
-  border-color: #d0d0d0;
-}
-
-.search-box:hover {
-  border-color: #444;
-}
-
-:root[data-theme="light"] .search-box:hover {
-  border-color: #bbb;
+  border-color: #ddd;
 }
 
 .search-icon {
-  font-size: 13px;
-  color: #666;
-  stroke-width: 2;
-}
-
-:root[data-theme="light"] .search-icon {
-  color: #999;
+  opacity: 0.5;
+  flex-shrink: 0;
 }
 
 .search-input {
-  background: none;
+  background: transparent;
   border: none;
-  font-size: 13px;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
   outline: none;
-  width: 80px;
-  transition: color 0.3s;
+  font-size: 13px;
+  width: 100px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 :root[data-theme="dark"] .search-input {
@@ -128,52 +128,125 @@
   color: #333;
 }
 
-:root[data-theme="dark"] .search-input::placeholder {
-  color: #555;
-}
-
-:root[data-theme="light"] .search-input::placeholder {
-  color: #999;
-}
-
-.search-shortcut {
-  font-size: 11px;
-  margin-left: auto;
-  transition: color 0.3s;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-:root[data-theme="dark"] .search-shortcut {
-  color: #555;
-}
-
-:root[data-theme="light"] .search-shortcut {
-  color: #999;
+.search-input::placeholder {
+  opacity: 0.4;
 }
 
 .theme-toggle {
-  background: none;
+  background: transparent;
   border: none;
   cursor: pointer;
-  transition: opacity 0.2s;
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #666;
-  padding: 4px;
-}
-
-:root[data-theme="light"] .theme-toggle {
-  color: #999;
+  opacity: 0.7;
+  transition: opacity 0.2s;
 }
 
 .theme-toggle:hover {
-  opacity: 0.7;
+  opacity: 1;
 }
 
-.theme-toggle svg {
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2;
+:root[data-theme="dark"] .theme-toggle {
+  color: #ccc;
+}
+
+:root[data-theme="light"] .theme-toggle {
+  color: #555;
+}
+
+/* Hamburger - hidden on desktop */
+.hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+:root[data-theme="dark"] .hamburger {
+  color: #ccc;
+}
+
+:root[data-theme="light"] .hamburger {
+  color: #555;
+}
+
+/* Mobile dropdown */
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  border-bottom: 1px solid;
+}
+
+:root[data-theme="dark"] .mobile-menu {
+  background: #0d0d0d;
+  border-bottom-color: #1a1a1a;
+}
+
+:root[data-theme="light"] .mobile-menu {
+  background: #ffffff;
+  border-bottom-color: #e0e0e0;
+}
+
+.mobile-nav-link {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-size: 16px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  transition: color 0.2s;
+  width: 100%;
+}
+
+:root[data-theme="dark"] .mobile-nav-link {
+  color: #777;
+}
+
+:root[data-theme="light"] .mobile-nav-link {
+  color: #888;
+}
+
+:root[data-theme="dark"] .mobile-nav-link.active,
+:root[data-theme="dark"] .mobile-nav-link:hover {
+  color: #fff;
+}
+
+:root[data-theme="light"] .mobile-nav-link.active,
+:root[data-theme="light"] .mobile-nav-link:hover {
+  color: #000;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .navbar {
+    max-width: 100%;
+    padding: 5px 1rem;
+  }
+
+  .nav-links-group {
+    display: none;
+  }
+
+  .nav-brand {
+    display: block;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .search-input {
+    width: 60px;
+  }
 }

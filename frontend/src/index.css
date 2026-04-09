@@ -63,3 +63,17 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 100, 100, 0.6);
 }
+
+.main-content {
+  max-width: 860px;
+  margin: 70px auto 0 auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 0 1rem;
+    margin-top: 55px;
+  }
+}

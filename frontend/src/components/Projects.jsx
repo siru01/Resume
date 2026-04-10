@@ -13,9 +13,21 @@ const projectsData = [
     description: "Shelf is a sophisticated, minimalist web application designed for the modern reader. It transforms the way you interact with your book collection by providing a seamless interface to explore new titles, manage your reading progress, and maintain a virtual rack of every book you've ever touched.",
     link: "https://github.com/siru01/e-book.git",
     Live: null,
-  }
-]
-
+  },
+  {
+    title: "Kite [File Transfer]",
+    description: "A browser-based peer-to-peer file sharing application that enables devices on the same Wi-Fi network to discover each other and transfer files directly, without any cloud storage or external servers, the project demonstrates applied knowledge of networking protocols, asynchronous Python, binary data handling in the browser, and full-stack integration",
+    link: "https://github.com/siru01/Kite.git",
+    Live: null,
+  },
+  {
+    title: "Content Monitoring System",
+    description: "This system monitors external content against user-defined keywords, generates match scores, and provides a review workflow with intelligent suppression rules. When a flag is marked irrelevant, it stays suppressed unless the underlying content changes.",
+    link: "https://github.com/siru01/content-monitoring-system.git",
+    Live: null,
+  },
+];
+  
 export default function Projects() {
   const [data] = useState(projectsData)
 

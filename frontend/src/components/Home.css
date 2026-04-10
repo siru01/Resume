@@ -3,7 +3,7 @@
   transition: border-color 0.3s;
   display: flex;
   gap: 1.5rem;
-  padding: 0rem 0 2rem 0;
+  padding: 0rem 0 1rem 0;
   width: 100%;
   /* Ensure it tries to take full width */
   max-width: 860px;

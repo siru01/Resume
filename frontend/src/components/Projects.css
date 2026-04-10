@@ -3,7 +3,7 @@
 .projects-container {
   width: 100%;
   max-width: 860px;
-  padding: 0.5rem 0;
+  padding: 0 0 0.5rem 0;
   margin: 0 auto;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
@@ -97,10 +97,6 @@
 }
 
 @media (max-width: 480px) {
-  .projects-container {
-    padding: 0 1rem;
-  }
-  
   .project-description-row {
     flex-direction: column;
     gap: 0.5rem;

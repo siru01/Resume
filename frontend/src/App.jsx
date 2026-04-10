@@ -1,17 +1,48 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'     
 import Home from './components/Home'     
 import Experience from './components/Experience'
 import Projects from './components/Projects'
 import Blog from './components/Blog'
 import Resume from './components/Resume'      
+import SearchPalette from './components/SearchPalette'
+
+console.log('App component loading...');
 
 export default function App() {
   const [page, setPage] = useState('home')
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+  // Global keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Cmd/Ctrl + K or "/"
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setIsSearchOpen(true)
+      } else if (e.key === '/' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        e.preventDefault()
+        setIsSearchOpen(true)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  useEffect(() => {
+    console.log('App mounted, current page:', page);
+  }, [page]);
 
   return (
-    <>
-      <Navbar page={page} setPage={setPage} />
+    <div className="app-root">
+      <Navbar page={page} setPage={setPage} onOpenSearch={() => setIsSearchOpen(true)} />
+      <SearchPalette 
+        isOpen={isSearchOpen} 
+        onClose={() => setIsSearchOpen(false)} 
+        setPage={setPage} 
+      />
+      
       <div className="main-content">
         <div className={`back-nav ${page === 'home' ? 'home-spacing' : ''}`}>
           {page !== 'home' && (
@@ -24,12 +55,13 @@ export default function App() {
             </button>
           )}
         </div>
+        
         {page === 'home' && <Home setPage={setPage} />}
         {page === 'experience' && <Experience />}
         {page === 'projects' && <Projects />}
         {page === 'blog' && <Blog />}
         {page === 'resume' && <Resume />}   
       </div>
-    </>
+    </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Navbar.css'
 
-export default function Navbar({ page, setPage }) {
+export default function Navbar({ page, setPage, onOpenSearch }) {
   const [isDark, setIsDark] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
   const links = ['home', 'experience', 'projects', 'blog', 'resume']
@@ -44,16 +44,12 @@ export default function Navbar({ page, setPage }) {
 
       {/* Right side: search + theme + hamburger */}
       <div className="nav-right">
-        <div className="search-box">
+        <div className="search-box-trigger" onClick={onOpenSearch}>
           <svg className="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
             <circle cx="6.5" cy="6.5" r="5"/>
             <path d="M10 10l4 4"/>
           </svg>
-          <input
-            type="text"
-            className="search-input"
-            placeholder="Search"
-          />
+          <span className="search-placeholder">Search</span>
         </div>
 
         <button

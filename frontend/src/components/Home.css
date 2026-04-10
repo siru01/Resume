@@ -13,11 +13,11 @@
 }
 
 :root[data-theme="dark"] .profile {
-  border-bottom-color: #1a1a1a;
+  border-bottom-color: #747474;
 }
 
 :root[data-theme="light"] .profile {
-  border-bottom-color: #e0e0e0;
+  border-bottom-color: #4d4d4d;
 }
 
 .profile-avatar {
@@ -224,7 +224,7 @@
   text-transform: uppercase;
   margin: 0 0 0.5rem 0;
   opacity: 1;
-  border-left: 4px solid green;
+  border-left: 4px solid #3b82f6;
   padding-left: 10px;
 }
 
@@ -248,11 +248,11 @@
 }
 
 :root[data-theme="dark"] .experience-role {
-  border-bottom-color: #333;
+  border-bottom-color: #747474;
 }
 
 :root[data-theme="light"] .experience-role {
-  border-bottom-color: #ccc;
+  border-bottom-color: #4d4d4d;
 }
 
 /* Row 1: Title (left) + Dates (right) */
@@ -375,7 +375,7 @@
   text-transform: uppercase;
   opacity: 1;
   margin-top: 0.1rem;
-  border-left: 4px solid green;
+  border-left: 4px solid #3b82f6;
   padding-left: 10px ; 
 }
 
@@ -562,11 +562,11 @@
 }
 
 :root[data-theme="dark"] .section-divider {
-  background-color: #1a1a1a;
+  background-color: #747474;
 }
 
 :root[data-theme="light"] .section-divider {
-  background-color: whitesmoke;
+  background-color: #4d4d4d;
 }
 
 /* ── Mobile ── */

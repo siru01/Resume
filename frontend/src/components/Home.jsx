@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './Home.css'
 
 const profileData = {
-  name: "Sirjan Murmu",
+  name: "SIRJAN MURMU",
   title: "Engineer · Versatile",
   email: "murmu.sirjan10@gmail.com",
   bio: "Obsessed with the details, focused on the impact, driven by the data.",

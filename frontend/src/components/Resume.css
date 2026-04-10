@@ -1,111 +1,401 @@
-section h2 {
-  font-size: 25px;
-  font-weight: 500;
-  border-left: 3px solid;
+.resume-page {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1rem 0;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Header Section */
+.resume-header {
+  border-bottom: 3px solid;
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  transition: border-color 0.3s;
+}
+
+:root[data-theme="dark"] .resume-header {
+  border-bottom-color: #747474;
+}
+
+:root[data-theme="light"] .resume-header {
+  border-bottom-color: #4d4d4d;
+}
+
+.resume-name {
+  font-size: 22px;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 1px;
+}
+
+:root[data-theme="dark"] .resume-name { color: #fff; }
+:root[data-theme="light"] .resume-name { color: #000; }
+
+.resume-contact {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.resume-contact .separator {
+  opacity: 0.5;
+}
+
+.resume-socials {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.resume-socials a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.3s;
+  color: #666;
+}
+
+.resume-socials a:hover {
+  color: #ffffff;
+}
+
+/* Common Section Title */
+.section-title {
+  font-size: 20px;
+  font-weight: 450;
   padding-left: 12px;
   margin-bottom: 1.5rem;
   transition: color 0.3s, border-color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  text-transform: uppercase;
+  border-left: 4px solid #3b82f6;
 }
 
-:root[data-theme="dark"] section h2 {
+:root[data-theme="dark"] .section-title {
   color: #fff;
-  border-left-color: #fff;
 }
 
-:root[data-theme="light"] section h2 {
+:root[data-theme="light"] .section-title {
   color: #000;
-  border-left-color: #000;
 }
 
-.resume-container {
-  padding: 2rem 0;
-}
 
-.resume-section {
+/* --- Experience Section (Synced with Experience.css) --- */
+.experience-item {
   margin-bottom: 2rem;
-}
-
-.resume-section h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  border-left: 2px solid;
-  padding-left: 10px;
-  transition: color 0.3s, border-color 0.3s;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-:root[data-theme="dark"] .resume-section h3 {
-  color: #fff;
-  border-left-color: #666;
-}
-
-:root[data-theme="light"] .resume-section h3 {
-  color: #000;
-  border-left-color: #999;
-}
-
-.resume-item {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid;
+  padding-bottom: 1.5rem;
+  border-bottom: 3px dotted #747474;
   transition: border-color 0.3s;
 }
 
-:root[data-theme="dark"] .resume-item {
-  border-bottom-color: #1e1e1e;
+:root[data-theme="light"] .experience-item {
+  border-bottom-color: #4d4d4d;
 }
 
-:root[data-theme="light"] .resume-item {
-  border-bottom-color: #e0e0e0;
-}
-
-.resume-item:last-child {
+.experience-item:last-child {
   border-bottom: none;
 }
 
-.resume-title {
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.experience-left {
+  flex: 1;
+}
+
+.role-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 0.3rem 0;
+  transition: color 0.3s;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+:root[data-theme="dark"] .role-title { color: #fff; }
+:root[data-theme="light"] .role-title { color: #000; }
+
+.company-name {
+  font-size: 14px;
   font-weight: 500;
-  margin-bottom: 0.25rem;
+  margin: 0;
   transition: color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-:root[data-theme="dark"] .resume-title {
-  color: #fff;
+:root[data-theme="dark"] .company-name { color: #aaa; }
+:root[data-theme="light"] .company-name { color: #666; }
+
+.experience-right {
+  text-align: right;
+  white-space: nowrap;
 }
 
-:root[data-theme="light"] .resume-title {
-  color: #000;
-}
-
-.resume-meta {
+.role-duration {
   font-size: 13px;
-  margin-bottom: 0.5rem;
   transition: color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
-
-:root[data-theme="dark"] .resume-meta {
   color: #888;
 }
 
-:root[data-theme="light"] .resume-meta {
+:root[data-theme="light"] .role-duration { color: #666; }
+
+.role-location {
+  font-size: 15px;
+  transition: color 0.3s;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #888;
+}
+
+:root[data-theme="light"] .role-location { color: #666; }
+
+.responsibilities {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.responsibilities li {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  padding-left: 1.2rem;
+  position: relative;
+  transition: color 0.3s;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #b4b4b4;
+}
+
+:root[data-theme="light"] .responsibilities li { color: #5e5e5e; }
+
+.responsibilities li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
   color: #666;
 }
 
-.resume-description {
-  font-size: 14px;
-  line-height: 1.6;
-  transition: color 0.3s;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+:root[data-theme="light"] .responsibilities li:before { color: #999; }
+
+
+
+/* --- Projects Section (Synced with Projects.css) --- */
+.resume-section.projects-container {
+  margin-top: 2rem;
 }
 
-:root[data-theme="dark"] .resume-description {
+.project-section-title {
+  font-size: 20px;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #3b82f6;
+  padding-left: 12px;
+}
+
+.projects-container .project-item {
+  padding: 0.8rem 0 1.5rem 0;
+  border-bottom: 3px dotted #747474;
+  display: flex;
+  flex-direction: column; 
+  gap: 0.8rem;
+}
+
+:root[data-theme="light"] .projects-container .project-item { border-bottom-color: #4d4d4d; }
+
+.projects-container .project-item:last-child {
+  border-bottom: none;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.project-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+:root[data-theme="dark"] .project-title { color: #fff; }
+:root[data-theme="light"] .project-title { color: #000; }
+
+.project-description-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  font-size: 15px;
+}
+
+.projects-container .project-description {
+  font-size: 15px;
+  line-height: 1.7;
   color: #aaa;
+  margin: 0;
+  flex: 1;
 }
 
-:root[data-theme="light"] .resume-description {
-  color: #555;
+:root[data-theme="light"] .projects-container .project-description { color: #555; }
+
+.project-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.2rem;
+}
+
+.project-github-icon {
+  opacity: 0.5;
+  transition: opacity 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  color: #888;
+}
+
+.project-github-icon:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  color: #4ade80;
+}
+
+.project-live-link {
+  font-size: 14px;
+  text-decoration: underline;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  color: #4ade80;
+  font-weight: bold;
+}
+
+/* --- Skills Grid (Kept as is) --- */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.skill-category {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.category-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+  margin: 0;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.skill-tag {
+  font-size: 0.85rem;
+  padding: 0.2rem 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #aaa;
+  transition: all 0.3s ease;
+}
+
+:root[data-theme="light"] .skill-tag {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #444;
+}
+
+.skill-tag:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+/* --- Education & Others --- */
+.resume-item.education-item, .resume-item.certification-item {
+  padding: 1.2rem 0;
+  border-bottom: 3px dotted #747474;
+}
+
+.resume-item.education-item:last-child, 
+.resume-item.certification-item:last-child {
+  border-bottom: none;
+}
+
+:root[data-theme="light"] .resume-item.education-item,
+:root[data-theme="light"] .resume-item.certification-item {
+  border-bottom-color: #4d4d4d;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+
+.item-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+:root[data-theme="dark"] .item-title { color: #fff; }
+:root[data-theme="light"] .item-title { color: #000; }
+
+.item-date {
+  font-size: 0.9rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+.item-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: #777;
+  margin-bottom: 0.2rem;
+}
+
+.item-branch {
+  font-size: 0.9rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .resume-name { font-size: 2rem; }
+  .experience-header, .item-header { flex-direction: column; gap: 0.2rem; text-align: left; }
+  .experience-right { text-align: left; }
+  .item-sub { flex-direction: column; gap: 0.1rem; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .project-description-row { flex-direction: column; gap: 0.5rem; }
+}
+
+.section-divider {
+  width: 100%;
+  height: 3px;
+  margin: 2rem 0;
+  transition: background-color 0.3s;
+}
+
+:root[data-theme="dark"] .section-divider {
+  background-color: #747474;
+}
+
+:root[data-theme="light"] .section-divider {
+  background-color: #4d4d4d;
 }

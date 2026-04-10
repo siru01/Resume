@@ -14,7 +14,7 @@
   text-transform: uppercase;
   opacity: 1; 
   margin-top: 0.1rem; 
-  border-left: 3px solid ;
+  border-left: 4px solid #3b82f6;
   padding-left: 10px;
 }
 
@@ -31,8 +31,8 @@
 }
 
 /* Synchronized themed colors for dark/light modes */
-:root[data-theme="dark"] .projects-container .project-item { border-bottom-color: #555; }
-:root[data-theme="light"] .projects-container .project-item { border-bottom-color: #ccc; }
+:root[data-theme="dark"] .projects-container .project-item { border-bottom-color: #747474; }
+:root[data-theme="light"] .projects-container .project-item { border-bottom-color: #4d4d4d; }
 
 .project-header {
   display: flex;

@@ -1,7 +1,7 @@
 section h2 {
   font-size: 25px;
   font-weight: 500;
-  border-left: 3px solid;
+  border-left: 4px solid #3b82f6;
   padding-left: 12px;
   margin-bottom: 1.5rem;
   transition: color 0.3s, border-color 0.3s;
@@ -10,12 +10,12 @@ section h2 {
 
 :root[data-theme="dark"] section h2 {
   color: #fff;
-  border-left-color: #fff;
+  border-left-color: #3b82f6;
 }
 
 :root[data-theme="light"] section h2 {
   color: #000;
-  border-left-color: #000;
+  border-left-color: #3b82f6;
 }
 
 .blog-item {
@@ -29,11 +29,11 @@ section h2 {
 }
 
 :root[data-theme="dark"] .blog-item {
-  border-bottom-color: #1e1e1e;
+  border-bottom-color: #747474;
 }
 
 :root[data-theme="light"] .blog-item {
-  border-bottom-color: #e0e0e0;
+  border-bottom-color: #4d4d4d;
 }
 
 .blog-item:last-child {

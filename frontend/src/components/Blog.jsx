@@ -3,8 +3,8 @@ import './Blog.css'
 
 
 const blogs = [
-    {"title": "dgfhzdffbdfb", "date": "6556465", "link": "#"},
-    {"title": "445", "date": "551515", "link": "#"},
+    {"title": "WILL UPDATE SOON", "date": "", "link": "#"},
+    /*{"title": "WILL UPDATE SOON", "date": "", "link": "#"},*/
 ]
 
 

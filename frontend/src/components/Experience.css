@@ -1,6 +1,7 @@
 .heading h2 {
   font-size: 20px;
   font-weight: 450;
+  border-left: 4px solid #3b82f6;
   padding-left: 12px;
   margin-bottom: 1.5rem;
   transition: color 0.3s, border-color 0.3s;
@@ -10,12 +11,12 @@
 
 :root[data-theme="dark"] .heading h2 {
   color: #fff;
-  border-left-color: #fff;
+  border-left-color: #3b82f6;
 }
 
 :root[data-theme="light"] .heading h2 {
   color: #000;
-  border-left-color: #000;
+  border-left-color: #3b82f6;
 }
 
 .experience-item {
@@ -26,11 +27,11 @@
 }
 
 :root[data-theme="dark"] .experience-item {
-  border-bottom-color: #555; 
+  border-bottom-color: #747474; 
 }
 
 :root[data-theme="light"] .experience-item {
-  border-bottom-color: #ccc;
+  border-bottom-color: #4d4d4d;
 }
 
 .experience-item:last-child {

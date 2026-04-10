@@ -5,7 +5,7 @@ const profileData = {
   name: "SIRJAN MURMU",
   title: "Engineer · Versatile",
   email: "murmu.sirjan10@gmail.com",
-  bio: "Obsessed with the details, focused on the impact, driven by the data.",
+  bio: "With a terminal, a vision, and to learn something new everyday.",
   socials: {
     twitter: "https://x.com/Siruishere",
     linkedin: "https://www.linkedin.com/in/sirjanmurmu",
@@ -65,6 +65,14 @@ const projectsData = [
   }
 ]
 
+const GADGETS = [
+  { label: 'RIG [Specs]', value: 'Curated collection of essential hardware where performance meets purpose and every gadget earns its place.'}, 
+  { label: 'SETUP [Workspace]', value: 'Precision-honed toolkit where code meets craft and the right software turns a vision into a reality.'}
+]
+
+const personal = [ {label: 'Atheletic', value: 'I am a dedicated athlete who leverages the discipline of volleyball and football to maintain the mental clarity and physical endurance essential for high-level problem-solving.'}
+
+]
 
 export default function Home({ setPage }) {
   const [copied, setCopied] = useState(false);
@@ -177,6 +185,7 @@ export default function Home({ setPage }) {
   ))}
 </div>
 
+
 {/* ── Projects Section ── */}
 <div className="projects-container">
   <h2 className="project-section-title">Projects</h2>
@@ -225,9 +234,47 @@ export default function Home({ setPage }) {
       </div>
     </div>
 
-    {/* Section Divider Line */}
     <div className="section-divider"></div>
-    
+
+    {/* ── Assets Section ── */}
+    <div className="home-assets-section">
+      <h2 className="project-section-title">ASSETS</h2>
+      <div className="assets-cards-container">
+        {GADGETS.map((item, i) => (
+          <div key={i} className="asset-card" onClick={() => setPage('assets')}>
+            <div className="asset-card-content">
+              <h3 className="asset-card-label">{item.label}</h3>
+              <p className="asset-card-value">{item.value}</p>
+            </div>
+            <div className="asset-card-arrow">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div className="section-divider"></div>
+
+    {/* ── Personal Section ── */}
+    <div className="home-personal-section">
+      <h2 className="project-section-title">PERSONAL</h2>
+      <div className="personal-content">
+        {personal.map((item, i) => (
+          <div key={i} className="personal-item">
+            <p className="personal-description">
+              <span className="personal-label">{item.label}:</span> {item.value}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div className="section-divider"></div>
+
     {/* ── Toast Notification ── */}
     {copied && (
       <div className="toast-notification">

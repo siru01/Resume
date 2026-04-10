@@ -6,6 +6,8 @@ import Projects from './components/Projects'
 import Blog from './components/Blog'
 import Resume from './components/Resume'      
 import SearchPalette from './components/SearchPalette'
+import Assets from './components/Assets'
+import Footer from './components/Footer'
 
 console.log('App component loading...');
 
@@ -32,6 +34,7 @@ export default function App() {
 
   useEffect(() => {
     console.log('App mounted, current page:', page);
+    window.scrollTo(0, 0);
   }, [page]);
 
   return (
@@ -61,7 +64,10 @@ export default function App() {
         {page === 'projects' && <Projects />}
         {page === 'blog' && <Blog />}
         {page === 'resume' && <Resume />}   
+        {page === 'assets' && <Assets />}
       </div>
+
+      <Footer setPage={setPage} />
     </div>
   )
 }

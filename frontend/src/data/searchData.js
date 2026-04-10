@@ -1,5 +1,8 @@
 export const searchData = [
   // Navigation
+  { title: "Assets", type: "Page", page: "assets" },
+  { title: "Rig [Specs]", type: "Assets", page: "assets" },
+  { title: "Setup [Workspace]", type: "Assets", page: "assets" },
   { title: "Home", type: "Page", page: "home" },
   { title: "Experience", type: "Page", page: "experience" },
   { title: "Projects", type: "Page", page: "projects" },

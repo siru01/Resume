@@ -63,7 +63,7 @@ const resumeData = {
     Live: null,
   },
   {
-    title: "Kite [File Transfer]",
+    title: "Data Transfer [Kite]",
     description: "A browser-based peer-to-peer file sharing application that enables devices on the same Wi-Fi network to discover each other and transfer files directly, without any cloud storage or external servers, the project demonstrates applied knowledge of networking protocols, asynchronous Python, binary data handling in the browser, and full-stack integration",
     link: "https://github.com/siru01/Kite.git",
     Live: null,
@@ -192,7 +192,7 @@ export default function Resume() {
 
         {/* Projects Section - Synced with Projects.jsx */}
         <div className="resume-section projects-container">
-          <h2 className="project-section-title">Projects [Endeavour]</h2>
+          <h2 className="project-section-title">Projects</h2>
           {data.projects.map((project, i) => (
             <div key={i} className="project-item">
               <div className="project-header">
@@ -220,7 +220,7 @@ export default function Resume() {
 
         {/* Skills Section - Kept as is */}
         <div className="resume-section">
-          <h2 className="section-title">Skills [Expertise]</h2>
+          <h2 className="section-title">Skills</h2>
           <div className="skills-grid">
             {data.skills.map((skillObj, i) => {
               const category = Object.keys(skillObj)[0];
@@ -243,7 +243,7 @@ export default function Resume() {
 
         {/* Certifications Section */}
         <div className="resume-section">
-          <h2 className="section-title">Certifications [Recognition]</h2>
+          <h2 className="section-title">Certifications</h2>
           {data.certifications.map((cert, i) => (
             <div key={i} className="resume-item certification-item">
               <div className="item-header">
@@ -258,7 +258,7 @@ export default function Resume() {
 
         {/* Education Section - Last */}
         <div className="resume-section">
-          <h2 className="section-title">Education [Scholastic]</h2>
+          <h2 className="section-title">Education</h2>
           {data.education.map((edu, i) => (
             <div key={i} className="resume-item education-item">
               <div className="item-header">

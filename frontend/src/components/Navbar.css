@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   height: 52px;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 3px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -37,10 +37,12 @@
 /* Ensure the background is opaque (solid) for each theme */
 :root[data-theme="dark"] .navbar {
   background-color: #0d0d0d;
+  border-bottom-color: #333;
 }
 
 :root[data-theme="light"] .navbar {
   background-color: #ffffff;
+  border-bottom-color: #bcbcbc;
 }
 
 /* Brand - hidden on desktop, shown on mobile */
@@ -86,7 +88,7 @@
   font-weight: bold;
 }
 
-:root[data-theme="dark"] .nav-link { color: #777; }
+:root[data-theme="dark"] .nav-link { color: #8c8b8b; }
 :root[data-theme="light"] .nav-link { color: #888; }
 :root[data-theme="dark"] .nav-link.active { color: #fff; font-weight: 600; }
 :root[data-theme="light"] .nav-link.active { color: #000; font-weight: 600; }
@@ -188,7 +190,7 @@
 }
 
 :root[data-theme="dark"] .mobile-menu { background: #0d0d0d; border-bottom-color: #1a1a1a; }
-:root[data-theme="light"] .mobile-menu { background: #ffffff; border-bottom-color: #e0e0e0; }
+:root[data-theme="light"] .mobile-menu { background: #ffffff; border-bottom-color: #ffffff; }
 
 .mobile-nav-link {
   background: transparent;

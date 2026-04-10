@@ -1,19 +1,19 @@
-section h2 {
-  font-size: 50px;
-  font-weight: 500;
-  border-left: 3px ;
+.heading h2 {
+  font-size: 20px;
+  font-weight: 450;
   padding-left: 12px;
   margin-bottom: 1.5rem;
   transition: color 0.3s, border-color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
-}
+  text-transform: uppercase;
+} 
 
-:root[data-theme="dark"] section h2 {
+:root[data-theme="dark"] .heading h2 {
   color: #fff;
   border-left-color: #fff;
 }
 
-:root[data-theme="light"] section h2 {
+:root[data-theme="light"] .heading h2 {
   color: #000;
   border-left-color: #000;
 }
@@ -26,11 +26,11 @@ section h2 {
 }
 
 :root[data-theme="dark"] .experience-item {
-  border-bottom-color: #1a1a1a; 
+  border-bottom-color: #555; 
 }
 
 :root[data-theme="light"] .experience-item {
-  border-bottom-color: #e0e0e0;
+  border-bottom-color: #ccc;
 }
 
 .experience-item:last-child {

@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import './Blog.css'
 
-export default function Blog() {
-  const [data, setData] = useState([])
 
-  useEffect(() => {
-    fetch('/api/blogs').then(r => r.json()).then(setData)
-  }, [])
+const blogs = [
+    {"title": "dgfhzdffbdfb", "date": "6556465", "link": "#"},
+    {"title": "445", "date": "551515", "link": "#"},
+]
+
+
+export default function Blog() {
+  const [data] = useState(blogs)
 
   return (
     <section>

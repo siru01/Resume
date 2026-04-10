@@ -1,82 +1,108 @@
-section h2 {
-  font-size: 25px;
-  font-weight: 500;
-  border-left: 3px solid;
-  padding-left: 12px;
-  margin-bottom: 1.5rem;
-  transition: color 0.3s, border-color 0.3s;
+/* Projects.css */
+
+.projects-container {
+  width: 100%;
+  max-width: 860px;
+  padding: 0.5rem 0;
+  margin: 0 auto;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-:root[data-theme="dark"] section h2 {
-  color: #fff;
-  border-left-color: #fff;
+.project-section-title {
+  font-size: 20px;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  opacity: 1; 
+  margin-top: 0.1rem; 
+  border-left: 3px solid ;
+  padding-left: 10px;
 }
 
-:root[data-theme="light"] section h2 {
-  color: #000;
-  border-left-color: #000;
+.projects-container .project-item {
+  padding: 0.8rem 0 1.5rem 0;
+  border-bottom: 3px dotted;
+  display: flex;
+  flex-direction: column; 
+  gap: 0.8rem;
 }
 
-.projectt-item {
-  margin-bottom: 1.2rem;
-  border-bottom: 1px solid;
-  padding-bottom: 1.2rem;
-  transition: border-color 0.3s;
-}
-
-:root[data-theme="dark"] .projectt-item {
-  border-bottom-color: #1e1e1e;
-}
-
-:root[data-theme="light"] .project-item {
-  border-bottom-color: #e0e0e0;
-}
-
-.projectt-item:last-child {
+.projects-container .project-item:last-child {
   border-bottom: none;
 }
 
-.projectt-name {
-  font-weight: 500;
-  display: block;
-  transition: color 0.3s;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+/* Synchronized themed colors for dark/light modes */
+:root[data-theme="dark"] .projects-container .project-item { border-bottom-color: #555; }
+:root[data-theme="light"] .projects-container .project-item { border-bottom-color: #ccc; }
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
-:root[data-theme="dark"] .projectt-name {
-  color: #fff;
+.project-title {
+  font-size: 16px;
+  font-weight: bold;
 }
 
-:root[data-theme="light"] .projectt-name {
-  color: #000;
+.project-description-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  font-size: 15px;
 }
 
-.projectt-name:hover {
-  text-decoration: underline;
-}
-
-:root[data-theme="dark"] .projectt-name:hover {
-  color: #aaa;
-}
-
-:root[data-theme="light"] .projectt-name:hover {
-  color: #555;
-}
-
-.projectt-description {
+.projects-container .project-description {
   font-size: 15px;
   line-height: 1.7;
-  margin-top: 4px;
-  margin-bottom: 0;
-  transition: color 0.3s;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: #888;
+  margin: 0;
+  flex: 1;
 }
 
-:root[data-theme="dark"] .project-description {
-  color: #777;
+:root[data-theme="dark"] .projects-container .project-description { color: #aaa; }
+:root[data-theme="light"] .projects-container .project-description { color: #555; }
+
+.project-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.2rem;
 }
 
-:root[data-theme="light"] .project-description {
-  color: #999;
+.project-github-icon {
+  opacity: 0.5;
+  transition: opacity 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.project-github-icon:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.project-live-link {
+  font-size: 14px;
+  text-decoration: underline;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  color: #4ade80;
+  font-weight: bold;
+}
+
+.project-live-link:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+  .projects-container {
+    padding: 0 1rem;
+  }
+  
+  .project-description-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }

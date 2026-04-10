@@ -41,7 +41,9 @@ export default function Experience() {
 
   return (
     <section>
-      <h2>Former Organizations</h2>
+      <div className="heading">
+        <h2>Former Organizations</h2>
+      </div>
       {data.map((exp, i) => (
         exp.roles.map((role, j) => (
           <div key={`${i}-${j}`} className="experience-item">

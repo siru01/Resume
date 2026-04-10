@@ -1,14 +1,37 @@
 import { useEffect, useState } from 'react'
 import './Resume.css'
 
+const resumeData = {
+    "education": [
+        {
+            "degree": "Your Degree Name",
+            "school": "University Name",
+            "year": "2020 - 2024",
+            "description": "Add details about your education here"
+        }
+    ],
+    "skills": [
+        {
+            "category": "Technical Skills",
+            "items": ["React", "Python", "JavaScript", "Node.js", "FastAPI"]
+        },
+        {
+            "category": "Languages",
+            "items": ["English", "Hindi"]
+        }
+    ],
+    "certifications": [
+        {
+            "name": "Your Certification Name",
+            "issuer": "Issuing Organization",
+            "year": "2024",
+            "description": "Add certification details here"
+        }
+    ]
+}
+
 export default function Resume() {
-  const [data, setData] = useState(null)
-
-  useEffect(() => {
-    fetch('/api/resume').then(r => r.json()).then(setData)
-  }, [])
-
-  if (!data) return null
+  const [data] = useState(resumeData)
 
   return (
     <section>

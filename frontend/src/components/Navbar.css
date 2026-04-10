@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   height: 52px;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid ;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -38,13 +38,11 @@
 :root[data-theme="dark"] .navbar {
   background-color: #0d0d0d;
   /* Matches your body background */
-  border-bottom-color: #1a1a1a;
 }
 
 :root[data-theme="light"] .navbar {
   background-color: #ffffff;
   /* Matches your white background */
-  border-bottom-color: #e0e0e0;
 }
 
 /* Brand - hidden on desktop, shown on mobile */
@@ -162,43 +160,46 @@
   display: flex;
   align-items: center;
   gap: 0.6rem ;
-  border: 1px solid;
+  border: 3px solid;
   border-radius: 1px;
   padding: 0.4rem 0.4rem;
 }
 
 :root[data-theme="dark"] .search-box {
-  border-color: #333;
+  border-color: #767676;
 }
 
 :root[data-theme="light"] .search-box {
-  border-color: #ddd;
+  border-color: #323232;
 }
 
 .search-icon {
-  opacity: 0.5;
-  flex-shrink: 0;
+  flex-shrink: 0.5;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-input {
   background: transparent;
   border: none;
   outline: none;
-  font-size: 13px;
+  font-size: 15px; 
   width: 100px;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
 :root[data-theme="dark"] .search-input {
-  color: #ccc;
+  color: #c0bcbc;
 }
 
 :root[data-theme="light"] .search-input {
-  color: #333;
+  color: #2b2b2b;
 }
 
 .search-input::placeholder {
-  opacity: 0.4;
+  opacity: 1;
+  padding-left: 15px;
+  font-size: 15px;
 }
 
 .theme-toggle {

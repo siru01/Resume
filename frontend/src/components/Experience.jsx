@@ -12,9 +12,8 @@ const experience = [
         "end": "Dec 2024",
         "location": "Remote",
         "responsibilities": [
-          "Tested game functionality and reported bugs",
-          "Provided feedback on gameplay mechanics",
-          "Documented test results and improvements"
+          "Executed comprehensive QA testing for Web3-based titles, identifying and documenting critical bugs in gameplay loops, UI/UX flows",
+          "Collaborated with development teams via detailed bug reports, utilizing structured feedback to improve performance, game stability, and the overall onboarding process for new users.",
         ]
       },
     ]
@@ -29,9 +28,8 @@ const experience = [
         "end": "August 2023",
         "location": "Remote",
         "responsibilities": [
-          "Built Python applications using modern frameworks",
-          "Collaborated with team on feature development",
-          "Participated in code reviews and testing"
+          "Engineered functional Python applications, including a secure Password Generator and Task Manager, utilizing standard libraries to handle user input and data persistence.",
+          "Implemented core algorithmic logic and randomization for interactive programs, ensuring robust error handling and a seamless user interface (CLI).",
         ]
       },
     ]

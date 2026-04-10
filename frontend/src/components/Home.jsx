@@ -77,10 +77,27 @@ const personal = [ {label: 'Atheletic', value: 'I am a dedicated athlete who lev
 export default function Home({ setPage }) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(profileData.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopyEmail = async () => {
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(profileData.email);
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = profileData.email;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        textArea.remove();
+      }
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    } finally {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   const SocialIcon = ({ platform }) => {

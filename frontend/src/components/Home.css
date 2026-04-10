@@ -502,6 +502,18 @@
   }
 }
 
+@keyframes slideUpFade {
+  from {
+    bottom: -50px;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
 :root[data-theme="light"] .toast-notification {
   background: rgba(255, 255, 255, 0.9);
   border-color: rgba(74, 222, 128, 0.5);
@@ -601,9 +613,10 @@
     width: 90%;
     font-size: 13px;
     padding: 8px 15px;
-    text-align: center;
+    justify-content: center;
   }
 }
+
 
 /* --- Shared Home Section Card Styles --- */
 .home-assets-section, 

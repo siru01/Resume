@@ -1,16 +1,49 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './Experience.css'
 
-export default function Experience() {
-  const [data, setData] = useState([])
+const experience = [
+  {
+    "company": "KGeN [INDGG]",
+    "status": null,
+    "roles": [    
+      {
+        "title": "Game tester",
+        "start": "May 2024",
+        "end": "Dec 2024",
+        "location": "Remote",
+        "responsibilities": [
+          "Tested game functionality and reported bugs",
+          "Provided feedback on gameplay mechanics",
+          "Documented test results and improvements"
+        ]
+      },
+    ]
+  },
+  {
+    "company": "Codesoft",
+    "status": "Python internship",
+    "roles": [
+      {
+        "title": "Python intern",
+        "start": "April 2023",
+        "end": "August 2023",
+        "location": "Remote",
+        "responsibilities": [
+          "Built Python applications using modern frameworks",
+          "Collaborated with team on feature development",
+          "Participated in code reviews and testing"
+        ]
+      },
+    ]
+  },
+]
 
-  useEffect(() => {
-    fetch('/api/experience').then(r => r.json()).then(setData)
-  }, [])
+export default function Experience() {
+  const [data] = useState(experience)
 
   return (
     <section>
-      <h2>Companies i have worked for ...</h2>
+      <h2>Former Organizations</h2>
       {data.map((exp, i) => (
         exp.roles.map((role, j) => (
           <div key={`${i}-${j}`} className="experience-item">

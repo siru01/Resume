@@ -42,7 +42,7 @@ const experienceData = [
         end: "August 2023",
         location: "Remote",
         responsibilities: [
-          "Built Python applications using modern frameworks",
+          "Built Python services using modern frameworks",
           "Collaborated with team on feature development",
           "Participated in code reviews and testing"
         ]

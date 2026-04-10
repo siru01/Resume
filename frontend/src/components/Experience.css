@@ -1,7 +1,7 @@
 section h2 {
   font-size: 50px;
   font-weight: 500;
-  border-left: 3px solid;
+  border-left: 3px ;
   padding-left: 12px;
   margin-bottom: 1.5rem;
   transition: color 0.3s, border-color 0.3s;
@@ -21,12 +21,12 @@ section h2 {
 .experience-item {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid;
+  border-bottom: 3px dotted rgb(255, 255, 255);
   transition: border-color 0.3s;
 }
 
 :root[data-theme="dark"] .experience-item {
-  border-bottom-color: #1a1a1a;
+  border-bottom-color: #1a1a1a; 
 }
 
 :root[data-theme="light"] .experience-item {
@@ -101,7 +101,7 @@ section h2 {
 }
 
 .role-location {
-  font-size: 13px;
+  font-size: 15px;
   transition: color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
@@ -121,7 +121,7 @@ section h2 {
 }
 
 .responsibilities li {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   margin-bottom: 0.5rem;
   padding-left: 1.2rem;
@@ -131,11 +131,11 @@ section h2 {
 }
 
 :root[data-theme="dark"] .responsibilities li {
-  color: #aaa;
+  color: #b4b4b4;
 }
 
 :root[data-theme="light"] .responsibilities li {
-  color: #555;
+  color: #5e5e5e;
 }
 
 .responsibilities li:before {

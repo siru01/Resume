@@ -224,6 +224,8 @@
   text-transform: uppercase;
   margin: 0 0 0.5rem 0;
   opacity: 1;
+  border-left: 4px solid green;
+  padding-left: 10px;
 }
 
 .experience-company {
@@ -373,6 +375,8 @@
   text-transform: uppercase;
   opacity: 1;
   margin-top: 0.1rem;
+  border-left: 4px solid green;
+  padding-left: 10px ; 
 }
 
 .projects-container .project-item {
@@ -521,6 +525,7 @@
   transition: all 0.3s ease;
   background: transparent;
 }
+
 
 :root[data-theme="dark"] .show-all-box {
   color: #fff;

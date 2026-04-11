@@ -8,7 +8,6 @@ import Resume from './components/Resume'
 import SearchPalette from './components/SearchPalette'
 import Assets from './components/Assets'
 import Footer from './components/Footer'
-import ThemeAnimation from './components/ThemeAnimation';
 
 console.log('App component loading...');
 
@@ -47,7 +46,6 @@ export default function App() {
 
   return (
     <div className="app-root">
-      <ThemeAnimation theme={theme} />
       <Navbar page={page} setPage={setPage} onOpenSearch={() => setIsSearchOpen(true)} theme={theme} toggleTheme={toggleTheme} />
       <SearchPalette 
         isOpen={isSearchOpen} 

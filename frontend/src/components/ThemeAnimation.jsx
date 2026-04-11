@@ -41,16 +41,24 @@ const ThemeAnimation = ({ theme }) => {
       }
 
       draw() {
-        ctx.beginPath();
         if (theme === 'dark') {
-          // Circular Snowflake
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          // Snowflake character
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate(this.angle);
+          ctx.font = `${Math.floor(this.size * 4)}px Arial`;
+          ctx.fillStyle = this.color;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('❄', 0, 0);
+          ctx.restore();
         } else {
+          ctx.beginPath();
           // Petal Shape (Ellipse)
           ctx.ellipse(this.x, this.y, this.size, this.size / 2, this.angle, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
         }
-        ctx.fillStyle = this.color;
-        ctx.fill();
       }
     }
 

@@ -24,7 +24,7 @@
 .profile-avatar {
   width: 80px;
   height: 80px;
-  border-radius: 8px;
+  border-radius: 1px;
   background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
   border: 2px solid #333;
   display: flex;
@@ -39,7 +39,7 @@
   height: 100%;
   object-fit: cover;     /*preventing the photo from stretching */
   display: block;
-  border-radius: 8px;
+  border-radius: 1px;
   
 }
 
@@ -491,9 +491,9 @@
   transform: translateX(-50%);
   background: rgba(20, 20, 20, 0.8);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  border: 1px solid rgb(55, 227, 103);
   padding: 10px 20px;
-  border-radius: 50px;
+  border-radius: 0px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -531,7 +531,7 @@
 
 :root[data-theme="light"] .toast-notification {
   background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(74, 222, 128, 0.5);
+  border-color: rgba(116, 209, 104, 0.952);
   color: #000;
 }
 

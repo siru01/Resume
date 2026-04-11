@@ -4,7 +4,7 @@ import './Navbar.css'
 export default function Navbar({ page, setPage, onOpenSearch }) {
   const [isDark, setIsDark] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
-  const links = ['home', 'experience', 'projects', 'blog', 'resume']
+  const links = ['home', 'experience', 'projects', /*'blog', */ 'resume']  /*for the time being blog is not being used, will be upating later  */
 
   useEffect(() => {
     if (isDark) {

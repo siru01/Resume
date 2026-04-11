@@ -318,8 +318,16 @@
   color: #444;
 }
 
-.skill-tag:hover {
-  border-color: #3b82f6;
+/* Light Mode Hover */
+:root[data-theme="light"] .skill-tag:hover {
+  border-color: #2563eb; /* A slightly deeper blue for better contrast on white */
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+/* Dark Mode Hover */
+:root[data-theme="dark"] .skill-tag:hover {
+  border-color: #3b82f6; /* The bright blue you currently have */
   color: #3b82f6;
   transform: translateY(-1px);
 }

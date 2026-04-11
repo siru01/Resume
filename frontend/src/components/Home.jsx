@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './Home.css'
+import myPhoto from '../assets/pic.jpeg'
 
 const profileData = {
   name: "SIRJAN MURMU",
@@ -136,7 +137,7 @@ export default function Home({ setPage }) {
     <div>
       {/* ── Profile Section ── */}
       <div className="profile">
-        <div className="profile-avatar">👤</div>
+        <div className="profile-avatar">{<img src={myPhoto} alt="Profile" className="avatar-img" />}</div>
         <div className="profile-info">
           <h1 className="profile-name">{profileData.name}</h1>
           <div className="profile-meta">

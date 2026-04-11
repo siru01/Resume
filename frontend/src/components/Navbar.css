@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   height: 52px;
-  border-bottom: 3px solid var(--border);
+  border-bottom: 3px solid var(--border);  /*this is the border at the bottom of the navbar*/
   position: sticky;
   top: 0;
   z-index: 100;
@@ -37,12 +37,12 @@
 /* Ensure the background is opaque (solid) for each theme */
 :root[data-theme="dark"] .navbar {
   background-color: #0d0d0d;
-  border-bottom-color: #333;
+  border-bottom-color: #c3c0c0;  /*this is the border colour in dark mode*/
 }
 
 :root[data-theme="light"] .navbar {
   background-color: #ffffff;
-  border-bottom-color: #bcbcbc;
+  border-bottom-color: #151515;  /*this is the border colour in light mode*/
 }
 
 /* Brand - hidden on desktop, shown on mobile */
@@ -106,7 +106,7 @@
 .search-box-trigger {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1.3rem;
   border: 1px solid;
   border-radius: 4px;
   padding: 0.3rem 0.6rem;
@@ -137,7 +137,8 @@
 
 .search-icon {
   flex-shrink: 0;
-  opacity: 0.7;
+  opacity: 1;
+  
 }
 
 .search-placeholder {
@@ -160,8 +161,8 @@
 
 .theme-toggle:hover { opacity: 1; }
 
-:root[data-theme="dark"] .theme-toggle { color: #ccc; }
-:root[data-theme="light"] .theme-toggle { color: #555; }
+:root[data-theme="dark"] .theme-toggle { color: #ffffff; }
+:root[data-theme="light"] .theme-toggle { color: #000000; }
 
 /* Hamburger - hidden on desktop */
 .hamburger {

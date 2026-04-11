@@ -13,7 +13,7 @@ export default function Footer({ setPage }) {
             <li onClick={() => setPage('home')}>Home</li>
             <li onClick={() => setPage('experience')}>Work</li>
             <li onClick={() => setPage('projects')}>Projects</li>
-            <li onClick={() => setPage('blog')}>Blog</li>
+            {/*<li onClick={() => setPage('blog')}>Blog</li>*/}
             <li onClick={() => setPage('resume')}>Resume</li>
           </ul>
         </div>

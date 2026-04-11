@@ -1,0 +1,38 @@
+.gallery-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.1);
+  touch-action: none; /* Prevents browser scroll while swiping image */
+}
+
+.gallery-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-color);
+  opacity: 0.3;
+}
+
+.dot.active {
+  opacity: 1;
+  background: #3b82f6; /* Your accent blue */
+}

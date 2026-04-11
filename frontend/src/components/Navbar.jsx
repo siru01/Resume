@@ -23,7 +23,7 @@ export default function Navbar({ page, setPage, onOpenSearch, theme, toggleTheme
   }
 
   return (
-    <nav className="navbar">
+    <nav className="nav-bar">
 
       {/* Brand name - mobile only */}
       <span className="nav-brand">Sirjan</span>
@@ -34,7 +34,7 @@ export default function Navbar({ page, setPage, onOpenSearch, theme, toggleTheme
           <button
             key={l}
             onClick={() => handleNavClick(l)}
-            className={`nav-link ${page === l ? 'active' : ''}`}
+            className={`nav-link ${page === l ? 'nav-active' : ''}`}
           >
             {l.charAt(0).toUpperCase() + l.slice(1)}
           </button>
@@ -43,16 +43,16 @@ export default function Navbar({ page, setPage, onOpenSearch, theme, toggleTheme
 
       {/* Right side: search + theme + hamburger */}
       <div className="nav-right">
-        <div className="search-box-trigger" onClick={onOpenSearch}>
-          <svg className="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
+        <div className="nav-search-trigger" onClick={onOpenSearch}>
+          <svg className="nav-search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
             <circle cx="6.5" cy="6.5" r="5"/>
             <path d="M10 10l4 4"/>
           </svg>
-          <span className="search-placeholder">Search</span>
+          <span className="nav-search-placeholder">Search</span>
         </div>
 
         <button
-          className="theme-toggle"
+          className="nav-theme-toggle"
           onClick={toggleTheme}
           title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
@@ -77,7 +77,7 @@ export default function Navbar({ page, setPage, onOpenSearch, theme, toggleTheme
 
         {/* Hamburger - mobile only */}
         <button
-          className="hamburger"
+          className="nav-hamburger"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
@@ -98,12 +98,12 @@ export default function Navbar({ page, setPage, onOpenSearch, theme, toggleTheme
 
       {/* Mobile dropdown */}
       {menuOpen && (
-        <div className="mobile-menu">
+        <div className="nav-mobile-menu">
           {links.map((l) => (
             <button
               key={l}
               onClick={() => handleNavClick(l)}
-              className={`mobile-nav-link ${page === l ? 'active' : ''}`}
+              className={`nav-mobile-nav-link ${page === l ? 'nav-active' : ''}`}
             >
               {l.charAt(0).toUpperCase() + l.slice(1)}
             </button>

@@ -17,14 +17,14 @@
   -webkit-user-drag: none;
 }
 
-.dots {
+.gallery-dots {
   display: flex;
   justify-content: center;
   gap: 8px;
   padding: 10px;
 }
 
-.dot {
+.gallery-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -32,7 +32,7 @@
   opacity: 0.3;
 }
 
-.dot.active {
+.gallery-dot.active {
   opacity: 1;
   background: #3b82f6; /* Your accent blue */
 }

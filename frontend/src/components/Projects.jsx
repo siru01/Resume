@@ -49,19 +49,19 @@ export default function Projects() {
   }
 
   return (
-    <section className="projects-container">
-      <h2 className="project-section-title">Projects [Endeavour]</h2>
+    <section className="proj-page">
+      <h2 className="proj-section-title">Projects [Endeavour]</h2>
       {data.map((project, i) => (
-        <div key={i} className="project-item">
+        <div key={i} className="proj-item">
           
           {/* Row 1: Title */}
-          <div className="project-header">
-            <span className="project-title">{project.title}</span>
+          <div className="proj-header">
+            <span className="proj-title">{project.title}</span>
           </div>
 
           {/* Row 2: Description & Live Link */}
-          <div className="project-description-row">
-            <p className="project-description">
+          <div className="proj-description-row">
+            <p className="proj-description">
               {project.description}
             </p>
             
@@ -70,7 +70,7 @@ export default function Projects() {
                 href={project.Live} 
                 target="_blank" 
                 rel="noreferrer" 
-                className="project-live-link"
+                className="proj-live-link"
               >
                 Live Demo ↗
               </a>
@@ -78,8 +78,8 @@ export default function Projects() {
           </div>
 
           {/* Row 3: Project Links (GitHub Icon) */}
-          <div className="project-actions">
-            <a href={project.link} target="_blank" rel="noreferrer" className="project-github-icon" title="View Source Code">
+          <div className="proj-actions">
+            <a href={project.link} target="_blank" rel="noreferrer" className="proj-github-icon" title="View Source Code">
               <SocialIcon platform="github" />
             </a>
           </div>

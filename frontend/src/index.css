@@ -64,7 +64,7 @@ html::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 100, 100, 0.6);
 }
 
-.main-content {
+.app-main-content {
   max-width: 890px;
   margin: 0 auto;
   padding: 0 2rem 5rem 2rem;
@@ -72,19 +72,19 @@ html::-webkit-scrollbar-thumb:hover {
   min-height: calc(100vh - 52px);
 }
 
-.back-nav {
+.app-back-nav {
   height: 60px;
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
 }
 
-.back-nav.home-spacing {
+.app-back-nav.app-home-spacing {
   height: 20px;
   margin-bottom: 1rem;
 }
 
-.back-button {
+.app-back-button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -100,22 +100,22 @@ html::-webkit-scrollbar-thumb:hover {
   color: var(--text-secondary);
 }
 
-.back-button:hover {
+.app-back-button:hover {
   color: var(--text-primary);
   transform: translateX(-5px);
 }
 
 @media (max-width: 480px) {
-  .main-content {
+  .app-main-content {
     padding: 0 1rem 3rem 1rem;
   }
   
-  .back-nav {
+  .app-back-nav {
     height: 50px;
     margin-bottom: 1rem;
   }
 
-  .back-nav.home-spacing {
+  .app-back-nav.app-home-spacing {
     height: 15px;
     margin-bottom: 0.5rem;
   }

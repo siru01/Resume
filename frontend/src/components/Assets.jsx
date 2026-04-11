@@ -21,28 +21,28 @@ export default function Assets() {
   ] 
 
   return (
-    <div className="assets-page">
-      <section className="assets-section">
-        <h2 className="assets-title">Rig [Specs]</h2>
-        <div className="specs-grid">
+    <div className="ast-page">
+      <section className="ast-section">
+        <h2 className="ast-title">Rig [Specs]</h2>
+        <div className="ast-specs-grid">
           {specs.map((item, i) => (
-            <div key={i} className="spec-item">
-              <span className="spec-label">{item.label}</span>
-              <span className="spec-value">{item.value}</span>
+            <div key={i} className="ast-spec-item">
+              <span className="ast-spec-label">{item.label}</span>
+              <span className="ast-spec-value">{item.value}</span>
             </div>
           ))}
         </div>
       </section>
 
-      <div className="section-divider"></div>
+      <div className="ast-section-divider"></div>
 
-      <section className="assets-section">
-        <h2 className="assets-title">Setup [Workspace]</h2>
-        <div className="specs-grid">
+      <section className="ast-section">
+        <h2 className="ast-title">Setup [Workspace]</h2>
+        <div className="ast-specs-grid">
           {setup.map((item, i) => (
-            <div key={i} className="spec-item">
-              <span className="spec-label">{item.label}</span>
-              <span className="spec-value">{item.value}</span>
+            <div key={i} className="ast-spec-item">
+              <span className="ast-spec-label">{item.label}</span>
+              <span className="ast-spec-value">{item.value}</span>
             </div>
           ))}
         </div>

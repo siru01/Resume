@@ -134,22 +134,22 @@ export default function Home({ setPage }) {
   return (
     <div className="home-page" >
       {/* ── Profile Section ── */}
-      <div className="profile">
-        <div className="profile-avatar">
+      <div className="home-profile">
+        <div className="home-profile-avatar">
           <ImageGallery images={['/mainprofile.jpeg', '/pic.jpeg', '/profile-2.jpg', '/profile-3.jpg', '/profile-5.jpg']} />
         </div>
-        <div className="profile-info">
-          <h1 className="profile-name">{profileData.name}</h1>
-          <div className="profile-meta">
+        <div className="home-profile-info">
+          <h1 className="home-profile-name">{profileData.name}</h1>
+          <div className="home-profile-meta">
             <span>{profileData.title}</span>
-            <span className="meta-separator">·</span>
-            <span className="profile-email-container">
+            <span className="home-meta-separator">·</span>
+            <span className="home-profile-email-container">
               <span>{profileData.email}</span>
-              <span className="copy-wrapper" onClick={handleCopyEmail} title="Copy Email">
+              <span className="home-copy-wrapper" onClick={handleCopyEmail} title="Copy Email">
                 {copied ? (
-                  <span className="copied-text">Copied!</span>
+                  <span className="home-copied-text">Copied!</span>
                 ) : (
-                  <svg className="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="home-copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                   </svg>
@@ -157,14 +157,14 @@ export default function Home({ setPage }) {
               </span>
             </span>
           </div>
-          <p className="profile-bio">{profileData.bio}</p>
-          <div className="profile-socials">
+          <p className="home-profile-bio">{profileData.bio}</p>
+          <div className="home-profile-socials">
   {Object.entries(profileData.socials).map(([key, url]) => {
     const isMail = key === 'mail';
     const href = isMail ? `mailto:${url}` : url;
     
     return (
-      <a key={key} href={href} target={isMail ? '_self' : '_blank'} rel="noreferrer" className={`social-link social-${key}`}>
+      <a key={key} href={href} target={isMail ? '_self' : '_blank'} rel="noreferrer" className={`home-social-link home-social-${key}`}>
         {['twitter', 'github', 'linkedin', 'mail'].includes(key) ? (
           <SocialIcon platform={key} />
         ) : (
@@ -178,21 +178,21 @@ export default function Home({ setPage }) {
       </div>
 
       {/* ── Experience Section ── */}
-<div className="experience">
-  <h2 className="experience-title">Experience</h2>
+<div className="home-experience">
+  <h2 className="home-experience-title">Experience</h2>
   {experienceData.map((job, i) => (
-    <div key={i} className="experience-company">
+    <div key={i} className="home-experience-company">
       {job.roles.map((role, j) => (
-        <div key={j} className="experience-role">
-          <div className="role-top">
-            <span className="role-title">{role.title}</span>
-            <span className="role-dates">{role.start} – {role.end}</span>
+        <div key={j} className="home-experience-role">
+          <div className="home-role-top">
+            <span className="home-role-title">{role.title}</span>
+            <span className="home-role-dates">{role.start} – {role.end}</span>
           </div>
-          <div className="role-sub">
-            <span className="company-name">{job.company}</span>
-            <span className="role-location">{role.location}</span>
+          <div className="home-role-sub">
+            <span className="home-company-name">{job.company}</span>
+            <span className="home-role-location">{role.location}</span>
           </div>
-          <ul className="role-responsibilities">
+          <ul className="home-role-responsibilities">
             {role.responsibilities.map((item, k) => (
               <li key={k}>{item}</li>
             ))}
@@ -204,23 +204,23 @@ export default function Home({ setPage }) {
 </div>
 
 
-    <div className="section-divider"></div>
+    <div className="home-section-divider"></div>
 
 {/* ── Projects Section ── */}
-<div className="projects-container">
-  <h2 className="project-section-title">Projects</h2>
+<div className="home-projects-container">
+  <h2 className="home-project-section-title">Projects</h2>
   
   {projectsData.map((project, i) => (
-    <div key={i} className="project-item">
+    <div key={i} className="home-project-item">
       
       {/* Row 1: Title */}
-      <div className="project-header">
-        <span className="project-title">{project.title}</span>
+      <div className="home-project-header">
+        <span className="home-project-title">{project.title}</span>
       </div>
 
       {/* Row 2: Description & Live Link */}
-      <div className="project-description-row">
-        <p className="project-description">
+      <div className="home-project-description-row">
+        <p className="home-project-description">
           {project.description}
         </p>
         
@@ -230,7 +230,7 @@ export default function Home({ setPage }) {
             href={project.Live} 
             target="_blank" 
             rel="noreferrer" 
-            className="project-live-link"
+            className="home-project-live-link"
           >
             Live Demo ↗
           </a>
@@ -238,8 +238,8 @@ export default function Home({ setPage }) {
       </div>
 
       {/* Row 3: Project Links (GitHub Icon) */}
-      <div className="project-actions">
-        <a href={project.link} target="_blank" rel="noreferrer" className="project-github-icon" title="View Source Code">
+      <div className="home-project-actions">
+        <a href={project.link} target="_blank" rel="noreferrer" className="home-project-github-icon" title="View Source Code">
           <SocialIcon platform="github" />
         </a>
       </div>
@@ -248,25 +248,25 @@ export default function Home({ setPage }) {
   ))}
     </div>
 
-    <div className="show-all-container">
-      <div className="show-all-box" onClick={() => setPage('projects')}>
+    <div className="home-show-all-container">
+      <div className="home-show-all-box" onClick={() => setPage('projects')}>
         Show all Projects
       </div>
     </div>
 
-    <div className="section-divider"></div>
+    <div className="home-section-divider"></div>
 
     {/* ── Assets Section ── */}
     <div className="home-assets-section">
-      <h2 className="project-section-title">ASSETS</h2>
-      <div className="assets-cards-container">
+      <h2 className="home-project-section-title">ASSETS</h2>
+      <div className="home-assets-cards-container">
         {GADGETS.map((item, i) => (
-          <div key={i} className="asset-card" onClick={() => setPage('assets')}>
-            <div className="asset-card-content">
-              <h3 className="asset-card-label">{item.label}</h3>
-              <p className="asset-card-value">{item.value}</p>
+          <div key={i} className="home-asset-card" onClick={() => setPage('assets')}>
+            <div className="home-asset-card-content">
+              <h3 className="home-asset-card-label">{item.label}</h3>
+              <p className="home-asset-card-value">{item.value}</p>
             </div>
-            <div className="asset-card-arrow">
+            <div className="home-asset-card-arrow">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -277,27 +277,27 @@ export default function Home({ setPage }) {
       </div>
     </div>
 
-    <div className="section-divider"></div>
+    <div className="home-section-divider"></div>
 
     {/* ── Personal Section ── */}
     <div className="home-personal-section">
-      <h2 className="project-section-title">PERSONAL</h2>
-      <div className="personal-content">
+      <h2 className="home-project-section-title">PERSONAL</h2>
+      <div className="home-personal-content">
         {personal.map((item, i) => (
-          <div key={i} className="personal-item">
-            <p className="personal-description">
-              <span className="personal-label">{item.label}:</span> {item.value}
+          <div key={i} className="home-personal-item">
+            <p className="home-personal-description">
+              <span className="home-personal-label">{item.label}:</span> {item.value}
             </p>
           </div>
         ))}
       </div>
     </div>
 
-    <div className="section-divider"></div>
+    <div className="home-section-divider"></div>
 
     {/* ── Toast Notification ── */}
     {copied && (
-      <div className="toast-notification">
+      <div className="home-toast-notification">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>

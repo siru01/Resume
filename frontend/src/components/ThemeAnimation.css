@@ -5,6 +5,6 @@ main {
 }
 
 /* Ensure your containers don't have solid backgrounds that block the canvas */
-.section-container {
+.theme-section-container {
   background: transparent;
 }

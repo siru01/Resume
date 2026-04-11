@@ -40,26 +40,26 @@ export default function Experience() {
   const [data] = useState(experience)
 
   return (
-    <div className="experience-page">
+    <div className="exp-page">
     <section>
-      <div className="heading">
+      <div className="exp-heading">
         <h2>Former Organizations</h2>
       </div>
       {data.map((exp, i) => (
         exp.roles.map((role, j) => (
-          <div key={`${i}-${j}`} className="experience-item">
-            <div className="experience-header">
-              <div className="experience-left">
-                <h3 className="role-title">{role.title}</h3>
-                <h4 className="company-name">{exp.company}</h4>
+          <div key={`${i}-${j}`} className="exp-item">
+            <div className="exp-header">
+              <div className="exp-left">
+                <h3 className="exp-role-title">{role.title}</h3>
+                <h4 className="exp-company-name">{exp.company}</h4>
               </div>
-              <div className="experience-right">
-                <div className="role-duration">{role.start} - {role.end}</div>
-                <div className="role-location">{role.location}</div>
+              <div className="exp-right">
+                <div className="exp-role-duration">{role.start} - {role.end}</div>
+                <div className="exp-role-location">{role.location}</div>
               </div>
             </div>
             {role.responsibilities && (
-              <ul className="responsibilities">
+              <ul className="exp-responsibilities">
                 {role.responsibilities.map((resp, k) => (
                   <li key={k}>{resp}</li>
                 ))}

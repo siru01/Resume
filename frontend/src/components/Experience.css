@@ -1,49 +1,51 @@
-.experience-page {
+.exp-page {
   padding: 1rem 0;
-  animation: fadeIn 0.5s ease-out;
+  animation: exp-fadeIn 0.5s ease-out;
 }
 
-.heading h2 {
-  font-size: 20px;
-  font-weight: 450;
-  border-left: 4px solid #3b82f6;
-  padding-left: 12px;
-  margin-bottom: 1.5rem;
-  transition: color 0.3s, border-color 0.3s;
+.exp-heading h2 {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  border-left: 4px solid #3b82f6;
+  padding: 0.1rem 0 0.1rem 12px;
+  margin: 1rem 0 1.5rem 0;
+  opacity: 1;
+  transition: color 0.3s, border-color 0.3s;
 } 
 
-:root[data-theme="dark"] .heading h2 {
+:root[data-theme="dark"] .exp-heading h2 {
   color: #fff;
   border-left-color: #3b82f6;
 }
 
-:root[data-theme="light"] .heading h2 {
+:root[data-theme="light"] .exp-heading h2 {
   color: #000;
   border-left-color: #3b82f6;
 }
 
-.experience-item {
+.exp-item {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
   border-bottom: 3px dotted rgb(255, 255, 255);
   transition: border-color 0.3s;
 }
 
-:root[data-theme="dark"] .experience-item {
+:root[data-theme="dark"] .exp-item {
   border-bottom-color: #747474; 
 }
 
-:root[data-theme="light"] .experience-item {
+:root[data-theme="light"] .exp-item {
   border-bottom-color: #4d4d4d;
 }
 
-.experience-item:last-child {
+.exp-item:last-child {
   border-bottom: none;
 }
 
-.experience-header {
+.exp-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -51,11 +53,11 @@
   gap: 1rem;
 }
 
-.experience-left {
+.exp-left {
   flex: 1;
 }
 
-.role-title {
+.exp-role-title {
   font-size: 16px;
   font-weight: 600;
   margin: 0 0 0.3rem 0;
@@ -63,15 +65,15 @@
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-:root[data-theme="dark"] .role-title {
+:root[data-theme="dark"] .exp-role-title {
   color: #fff;
 }
 
-:root[data-theme="light"] .role-title {
+:root[data-theme="light"] .exp-role-title {
   color: #000;
 }
 
-.company-name {
+.exp-company-name {
   font-size: 14px;
   font-weight: 500;
   margin: 0;
@@ -79,54 +81,54 @@
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-:root[data-theme="dark"] .company-name {
+:root[data-theme="dark"] .exp-company-name {
   color: #aaa;
 }
 
-:root[data-theme="light"] .company-name {
+:root[data-theme="light"] .exp-company-name {
   color: #666;
 }
 
-.experience-right {
+.exp-right {
   text-align: right;
   white-space: nowrap;
 }
 
-.role-duration {
+.exp-role-duration {
   font-size: 13px;
   transition: color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-:root[data-theme="dark"] .role-duration {
+:root[data-theme="dark"] .exp-role-duration {
   color: #888;
 }
 
-:root[data-theme="light"] .role-duration {
+:root[data-theme="light"] .exp-role-duration {
   color: #666;
 }
 
-.role-location {
+.exp-role-location {
   font-size: 15px;
   transition: color 0.3s;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-:root[data-theme="dark"] .role-location {
+:root[data-theme="dark"] .exp-role-location {
   color: #888;
 }
 
-:root[data-theme="light"] .role-location {
+:root[data-theme="light"] .exp-role-location {
   color: #666;
 }
 
-.responsibilities {
+.exp-responsibilities {
   list-style: none;
   padding-left: 0;
   margin: 0;
 }
 
-.responsibilities li {
+.exp-responsibilities li {
   font-size: 15px;
   line-height: 1.6;
   margin-bottom: 0.5rem;
@@ -136,26 +138,36 @@
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-:root[data-theme="dark"] .responsibilities li {
+:root[data-theme="dark"] .exp-responsibilities li {
   color: #b4b4b4;
 }
 
-:root[data-theme="light"] .responsibilities li {
+:root[data-theme="light"] .exp-responsibilities li {
   color: #5e5e5e;
 }
 
-.responsibilities li:before {
+.exp-responsibilities li:before {
   content: "•";
   position: absolute;
   left: 0;
   transition: color 0.3s;
 }
 
-:root[data-theme="dark"] .responsibilities li:before {
+:root[data-theme="dark"] .exp-responsibilities li:before {
   color: #666;
 }
 
-:root[data-theme="light"] .responsibilities li:before {
+:root[data-theme="light"] .exp-responsibilities li:before {
   color: #999;
 }
 
+@keyframes exp-fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}

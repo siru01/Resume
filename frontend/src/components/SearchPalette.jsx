@@ -69,7 +69,7 @@ export default function SearchPalette({ isOpen, onClose, setPage }) {
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
-          <div className="esc-hint">ESC</div>
+          <div className="search-esc-hint">ESC</div>
         </div>
 
         <div className="search-results">
@@ -77,33 +77,33 @@ export default function SearchPalette({ isOpen, onClose, setPage }) {
             filteredItems.map((item, index) => (
               <div
                 key={`${item.title}-${index}`}
-                className={`search-item ${index === selectedIndex ? 'selected' : ''}`}
+                className={`search-item ${index === selectedIndex ? 'search-selected' : ''}`}
                 onMouseEnter={() => setSelectedIndex(index)}
                 onClick={() => handleSelect(item)}
               >
-                <div className="item-info">
-                  <span className="item-title">{item.title}</span>
-                  <span className="item-type">{item.type}</span>
+                <div className="search-item-info">
+                  <span className="search-item-title">{item.title}</span>
+                  <span className="search-item-type">{item.type}</span>
                 </div>
               </div>
             ))
           ) : (
-            <div className="no-results">No results found for "{search}"</div>
+            <div className="search-no-results">No results found for "{search}"</div>
           )}
         </div>
 
         <div className="search-footer">
-          <div className="hint-group">
-            <span className="hint-key">↑↓</span>
-            <span className="hint-text">navigate</span>
+          <div className="search-hint-group">
+            <span className="search-hint-key">↑↓</span>
+            <span className="search-hint-text">navigate</span>
           </div>
-          <div className="hint-group">
-            <span className="hint-key">↵</span>
-            <span className="hint-text">open</span>
+          <div className="search-hint-group">
+            <span className="search-hint-key">↵</span>
+            <span className="search-hint-text">open</span>
           </div>
-          <div className="hint-group">
-            <span className="hint-key">ESC</span>
-            <span className="hint-text">close</span>
+          <div className="search-hint-group">
+            <span className="search-hint-key">ESC</span>
+            <span className="search-hint-text">close</span>
           </div>
         </div>
       </div>

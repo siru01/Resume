@@ -147,7 +147,7 @@ export default function Resume() {
         <h1 className="resume-name">{personalInfo.name}</h1>
         <div className="resume-contact">
           <span>{personalInfo.email}</span>
-          <span className="separator">·</span>
+          <span className="resume-separator">·</span>
           <span>{personalInfo.location}</span>
         </div>
         <div className="resume-socials">
@@ -161,24 +161,24 @@ export default function Resume() {
         
         {/* Experience Section - Synced with Experience.jsx */}
         <div className="resume-section">
-          <div className="heading">
-            <h2 className="section-title">Former Organizations</h2>
+          <div className="resume-heading">
+            <h2 className="resume-section-title">Former Organizations</h2>
           </div>
           {data.experience.map((exp, i) => (
             exp.roles.map((role, j) => (
-              <div key={`${i}-${j}`} className="experience-item">
-                <div className="experience-header">
-                  <div className="experience-left">
-                    <h3 className="role-title">{role.title}</h3>
-                    <h4 className="company-name">{exp.company}</h4>
+              <div key={`${i}-${j}`} className="resume-experience-item">
+                <div className="resume-experience-header">
+                  <div className="resume-experience-left">
+                    <h3 className="resume-role-title">{role.title}</h3>
+                    <h4 className="resume-company-name">{exp.company}</h4>
                   </div>
-                  <div className="experience-right">
-                    <div className="role-duration">{role.start} - {role.end}</div>
-                    <div className="role-location">{role.location}</div>
+                  <div className="resume-experience-right">
+                    <div className="resume-role-duration">{role.start} - {role.end}</div>
+                    <div className="resume-role-location">{role.location}</div>
                   </div>
                 </div>
                 {role.responsibilities && (
-                  <ul className="responsibilities">
+                  <ul className="resume-responsibilities">
                     {role.responsibilities.map((resp, k) => (
                       <li key={k}>{resp}</li>
                     ))}
@@ -188,50 +188,50 @@ export default function Resume() {
             ))
           ))}
         </div>
-        <div className="section-divider"></div>
+        <div className="resume-divider"></div>
 
         {/* Projects Section - Synced with Projects.jsx */}
-        <div className="resume-section projects-container">
-          <h2 className="project-section-title">Projects</h2>
+        <div className="resume-section resume-projects-container">
+          <h2 className="resume-project-section-title">Projects</h2>
           {data.projects.map((project, i) => (
-            <div key={i} className="project-item">
-              <div className="project-header">
-                <span className="project-title">{project.title}</span>
+            <div key={i} className="resume-project-item">
+              <div className="resume-project-header">
+                <span className="resume-project-title">{project.title}</span>
               </div>
-              <div className="project-description-row">
-                <p className="project-description">
+              <div className="resume-project-description-row">
+                <p className="resume-project-description">
                   {project.description}
                 </p>
                 {project.Live && (
-                  <a href={project.Live} target="_blank" rel="noreferrer" className="project-live-link">
+                  <a href={project.Live} target="_blank" rel="noreferrer" className="resume-project-live-link">
                     Live Demo ↗
                   </a>
                 )}
               </div>
-              <div className="project-actions">
-                <a href={project.link} target="_blank" rel="noreferrer" className="project-github-icon" title="View Source Code">
+              <div className="resume-project-actions">
+                <a href={project.link} target="_blank" rel="noreferrer" className="resume-project-github-icon" title="View Source Code">
                   <SocialIcon platform="github" />
                 </a>
               </div>
             </div>
           ))}
         </div>
-        <div className="section-divider"></div>
+        <div className="resume-divider"></div>
 
         {/* Skills Section - Kept as is */}
         <div className="resume-section">
-          <h2 className="section-title">Skills</h2>
-          <div className="skills-grid">
+          <h2 className="resume-section-title">Skills</h2>
+          <div className="resume-skills-grid">
             {data.skills.map((skillObj, i) => {
               const category = Object.keys(skillObj)[0];
               const items = skillObj[category];
               return (
-                <div key={i} className="skill-category">
-                  <h3 className="category-label">{category.replace('_', ' ')}</h3>
-                  <div className="skill-tags">
+                <div key={i} className="resume-skill-category">
+                  <h3 className="resume-category-label">{category.replace('_', ' ')}</h3>
+                  <div className="resume-skill-tags">
                     {Array.isArray(items) ? 
-                      items.map((skill, si) => <span key={si} className="skill-tag">{skill}</span>) :
-                      <span className="skill-tag">{items}</span>
+                      items.map((skill, si) => <span key={si} className="resume-skill-tag">{skill}</span>) :
+                      <span className="resume-skill-tag">{items}</span>
                     }
                   </div>
                 </div>
@@ -239,41 +239,41 @@ export default function Resume() {
             })}
           </div>
         </div>
-        <div className="section-divider"></div>
+        <div className="resume-divider"></div>
 
         {/* Certifications Section */}
         <div className="resume-section">
-          <h2 className="section-title">Certifications</h2>
+          <h2 className="resume-section-title">Certifications</h2>
           {data.certifications.map((cert, i) => (
-            <div key={i} className="resume-item certification-item">
-              <div className="item-header">
-                <span className="item-title">{cert.name}</span>
-                <span className="item-date">{cert.year}</span>
+            <div key={i} className="resume-item resume-certification-item">
+              <div className="resume-item-header">
+                <span className="resume-item-title">{cert.name}</span>
+                <span className="resume-item-date">{cert.year}</span>
               </div>
-              <div className="item-sub">{cert.issuer}</div>
+              <div className="resume-item-sub">{cert.issuer}</div>
             </div>
           ))}
         </div>
-        <div className="section-divider"></div>
+        <div className="resume-divider"></div>
 
         {/* Education Section - Last */}
         <div className="resume-section">
-          <h2 className="section-title">Education</h2>
+          <h2 className="resume-section-title">Education</h2>
           {data.education.map((edu, i) => (
-            <div key={i} className="resume-item education-item">
-              <div className="item-header">
-                <span className="item-title">{edu.degree}</span>
-                <span className="item-date">{edu.year}</span>
+            <div key={i} className="resume-item resume-education-item">
+              <div className="resume-item-header">
+                <span className="resume-item-title">{edu.degree}</span>
+                <span className="resume-item-date">{edu.year}</span>
               </div>
-              <div className="item-sub">
+              <div className="resume-item-sub">
                 <span>{edu.school}</span>
-                <span className="item-cgpa">CGPA: {edu.cgpa}</span>
+                <span className="resume-item-cgpa">CGPA: {edu.cgpa}</span>
               </div>
-              <div className="item-branch">{edu.branch}</div>
+              <div className="resume-item-branch">{edu.branch}</div>
             </div>
           ))}
         </div>
-        <div className="section-divider"></div>
+        <div className="resume-divider"></div>
 
       </div>
     </section>

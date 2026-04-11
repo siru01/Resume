@@ -204,6 +204,8 @@ export default function Home({ setPage }) {
 </div>
 
 
+    <div className="section-divider"></div>
+
 {/* ── Projects Section ── */}
 <div className="projects-container">
   <h2 className="project-section-title">Projects</h2>

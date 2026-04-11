@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import './Home.css'
-import myPhoto from '../assets/pic.jpeg'
-
-const profileData = {
+import ImageGallery from './ImageGallery';const profileData = {
   name: "SIRJAN MURMU",
   title: "Engineer · Versatile",
   email: "murmu.sirjan10@gmail.com",
@@ -137,7 +135,9 @@ export default function Home({ setPage }) {
     <div className="home-page" >
       {/* ── Profile Section ── */}
       <div className="profile">
-        <div className="profile-avatar">{<img src={myPhoto} alt="Profile" className="avatar-img" />}</div>
+        <div className="profile-avatar">
+          <ImageGallery images={['/mainprofile.jpeg', '/pic.jpeg', '/profile-2.jpg', '/profile-3.jpg', '/profile-5.jpg']} />
+        </div>
         <div className="profile-info">
           <h1 className="profile-name">{profileData.name}</h1>
           <div className="profile-meta">

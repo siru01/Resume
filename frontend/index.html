@@ -2,12 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="/s_logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sirjan</title>
+    <title>Sirjan | Software Engineer</title>
+    
+    <meta http-equiv="X-Frame-Options" content="DENY">
+
+    <script>
+      (function() {
+        try {
+          const savedTheme = localStorage.getItem('theme') || 'dark';
+          document.documentElement.setAttribute('data-theme', savedTheme);
+          document.documentElement.style.backgroundColor = savedTheme === 'dark' ? '#0d0d0d' : '#ffffff';
+        } catch (e) {}
+      })();
+    </script>
+
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self'; 
+      script-src 'self' 'unsafe-inline'; 
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+      font-src 'self' https://fonts.gstatic.com; 
+      img-src 'self' data:;
+    ">
+
+    <link rel="icon" type="image/svg+xml" href="/s_logo.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
   <body>
+    <noscript>
+      <div style="font-family: 'JetBrains Mono', monospace; text-align: center; padding: 50px; background: #0d0d0d; color: #fff; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <h1 style="color: #3b82f6; margin-bottom: 10px;">Security: JS Required</h1>
+        <p>This engineering portfolio requires JavaScript to function securely.</p>
+        <p style="opacity: 0.5; font-size: 0.9rem;">Please enable JS to continue.</p>
+      </div>
+    </noscript>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

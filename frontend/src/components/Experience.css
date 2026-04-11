@@ -1,3 +1,8 @@
+.experience-page {
+  padding: 1rem 0;
+  animation: fadeIn 0.5s ease-out;
+}
+
 .heading h2 {
   font-size: 20px;
   font-weight: 450;

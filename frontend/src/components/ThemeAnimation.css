@@ -1,0 +1,10 @@
+main {
+  position: relative;
+  z-index: 1; /* Sits above the animation */
+  background: transparent;
+}
+
+/* Ensure your containers don't have solid backgrounds that block the canvas */
+.section-container {
+  background: transparent;
+}

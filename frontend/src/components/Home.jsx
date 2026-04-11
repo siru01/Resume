@@ -134,7 +134,7 @@ export default function Home({ setPage }) {
   }
 
   return (
-    <div>
+    <div className="home-page" >
       {/* ── Profile Section ── */}
       <div className="profile">
         <div className="profile-avatar">{<img src={myPhoto} alt="Profile" className="avatar-img" />}</div>

@@ -40,6 +40,7 @@ export default function Experience() {
   const [data] = useState(experience)
 
   return (
+    <div className="experience-page">
     <section>
       <div className="heading">
         <h2>Former Organizations</h2>
@@ -68,5 +69,6 @@ export default function Experience() {
         ))
       ))}
     </section>
+    </div>
   )
 }

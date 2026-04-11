@@ -8,12 +8,14 @@ import Resume from './components/Resume'
 import SearchPalette from './components/SearchPalette'
 import Assets from './components/Assets'
 import Footer from './components/Footer'
+import ThemeAnimation from './components/ThemeAnimation';
 
 console.log('App component loading...');
 
 export default function App() {
   const [page, setPage] = useState('home')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
   // Global keyboard shortcuts
   useEffect(() => {
@@ -71,3 +73,5 @@ export default function App() {
     </div>
   )
 }
+
+

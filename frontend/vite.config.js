@@ -7,7 +7,7 @@ export default defineConfig({
     host: true,
     port: 5173,
     proxy: {
-      '/api': 'http://127.0.0.1:8000', // only works locally, ignored in build
+      //'/api': 'http://127.0.0.1:8000', // only works locally, ignored in build
     },
   },
   build: {

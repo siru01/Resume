@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import './Navbar.css'
 
-export default function Navbar({ page, setPage, onOpenSearch }) {
-  const [isDark, setIsDark] = useState(true)
+export default function Navbar({ page, setPage, onOpenSearch, theme, toggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const links = ['home', 'experience', 'projects', /*'blog', */ 'resume']  /*for the time being blog is not being used, will be upating later  */
 
   useEffect(() => {
-    if (isDark) {
+    if (theme === 'dark') {
       document.documentElement.setAttribute('data-theme', 'dark')
       document.body.style.background = '#0d0d0d'
       document.body.style.color = '#e0e0e0'
@@ -16,7 +15,7 @@ export default function Navbar({ page, setPage, onOpenSearch }) {
       document.body.style.background = '#ffffff'
       document.body.style.color = '#1a1a1a'
     }
-  }, [isDark])
+  }, [theme])
 
   const handleNavClick = (l) => {
     setPage(l)
@@ -54,10 +53,10 @@ export default function Navbar({ page, setPage, onOpenSearch }) {
 
         <button
           className="theme-toggle"
-          onClick={() => setIsDark(!isDark)}
-          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          onClick={toggleTheme}
+          title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
-          {isDark ? (
+          {theme === 'dark' ? (
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1">
               <circle cx="12" cy="12" r="5"/>
               <line x1="12" y1="1" x2="12" y2="3"/>

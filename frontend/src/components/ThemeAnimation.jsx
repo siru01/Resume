@@ -29,7 +29,7 @@ const ThemeAnimation = ({ theme }) => {
         this.angle = Math.random() * Math.PI * 2;
         this.spin = Math.random() * 0.02 - 0.01;
         // Snow = White, Flowers = Soft Pink/Peach
-        this.color = theme === 'dark' ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 182, 193, 0.6)';
+        this.color = theme === 'dark' ? 'rgba(255, 255, 255, 0.4)' : 'rgba(255, 182, 193, 0.8)';
       }
 
       update() {

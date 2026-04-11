@@ -17,6 +17,12 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  };
+
   // Global keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -41,7 +47,8 @@ export default function App() {
 
   return (
     <div className="app-root">
-      <Navbar page={page} setPage={setPage} onOpenSearch={() => setIsSearchOpen(true)} />
+      <ThemeAnimation theme={theme} />
+      <Navbar page={page} setPage={setPage} onOpenSearch={() => setIsSearchOpen(true)} theme={theme} toggleTheme={toggleTheme} />
       <SearchPalette 
         isOpen={isSearchOpen} 
         onClose={() => setIsSearchOpen(false)} 

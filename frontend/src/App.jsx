@@ -8,6 +8,8 @@ import Resume from './components/Resume'
 import SearchPalette from './components/SearchPalette'
 import Assets from './components/Assets'
 import Footer from './components/Footer'
+//for analytical 
+import { Analytics } from '@vercel/analytics/react';
 
 console.log('App component loading...');
 
@@ -45,6 +47,8 @@ export default function App() {
   }, [page]);
 
   return (
+    <>  
+    <Analytics />
     <div className="app-container">
       <Navbar page={page} setPage={setPage} onOpenSearch={() => setIsSearchOpen(true)} theme={theme} toggleTheme={toggleTheme} />
       <SearchPalette 
@@ -76,6 +80,7 @@ export default function App() {
 
       <Footer setPage={setPage} />
     </div>
+    </>
   )
 }
 

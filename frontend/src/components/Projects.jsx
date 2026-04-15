@@ -18,13 +18,13 @@ const projectsData = [
     title: "Kite [File Transfer]",
     description: "A browser-based peer-to-peer file sharing application that enables devices on the same Wi-Fi network to discover each other and transfer files directly, without any cloud storage or external servers, the project demonstrates applied knowledge of networking protocols, asynchronous Python, binary data handling in the browser, and full-stack integration",
     link: "https://github.com/siru01/Kite.git",
-    Live: null,
+    Live: "https://kite-azure.vercel.app",
   },
   {
     title: "Content Monitoring System",
     description: "This system monitors external content against user-defined keywords, generates match scores, and provides a review workflow with intelligent suppression rules. When a flag is marked irrelevant, it stays suppressed unless the underlying content changes.",
     link: "https://github.com/siru01/content-monitoring-system.git",
-    Live: null,
+    Live: null, 
   },
 ];
   
@@ -59,29 +59,27 @@ export default function Projects() {
             <span className="proj-title">{project.title}</span>
           </div>
 
-          {/* Row 2: Description & Live Link */}
+          {/* Row 2: Description */}
           <div className="proj-description-row">
             <p className="proj-description">
               {project.description}
             </p>
-            
-            {project.Live && (
-              <a 
-                href={project.Live} 
-                target="_blank" 
-                rel="noreferrer" 
-                className="proj-live-link"
-              >
-                Live Demo ↗
-              </a>
-            )}
           </div>
 
-          {/* Row 3: Project Links (GitHub Icon) */}
+          {/* Row 3: Project Links (GitHub + Live Icon) */}
           <div className="proj-actions">
             <a href={project.link} target="_blank" rel="noreferrer" className="proj-github-icon" title="View Source Code">
               <SocialIcon platform="github" />
             </a>
+            {project.Live && (
+              <a href={project.Live} target="_blank" rel="noreferrer" className="proj-live-icon" title="View Live Site">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+              </a>
+            )}
           </div>
 
         </div>

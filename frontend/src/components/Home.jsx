@@ -60,7 +60,7 @@ const projectsData = [
     title: "E-Book Reader [Shelf]",
     description: "Shelf is a sophisticated, minimalist web application designed for the modern reader. It transforms the way you interact with your book collection by providing a seamless interface to explore new titles, manage your reading progress, and maintain a virtual rack of every book you've ever touched.",
     link: "https://github.com/siru01/e-book.git",
-    Live: null,
+    Live: "https://e-book-nine-beta.vercel.app/", 
   }
 ]
 
@@ -246,6 +246,10 @@ export default function Home({ setPage }) {
 
     </div>
   ))}
+      
+
+  { /* Add a small gap before the show-all button */ }
+  <div style={{ height: '20px' }}></div>
     </div>
 
     <div className="home-show-all-container">

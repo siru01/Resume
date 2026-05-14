@@ -60,13 +60,13 @@ const resumeData = {
     title: "E-Book Reader [Shelf]",
     description: "Shelf is a sophisticated, minimalist web application designed for the modern reader. It transforms the way you interact with your book collection by providing a seamless interface to explore new titles, manage your reading progress, and maintain a virtual rack of every book you've ever touched.",
     link: "https://github.com/siru01/e-book.git",
-    Live: null,
+    Live: "https://e-book-nine-beta.vercel.app/",
   },
   {
     title: "Data Transfer [Kite]",
     description: "A browser-based peer-to-peer file sharing application that enables devices on the same Wi-Fi network to discover each other and transfer files directly, without any cloud storage or external servers, the project demonstrates applied knowledge of networking protocols, asynchronous Python, binary data handling in the browser, and full-stack integration",
     link: "https://github.com/siru01/Kite.git",
-    Live: null,
+    Live:"https://kite-azure.vercel.app/",
   },
   {
     title: "Content Monitoring System",
@@ -204,7 +204,7 @@ export default function Resume() {
                 </p>
                 {project.Live && (
                   <a href={project.Live} target="_blank" rel="noreferrer" className="resume-project-live-link">
-                    Live Demo ↗
+                    Live Demo ↗ 
                   </a>
                 )}
               </div>

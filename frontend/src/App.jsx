@@ -47,7 +47,25 @@ export default function App() {
   }, [page]);
 
   return (
-    <>  
+    <>   
+
+    <div class="grid-container">
+  <div class="wave-overlay"></div>
+  
+  <div class="map-wrapper">
+    <div class="c na" title="North America"></div>
+    <div class="c ca" title="Central America"></div>
+    <div class="c sa" title="South America"></div>
+    <div class="c eu" title="Europe"></div>
+    <div class="c af" title="Africa"></div>
+    <div class="c as" title="Asia"></div>
+    <div class="c in" title="India"></div>
+    <div class="c sea" title="South East Asia"></div>
+    <div class="c au" title="Australia"></div>
+    <div class="c jp" title="Japan"></div>
+    <div class="c nz" title="New Zealand"></div>
+  </div>
+</div>
     <Analytics />
     <div className="app-container">
       <Navbar page={page} setPage={setPage} onOpenSearch={() => setIsSearchOpen(true)} theme={theme} toggleTheme={toggleTheme} />

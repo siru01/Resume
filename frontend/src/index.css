@@ -120,3 +120,81 @@ html::-webkit-scrollbar-thumb:hover {
     margin-bottom: 0.5rem;
   }
 }
+
+
+
+
+
+
+
+
+
+
+/* base grid */
+.grid-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.052) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.052) 1px, transparent 1px);
+  background-size: 8px 8px;
+}
+
+/* light mode base grid */
+[data-theme="light"] .grid-container {
+  background-image: 
+    linear-gradient(to right, rgba(0,0,0,0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.08) 1px, transparent 1px);
+}
+
+/* glowing wave layer */
+/*
+.wave-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.123) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.123) 1px, transparent 1px);
+  background-size: 10px 10px;
+  -webkit-mask-image: linear-gradient(
+    120deg,
+    transparent 0%,
+    transparent 43%,
+    black 46%,
+    black 54%, 
+    transparent 57%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    120deg,
+    transparent 0%,
+    transparent 43%,
+    black 46%,
+    black 54%,
+    transparent 57%,
+    transparent 100%
+  );
+  -webkit-mask-size: 300% 300%;
+  mask-size: 300% 300%;
+  animation: waveSweep 4s linear infinite;
+}*/
+
+/* light mode wave */
+[data-theme="light"] .wave-overlay {
+  background-image: 
+    linear-gradient(to right, rgba(0,0,0,0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.25) 1px, transparent 1px);
+}
+
+@keyframes waveSweep {
+  0%   { -webkit-mask-position: 100% 100%; mask-position: 100% 100%; }
+  100% { -webkit-mask-position: 0% 0%;    mask-position: 0% 0%; }
+}
+

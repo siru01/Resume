@@ -184,11 +184,11 @@
   }
 }
 
-.app-main-content {
-  max-width: 860px;
-  margin: 70px auto 0 auto;
-  padding: 0 2rem;
-  box-sizing: border-box;
+/* add this to App.css */
+.app-container {
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 @media (max-width: 480px) {

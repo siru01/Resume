@@ -35,8 +35,8 @@
 }
 
 .prog-card {
-  border: 1px solid;
-  border-radius: 12px;
+  border: 5px solid;
+  border-radius: 0px;
   padding: 1.25rem 1.35rem;
 }
 
@@ -52,7 +52,7 @@
 
 .prog-card-title {
   margin: 0 0 1rem 0;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -82,7 +82,7 @@
 
 .prog-contest-rating-label {
   display: block;
-  font-size: 12px;
+  font-size: 15px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 0.35rem;
@@ -102,7 +102,7 @@
   flex-direction: column;
   gap: 0.45rem;
   margin-top: 1rem;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 :root[data-theme="dark"] .prog-contest-meta {
@@ -173,7 +173,7 @@
 
 .prog-chart-empty p {
   margin: 0;
-  font-size: 13px;
+  font-size: 18px;
   line-height: 1.6;
   opacity: 0.75;
 }
@@ -190,7 +190,7 @@
   display: flex;
   align-items: flex-end;
   gap: 4px;
-  height: 90px;
+  height:px;
 }
 
 .prog-percentile-bar {
@@ -255,12 +255,12 @@
 }
 
 .prog-donut-solved {
-  font-size: 22px;
+  font-size: 30px;
   font-weight: bold;
 }
 
 .prog-donut-total {
-  font-size: 12px;
+  font-size: 20px;
   opacity: 0.65;
 }
 
@@ -274,7 +274,7 @@
 .prog-diff-row {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 18px;
 }
 
 .prog-diff-row.easy strong { color: #22c55e; }
@@ -283,7 +283,7 @@
 
 .prog-attempting {
   margin: 0.35rem 0 0;
-  font-size: 12px;
+  font-size: 14px;
   opacity: 0.75;
 }
 
@@ -292,7 +292,7 @@
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.35rem;
-  font-size: 11px;
+  font-size: 15px;
   opacity: 0.7;
 }
 
@@ -370,20 +370,20 @@
 
 .prog-heatmap {
   display: flex;
-  gap: 3px;
+  gap: 5px;
   min-width: max-content;
 }
 
 .prog-heatmap-week {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
 }
 
 .prog-heatmap-cell {
   width: 11px;
   height: 11px;
-  border-radius: 2px;
+  border-radius: 50%;
   background: rgba(128, 128, 128, 0.15);
 }
 

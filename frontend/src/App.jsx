@@ -15,9 +15,17 @@ import { Analytics } from '@vercel/analytics/react';
 console.log('App component loading...');
 
 export default function App() {
-  const [page, setPage] = useState('home')
+  // Initialize page from localStorage, default to 'home'
+  const [page, setPage] = useState(() => {
+    return localStorage.getItem('currentPage') || 'home'
+  })
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+
+  // Save page to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('currentPage', page)
+  }, [page])
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -103,5 +111,3 @@ export default function App() {
     </>
   )
 }
-
-

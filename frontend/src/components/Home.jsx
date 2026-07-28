@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './Home.css'
-import ImageGallery from './ImageGallery';const profileData = {
+import ImageGallery from './ImageGallery'
+
+const profileData = {
   name: "SIRJAN MURMU",
   title: "Engineer · Versatile",
   email: "murmu.sirjan10@gmail.com",
@@ -9,6 +11,7 @@ import ImageGallery from './ImageGallery';const profileData = {
     twitter: "https://x.com/Siruishere",
     linkedin: "https://www.linkedin.com/in/sirjanmurmu",
     github: "https://github.com/siru01",
+    leetcode: "https://leetcode.com/u/SIRU10/",
     mail: "murmu.sirjan10@gmail.com",
   }
 }
@@ -122,6 +125,12 @@ export default function Home({ setPage }) {
             <polyline points="22,6 12,13 2,6"></polyline>
           </svg>
         )
+      case 'leetcode':
+        return (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M16.102 17.93l-2.697 2.607.732.732 3.677-3.532a.51.51 0 0 0 0-.683l-3.677-3.675-.732.732 2.697 2.607H9.333v1.035h6.769zM7.266 5.32a.516.516 0 0 0-.588.0L2.357 9.298l.732.731 3.286-3.286a.516.516 0 0 1 .588 0l3.286 3.286.732-.731-4.321-3.978a.516.516 0 0 0-.588 0zm9.734 3.375a.516.516 0 0 0-.588 0l-4.785 4.785 1.058 1.057 3.727-3.727a.516.516 0 0 1 .588 0l3.727 3.727 1.059-1.057-4.786-4.785a.516.516 0 0 0-.588 0z" />
+          </svg>
+        )
       default:
         return (
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -165,7 +174,7 @@ export default function Home({ setPage }) {
     
     return (
       <a key={key} href={href} target={isMail ? '_self' : '_blank'} rel="noreferrer" className={`home-social-link home-social-${key}`}>
-        {['twitter', 'github', 'linkedin', 'mail'].includes(key) ? (
+        {['twitter', 'github', 'linkedin', 'leetcode', 'mail'].includes(key) ? (
           <SocialIcon platform={key} />
         ) : (
           '🔗'

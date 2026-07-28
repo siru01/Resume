@@ -203,13 +203,15 @@
 
 /* GitHub & Mail - brighten the SVG */
 .home-social-github:hover,
-.home-social-mail:hover {
+.home-social-mail:hover,
+.home-social-leetcode:hover {
   transform: scale(1.25);
   filter: brightness(3);
 }
 
 :root[data-theme="light"] .home-social-github:hover,
-:root[data-theme="light"] .home-social-mail:hover {
+:root[data-theme="light"] .home-social-mail:hover,
+:root[data-theme="light"] .home-social-leetcode:hover {
   color: #000000;
   transform: scale(1.25);
 }

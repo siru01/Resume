@@ -8,6 +8,8 @@ export const searchData = [
   { title: "Projects", type: "Page", page: "projects" },
   { title: "Blog", type: "Page", page: "blog" },
   { title: "Resume", type: "Page", page: "resume" },
+  { title: "Progress", type: "Page", page: "progress" },
+  { title: "LeetCode", type: "Progress", page: "progress" },
 
   // Experience
   { title: "KGeN [INDGG]", type: "Experience", page: "experience" },

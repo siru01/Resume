@@ -4,7 +4,8 @@ import Home from './components/Home'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
 import Blog from './components/Blog'
-import Resume from './components/Resume'      
+import Resume from './components/Resume'
+import Progress from './components/Progress'
 import SearchPalette from './components/SearchPalette'
 import Assets from './components/Assets'
 import Footer from './components/Footer'
@@ -92,7 +93,8 @@ export default function App() {
         {page === 'experience' && <Experience />}
         {page === 'projects' && <Projects />}
         {page === 'blog' && <Blog />}
-        {page === 'resume' && <Resume />}   
+        {page === 'resume' && <Resume />}
+        {page === 'progress' && <Progress />}
         {page === 'assets' && <Assets />}
       </div>
 

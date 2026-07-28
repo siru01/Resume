@@ -3,7 +3,7 @@ import './Navbar.css'
 
 export default function Navbar({ page, setPage, onOpenSearch, theme, toggleTheme }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const links = ['home', 'experience', 'projects', /*'blog', */ 'resume']  /*for the time being blog is not being used, will be upating later  */
+  const links = ['home', 'experience', 'projects', /*'blog', */ 'resume', 'progress']  /*for the time being blog is not being used, will be upating later  */
 
   useEffect(() => {
     if (theme === 'dark') {

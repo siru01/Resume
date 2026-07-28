@@ -1,0 +1,165 @@
+.prog-leetcode-block {
+  width: 100%;
+}
+
+.prog-leetcode-heading {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 1rem 0;
+}
+
+:root[data-theme="dark"] .prog-leetcode-heading {
+  color: #fff;
+}
+
+:root[data-theme="light"] .prog-leetcode-heading {
+  color: #000;
+}
+
+.prog-leetcode-card {
+  border: 1px solid;
+  padding: 1.5rem;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+:root[data-theme="dark"] .prog-leetcode-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: #222;
+}
+
+:root[data-theme="light"] .prog-leetcode-card {
+  background: rgba(0, 0, 0, 0.01);
+  border-color: #eee;
+}
+
+.prog-leetcode-status {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+:root[data-theme="dark"] .prog-leetcode-status {
+  color: #888;
+}
+
+:root[data-theme="light"] .prog-leetcode-status {
+  color: #666;
+}
+
+.prog-leetcode-fallback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.prog-leetcode-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.prog-leetcode-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.prog-leetcode-stat-value {
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+:root[data-theme="dark"] .prog-leetcode-stat-value {
+  color: #fff;
+}
+
+:root[data-theme="light"] .prog-leetcode-stat-value {
+  color: #000;
+}
+
+.prog-leetcode-stat-primary .prog-leetcode-stat-value {
+  color: #3b82f6;
+}
+
+.prog-leetcode-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+:root[data-theme="dark"] .prog-leetcode-stat-label {
+  color: #777;
+}
+
+:root[data-theme="light"] .prog-leetcode-stat-label {
+  color: #888;
+}
+
+.prog-leetcode-difficulty {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.prog-leetcode-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid;
+  font-size: 13px;
+}
+
+.prog-leetcode-pill span {
+  opacity: 0.85;
+}
+
+.prog-leetcode-pill strong {
+  font-weight: bold;
+}
+
+.prog-leetcode-pill-easy {
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #22c55e;
+}
+
+.prog-leetcode-pill-medium {
+  border-color: rgba(234, 179, 8, 0.35);
+  color: #eab308;
+}
+
+.prog-leetcode-pill-hard {
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #ef4444;
+}
+
+.prog-leetcode-profile-link {
+  align-self: flex-start;
+  font-size: 14px;
+  text-decoration: none;
+  color: #3b82f6;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.prog-leetcode-profile-link:hover {
+  border-bottom-color: #3b82f6;
+  opacity: 0.9;
+}
+
+@media (max-width: 520px) {
+  .prog-leetcode-summary {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .prog-leetcode-card {
+    padding: 1.2rem;
+  }
+}

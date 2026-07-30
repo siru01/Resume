@@ -111,21 +111,29 @@ export function computeMaxStreak(calendar) {
   return max;
 }
 
+function formatDateLocal(date) {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 export function buildHeatmap(calendar, weeks = 26) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const start = new Date(today);
-  start.setDate(start.getDate() - weeks * 7 + 1);
-  while (start.getDay() !== 0) {
-    start.setDate(start.getDate() - 1);
-  }
+  // Get Saturday of the current week
+  const end = new Date(today);
+  end.setDate(end.getDate() + (6 - end.getDay()));
+
+  // Get start date (Sunday) of the 26-week period
+  const start = new Date(end);
+  start.setDate(start.getDate() - (weeks * 7 - 1));
 
   const countsByDay = {};
   for (const [ts, count] of Object.entries(calendar)) {
     const date = new Date(Number(ts) * 1000);
-    date.setHours(0, 0, 0, 0);
-    const key = date.toISOString().slice(0, 10);
+    const key = formatDateLocal(date);
     countsByDay[key] = (countsByDay[key] || 0) + Number(count);
   }
 
@@ -135,7 +143,7 @@ export function buildHeatmap(calendar, weeks = 26) {
   for (let w = 0; w < weeks; w += 1) {
     const week = [];
     for (let d = 0; d < 7; d += 1) {
-      const key = cursor.toISOString().slice(0, 10);
+      const key = formatDateLocal(cursor);
       week.push({ date: key, count: countsByDay[key] || 0 });
       cursor.setDate(cursor.getDate() + 1);
     }
@@ -144,6 +152,7 @@ export function buildHeatmap(calendar, weeks = 26) {
 
   return grid;
 }
+
 
 export function heatmapLevel(count) {
   if (count === 0) return 0;

@@ -221,28 +221,33 @@ function BadgesCard({ badges }) {
 function ActivityCard({ activity }) {
   // Dynamically calculate month labels to match heatmap dates
   const monthLabels = (() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const rawLabels = [];
+    let prevMonth = null;
 
-    const start = new Date(today);
-    start.setDate(start.getDate() - 26 * 7 + 1);
-    while (start.getDay() !== 0) {
-      start.setDate(start.getDate() - 1);
+    activity.heatmap.forEach((week, index) => {
+      const dateStr = week[0].date;
+      const [yearStr, monthStr] = dateStr.split('-');
+      const monthKey = `${yearStr}-${monthStr}`;
+
+      if (monthKey !== prevMonth) {
+        const date = new Date(Number(yearStr), Number(monthStr) - 1, 1);
+        const label = date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+        rawLabels.push({ index, label });
+        prevMonth = monthKey;
+      }
+    });
+
+    const filteredLabels = [];
+    for (let i = 0; i < rawLabels.length; i += 1) {
+      const current = rawLabels[i];
+      const next = rawLabels[i + 1];
+      if (next && next.index - current.index < 3) {
+        continue;
+      }
+      filteredLabels.push(current);
     }
 
-    const labels = [];
-    const cursor = new Date(start);
-
-    // Collect unique month-year combinations across all 26 weeks
-    const monthSet = new Set();
-    for (let w = 0; w < 26; w += 1) {
-      const month = cursor.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
-      monthSet.add(month);
-      cursor.setDate(cursor.getDate() + 7);
-    }
-
-    // Return first 6 unique months (approximately one label per heatmap section)
-    return Array.from(monthSet).slice(0, 6);
+    return filteredLabels;
   })();
 
   return (
@@ -272,9 +277,18 @@ function ActivityCard({ activity }) {
           ))}
         </div>
         <div className="prog-heatmap-months">
-          {monthLabels.map((month) => (
-            <span key={month}>{month}</span>
-          ))}
+          {activity.heatmap.map((_, index) => {
+            const labelObj = monthLabels.find((ml) => ml.index === index);
+            return (
+              <div key={index} className="prog-heatmap-month-col">
+                {labelObj && (
+                  <span className="prog-heatmap-month-label">
+                    {labelObj.label}
+                  </span>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </article>

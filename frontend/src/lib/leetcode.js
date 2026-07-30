@@ -111,47 +111,65 @@ export function computeMaxStreak(calendar) {
   return max;
 }
 
-function formatDateLocal(date) {
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const dd = String(date.getDate()).padStart(2, '0');
+function formatDateLocal(year, month, day) {
+  const yyyy = year;
+  const mm = String(month + 1).padStart(2, '0');
+  const dd = String(day).padStart(2, '0');
   return `${yyyy}-${mm}-${dd}`;
 }
 
-export function buildHeatmap(calendar, weeks = 26) {
+export function buildHeatmap(calendar) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  // Get Saturday of the current week
-  const end = new Date(today);
-  end.setDate(end.getDate() + (6 - end.getDay()));
-
-  // Get start date (Sunday) of the 26-week period
-  const start = new Date(end);
-  start.setDate(start.getDate() - (weeks * 7 - 1));
-
   const countsByDay = {};
-  for (const [ts, count] of Object.entries(calendar)) {
+  for (const [ts, count] of Object.entries(calendar || {})) {
     const date = new Date(Number(ts) * 1000);
-    const key = formatDateLocal(date);
+    const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
     countsByDay[key] = (countsByDay[key] || 0) + Number(count);
   }
 
-  const grid = [];
-  const cursor = new Date(start);
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth(); // 0-indexed
 
-  for (let w = 0; w < weeks; w += 1) {
-    const week = [];
-    for (let d = 0; d < 7; d += 1) {
-      const key = formatDateLocal(cursor);
-      week.push({ date: key, count: countsByDay[key] || 0 });
-      cursor.setDate(cursor.getDate() + 1);
+  const months = [];
+  for (let i = 11; i >= 0; i -= 1) {
+    const d = new Date(currentYear, currentMonth - i, 1);
+    const year = d.getFullYear();
+    const month = d.getMonth();
+    const name = d.toLocaleDateString('en-US', { month: 'short' });
+
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    const days = [];
+    for (let dayNum = 1; dayNum <= totalDays; dayNum += 1) {
+      const dateKey = formatDateLocal(year, month, dayNum);
+      const count = countsByDay[dateKey] || 0;
+      days.push({ date: dateKey, dayNum, count, isPlaceholder: false });
     }
-    grid.push(week);
+
+    const columns = [];
+    for (let j = 0; j < days.length; j += 7) {
+      const col = days.slice(j, j + 7);
+      while (col.length < 7) {
+        col.push({ isPlaceholder: true });
+      }
+      columns.push(col);
+    }
+
+    months.push({
+      key: `${year}-${String(month + 1).padStart(2, '0')}`,
+      name,
+      year,
+      month,
+      totalDays,
+      columns,
+    });
   }
 
-  return grid;
+  return months;
 }
+
 
 
 export function heatmapLevel(count) {

@@ -219,36 +219,7 @@ function BadgesCard({ badges }) {
 }
 
 function ActivityCard({ activity }) {
-  // Dynamically calculate month labels to match heatmap dates
-  const monthLabels = (() => {
-    const rawLabels = [];
-    let prevMonth = null;
-
-    activity.heatmap.forEach((week, index) => {
-      const dateStr = week[0].date;
-      const [yearStr, monthStr] = dateStr.split('-');
-      const monthKey = `${yearStr}-${monthStr}`;
-
-      if (monthKey !== prevMonth) {
-        const date = new Date(Number(yearStr), Number(monthStr) - 1, 1);
-        const label = date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
-        rawLabels.push({ index, label });
-        prevMonth = monthKey;
-      }
-    });
-
-    const filteredLabels = [];
-    for (let i = 0; i < rawLabels.length; i += 1) {
-      const current = rawLabels[i];
-      const next = rawLabels[i + 1];
-      if (next && next.index - current.index < 3) {
-        continue;
-      }
-      filteredLabels.push(current);
-    }
-
-    return filteredLabels;
-  })();
+  const months = activity.heatmap;
 
   return (
     <article className="prog-card prog-activity-card">
@@ -263,32 +234,35 @@ function ActivityCard({ activity }) {
 
       <div className="prog-heatmap-wrap">
         <div className="prog-heatmap">
-          {activity.heatmap.map((week, weekIndex) => (
-            <div key={weekIndex} className="prog-heatmap-week">
-              {week.map((day) => (
-                <div
-                  key={day.date}
-                  className={`prog-heatmap-cell level-${heatmapLevel(day.count)}`}
-                  title={`${day.date}: ${day.count} submission${day.count === 1 ? '' : 's'}`}
-                  aria-label={`${day.date}: ${day.count} submission${day.count === 1 ? '' : 's'}`}
-                />
-              ))}
+          {months.map((m) => (
+            <div key={m.key} className="prog-heatmap-month-group">
+              <div className="prog-heatmap-weeks-row">
+                {m.columns.map((col, colIndex) => (
+                  <div key={colIndex} className="prog-heatmap-week">
+                    {col.map((day, dayIndex) => (
+                      <div
+                        key={dayIndex}
+                        className={`prog-heatmap-cell ${
+                          day.isPlaceholder ? 'is-placeholder' : `level-${heatmapLevel(day.count)}`
+                        }`}
+                        title={
+                          !day.isPlaceholder
+                            ? `${day.date}: ${day.count} submission${day.count === 1 ? '' : 's'}`
+                            : undefined
+                        }
+                        aria-label={
+                          !day.isPlaceholder
+                            ? `${day.date}: ${day.count} submission${day.count === 1 ? '' : 's'}`
+                            : undefined
+                        }
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
+              <span className="prog-heatmap-month-label">{m.name}</span>
             </div>
           ))}
-        </div>
-        <div className="prog-heatmap-months">
-          {activity.heatmap.map((_, index) => {
-            const labelObj = monthLabels.find((ml) => ml.index === index);
-            return (
-              <div key={index} className="prog-heatmap-month-col">
-                {labelObj && (
-                  <span className="prog-heatmap-month-label">
-                    {labelObj.label}
-                  </span>
-                )}
-              </div>
-            );
-          })}
         </div>
       </div>
     </article>

@@ -370,21 +370,36 @@
 
 .prog-heatmap {
   display: flex;
-  gap: 5px;
+  gap: 12px;
   min-width: max-content;
+}
+
+.prog-heatmap-month-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prog-heatmap-weeks-row {
+  display: flex;
+  gap: 4px;
 }
 
 .prog-heatmap-week {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 
 .prog-heatmap-cell {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
   background: rgba(128, 128, 128, 0.15);
+}
+
+.prog-heatmap-cell.is-placeholder {
+  visibility: hidden;
 }
 
 .prog-heatmap-cell.level-1 { background: rgba(34, 197, 94, 0.35); }
@@ -392,26 +407,14 @@
 .prog-heatmap-cell.level-3 { background: rgba(34, 197, 94, 0.75); }
 .prog-heatmap-cell.level-4 { background: #22c55e; }
 
-.prog-heatmap-months {
-  display: flex;
-  gap: 5px;
-  margin-top: 0.5rem;
+.prog-heatmap-month-label {
   font-size: 11px;
   opacity: 0.65;
-  min-width: max-content;
+  text-align: left;
+  font-weight: 500;
+  padding-left: 1px;
 }
 
-.prog-heatmap-month-col {
-  width: 11px;
-  flex-shrink: 0;
-  position: relative;
-}
-
-.prog-heatmap-month-label {
-  position: absolute;
-  left: 0;
-  white-space: nowrap;
-}
 
 
 .prog-profile-link {

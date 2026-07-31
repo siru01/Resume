@@ -31,23 +31,25 @@
 }
 
 :root[data-theme="light"] .prog-status {
-  color: #666;
+  color: #000000;
 }
 
 .prog-card {
   border: 5px solid;
   border-radius: 0px;
   padding: 1.25rem 1.35rem;
+  position: relative;
+  isolation: isolate;
 }
 
 :root[data-theme="dark"] .prog-card {
-  background: #000000;  
+  background: #0d0d0d;
   border-color: #2a2a2a;
 }
 
 :root[data-theme="light"] .prog-card {
-  background: rgba(0, 0, 0, 0.02);
-  border-color: #e5e5e5;
+  background: #ffffff;
+  border-color: #525252;
 }
 
 .prog-card-title {
@@ -110,7 +112,7 @@
 }
 
 :root[data-theme="light"] .prog-contest-meta {
-  color: #555;
+  color: #232121;
 }
 
 .prog-contest-badge {
@@ -366,6 +368,11 @@
 .prog-heatmap-wrap {
   overflow-x: auto;
   padding-bottom: 0.25rem;
+  background-color: #0d0d0d;
+}
+
+:root[data-theme="light"] .prog-heatmap-wrap {
+  background-color: #ffffff;
 }
 
 .prog-heatmap {
@@ -377,7 +384,7 @@
 .prog-heatmap-month-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .prog-heatmap-weeks-row {
@@ -394,10 +401,14 @@
 .prog-heatmap-cell {
   width: 10px;
   height: 10px;
-  border-radius: 2px;
-  background-color: rgb(40, 40, 40);
-
+  border-radius: 0px;
+  background-color: #1e1e1e;
 }
+
+:root[data-theme="light"] .prog-heatmap-cell {
+  background-color: #d4d4d4;
+}
+
 
 .prog-heatmap-cell.is-placeholder {
   visibility: hidden;
@@ -413,11 +424,9 @@
   opacity: 0.65;
   text-align: left;
   font-weight: 500;
-  padding-left: 1px;
+  padding-left: 16px;
 }
-.prog-heatmap-wrap {
-  background: inherit;  
-}
+
 
 .prog-profile-link {
   align-self: flex-start;

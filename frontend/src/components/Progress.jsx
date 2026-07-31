@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   badgeIconUrl,
+  clearLeetCodeCache,
   fetchLeetCodeDashboard,
   formatNumber,
   formatRanking,
@@ -299,7 +300,10 @@ export default function Progress() {
     };
   }, [reloadKey]);
 
-  const handleRetry = () => setReloadKey((key) => key + 1);
+  const handleRetry = () => {
+    clearLeetCodeCache();
+    setReloadKey((key) => key + 1);
+  };
 
   return (
     <section className="prog-page">

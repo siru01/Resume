@@ -41,8 +41,7 @@
 }
 
 :root[data-theme="dark"] .prog-card {
-  background: rgba(59, 130, 246, 0.05);
-  background-color: #000000 ;
+  background: #000000;  
   border-color: #2a2a2a;
 }
 
@@ -396,17 +395,18 @@
   width: 10px;
   height: 10px;
   border-radius: 2px;
-  background: rgba(128, 128, 128, 0.15);
+  background-color: rgb(40, 40, 40);
+
 }
 
 .prog-heatmap-cell.is-placeholder {
   visibility: hidden;
 }
 
-.prog-heatmap-cell.level-1 { background: rgba(34, 197, 94, 0.35); }
-.prog-heatmap-cell.level-2 { background: rgba(34, 197, 94, 0.55); }
-.prog-heatmap-cell.level-3 { background: rgba(34, 197, 94, 0.75); }
-.prog-heatmap-cell.level-4 { background: #22c55e; }
+.prog-heatmap-cell.level-1 { background-color: #4ade80; }
+.prog-heatmap-cell.level-2 { background-color: #22c55e; }
+.prog-heatmap-cell.level-3 { background-color: #16a34a; }
+.prog-heatmap-cell.level-4 { background-color: #15803d; }
 
 .prog-heatmap-month-label {
   font-size: 11px;
@@ -415,8 +415,9 @@
   font-weight: 500;
   padding-left: 1px;
 }
-
-
+.prog-heatmap-wrap {
+  background: inherit;  
+}
 
 .prog-profile-link {
   align-self: flex-start;

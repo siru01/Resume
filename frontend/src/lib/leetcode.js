@@ -1,15 +1,30 @@
-const LEETCODE_API = 'https://alfa-leetcode-api.onrender.com';
-const LEETCODE_GRAPHQL = 'https://leetcode.com/graphql';
+// ─── API Hosts ──────────────────────────────────────────────────────────────
+// Profile: faisalshohag vercel returns all needed fields in one call.
+// Secondary (contest/badges/calendar): alfa-leetcode-api-three vercel.
+// Fallback hosts are tried in order if the primary fails.
+
+const PROFILE_HOSTS = [
+  (u) => `https://leetcode-api-faisalshohag.vercel.app/${u}`,
+  (u) => `https://alfa-leetcode-api-three.vercel.app/userProfile/${u}`,
+  (u) => `https://alfa-leetcode-api.onrender.com/userProfile/${u}`,
+];
+
+const SECONDARY_HOSTS = [
+  'https://alfa-leetcode-api-three.vercel.app',
+  'https://alfa-leetcode-api.onrender.com',
+];
 
 export const LEETCODE_USERNAME = 'SIRU10';
 export const LEETCODE_PROFILE_URL = 'https://leetcode.com/u/SIRU10/';
 
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 function byDifficulty(entries, difficulty) {
   return entries?.find((entry) => entry.difficulty === difficulty);
 }
 
+// ─── Cache ───────────────────────────────────────────────────────────────────
 const CACHE_KEY_PREFIX = 'leetcode-dashboard';
-const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes cache
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 
 function getCachedDashboard(username) {
   try {
@@ -21,8 +36,7 @@ function getCachedDashboard(username) {
       return null;
     }
     return data;
-  } catch (error) {
-    console.warn('Cache retrieval failed:', error);
+  } catch {
     return null;
   }
 }
@@ -33,155 +47,69 @@ function setCachedDashboard(username, data) {
       `${CACHE_KEY_PREFIX}:${username}`,
       JSON.stringify({ savedAt: Date.now(), data }),
     );
-  } catch (error) {
-    console.warn('Cache storage failed:', error);
+  } catch {
+    // Ignore storage quota errors.
   }
 }
 
-function clearCache(username) {
+export function clearLeetCodeCache(username = LEETCODE_USERNAME) {
   try {
     sessionStorage.removeItem(`${CACHE_KEY_PREFIX}:${username}`);
-  } catch (error) {
-    console.warn('Cache clear failed:', error);
+  } catch {
+    // ignore
   }
 }
 
-async function fetchJson(path, { 
-  retries = 4, 
-  delayMs = 2000, 
-  timeoutMs = 15000,
-  baseUrl = LEETCODE_API 
-} = {}) {
-  let lastError;
-
-  for (let attempt = 0; attempt < retries; attempt += 1) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
-
-    try {
-      const url = `${baseUrl}${path}`;
-      console.log(`[Attempt ${attempt + 1}/${retries}] Fetching: ${url}`);
-      
-      const response = await fetch(url, { 
-        signal: controller.signal,
-        headers: {
-          'Accept': 'application/json',
-        }
-      });
-      clearTimeout(timer);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: Failed to load ${path}`);
-      }
-
-      const data = await response.json();
-      console.log(`✓ Successfully fetched: ${path}`);
-      return data;
-    } catch (error) {
-      clearTimeout(timer);
-      lastError = error;
-      console.warn(`✗ Attempt ${attempt + 1} failed:`, error.message);
-
-      if (attempt < retries - 1) {
-        // Exponential backoff with jitter
-        const baseDelay = delayMs * Math.pow(1.5, attempt);
-        const jitter = Math.random() * 500;
-        const totalDelay = baseDelay + jitter;
-        
-        console.log(`⏳ Retrying in ${Math.round(totalDelay)}ms...`);
-        await new Promise((resolve) => setTimeout(resolve, totalDelay));
-      }
-    }
-  }
-
-  throw new Error(`Failed after ${retries} attempts: ${lastError?.message || 'Unknown error'}`);
-}
-
-// Alternative: GraphQL API for more reliable data fetching
-async function fetchLeetCodeGraphQL(username) {
-  const query = `
-    query getUserProfile($username: String!) {
-      matchedUser(username: $username) {
-        username
-        profile {
-          ranking
-          realName
-          reputation
-        }
-        submitStats {
-          acSubmissionNum {
-            difficulty
-            count
-            submissions
-          }
-          totalSubmissionNum {
-            difficulty
-            count
-            submissions
-          }
-        }
-        problemsSolvedBeatsStats {
-          difficulty
-          percentage
-        }
-        userCalendar {
-          activeYears
-          streak
-          totalActiveDays
-          submissionCalendar
-        }
-        badges {
-          id
-          displayName
-          medal {
-            slug
-            config {
-              icon
-            }
-          }
-        }
-      }
-    }
-  `;
-
+// ─── Fetch helpers ────────────────────────────────────────────────────────────
+async function getJson(url, timeoutMs = 8000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(LEETCODE_GRAPHQL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'Mozilla/5.0'
-      },
-      body: JSON.stringify({
-        query,
-        variables: { username }
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`GraphQL API returned ${response.status}`);
-    }
-
-    const data = await response.json();
-    
-    if (data.errors) {
-      throw new Error(`GraphQL error: ${data.errors.map(e => e.message).join(', ')}`);
-    }
-
-    return data.data?.matchedUser;
-  } catch (error) {
-    console.error('GraphQL fetch failed:', error);
-    return null;
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    clearTimeout(timer);
+    throw err;
   }
 }
 
+/** Fetch the LeetCode profile, trying each host in turn. */
+async function fetchProfile(username) {
+  let lastErr;
+  for (const getUrl of PROFILE_HOSTS) {
+    try {
+      const data = await getJson(getUrl(username), 8000);
+      // Validate that this looks like real profile data
+      if (data && (data.totalSolved !== undefined || data.matchedUserStats)) {
+        return data;
+      }
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr ?? new Error('All profile hosts failed');
+}
+
+/** Fetch a secondary endpoint (/contest, /badges, etc.) with host fallback. */
+async function fetchSecondary(username, path) {
+  for (const host of SECONDARY_HOSTS) {
+    try {
+      const data = await getJson(`${host}/${username}${path}`, 6000);
+      if (data) return data;
+    } catch {
+      // try next host
+    }
+  }
+  return null;
+}
+
+// ─── Calendar / streak utilities ──────────────────────────────────────────────
 export function parseSubmissionCalendar(raw) {
   if (!raw) return {};
   if (typeof raw === 'string') {
-    try {
-      return JSON.parse(raw);
-    } catch {
-      return {};
-    }
+    try { return JSON.parse(raw); } catch { return {}; }
   }
   return raw;
 }
@@ -221,11 +149,42 @@ export function computeMaxStreak(calendar) {
   return max;
 }
 
+function computeCurrentStreak(calendar) {
+  const days = Object.keys(calendar || {})
+    .map((ts) => {
+      const date = new Date(Number(ts) * 1000);
+      date.setHours(0, 0, 0, 0);
+      return date.getTime();
+    })
+    .filter((value, index, array) => array.indexOf(value) === index)
+    .sort((a, b) => a - b);
+
+  if (!days.length) return 0;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayMs = today.getTime();
+  const yesterdayMs = todayMs - 86400000;
+
+  const lastDay = days[days.length - 1];
+  if (lastDay !== todayMs && lastDay !== yesterdayMs) return 0;
+
+  let streak = 1;
+  for (let i = days.length - 1; i > 0; i -= 1) {
+    if ((days[i] - days[i - 1]) / 86400000 === 1) {
+      streak += 1;
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
+// ─── Heatmap ──────────────────────────────────────────────────────────────────
 function formatDateLocal(year, month, day) {
-  const yyyy = year;
   const mm = String(month + 1).padStart(2, '0');
   const dd = String(day).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
+  return `${year}-${mm}-${dd}`;
 }
 
 export function buildHeatmap(calendar) {
@@ -248,7 +207,6 @@ export function buildHeatmap(calendar) {
     const year = d.getFullYear();
     const month = d.getMonth();
     const name = d.toLocaleDateString('en-US', { month: 'short' });
-
     const totalDays = new Date(year, month + 1, 0).getDate();
 
     const days = [];
@@ -261,9 +219,7 @@ export function buildHeatmap(calendar) {
     const columns = [];
     for (let j = 0; j < days.length; j += 7) {
       const col = days.slice(j, j + 7);
-      while (col.length < 7) {
-        col.push({ isPlaceholder: true });
-      }
+      while (col.length < 7) col.push({ isPlaceholder: true });
       columns.push(col);
     }
 
@@ -294,6 +250,7 @@ export function badgeIconUrl(icon) {
   return `https://leetcode.com${icon}`;
 }
 
+// ─── Parsers ──────────────────────────────────────────────────────────────────
 function parseContest(contestData, profileRanking) {
   const hasContests = Boolean(contestData?.contestAttend);
 
@@ -306,8 +263,6 @@ function parseContest(contestData, profileRanking) {
       label: new Date(entry.contest.startTime * 1000).getFullYear().toString(),
     }));
 
-  const recentHistory = ratingHistory.slice(-24);
-
   return {
     hasContests,
     rating: hasContests ? Math.round(contestData.contestRating) : null,
@@ -317,7 +272,7 @@ function parseContest(contestData, profileRanking) {
     contestsAttended: contestData?.contestAttend ?? 0,
     topPercentage: contestData?.contestTopPercentage ?? null,
     profileRanking,
-    ratingHistory: recentHistory,
+    ratingHistory: ratingHistory.slice(-24),
   };
 }
 
@@ -368,7 +323,7 @@ function parseActivity(profileData, calendarData) {
   return {
     submissionsPastYear: totalSubmissionsInYear(calendar),
     totalActiveDays: calendarData?.totalActiveDays ?? Object.keys(calendar).length,
-    currentStreak: calendarData?.streak ?? 0,
+    currentStreak: calendarData?.streak ?? computeCurrentStreak(calendar),
     maxStreak: computeMaxStreak(calendar),
     heatmap: buildHeatmap(calendar),
     calendar,
@@ -386,89 +341,44 @@ function buildDashboard(username, profile, contest, badges, calendar, progress) 
   };
 }
 
+// ─── Main export ──────────────────────────────────────────────────────────────
 export async function fetchLeetCodeDashboard(username = LEETCODE_USERNAME) {
-  // Try to return cached data first
   const cached = getCachedDashboard(username);
-  if (cached) {
-    console.log('📦 Returning cached dashboard');
-    return cached;
-  }
+  if (cached) return cached;
 
-  try {
-    console.log('🔄 Fetching fresh LeetCode data...');
-    
-    // Try primary API with better retry logic
-    const profile = await fetchJson(`/${username}/profile`, { 
-      retries: 5, 
-      delayMs: 2500,
-      timeoutMs: 20000
-    });
+  // Fetch profile (critical – throws if all hosts fail)
+  const profile = await fetchProfile(username);
 
-    const [contestResult, badgesResult, calendarResult, progressResult] = await Promise.allSettled([
-      fetchJson(`/${username}/contest`, { retries: 3, delayMs: 2000 }),
-      fetchJson(`/${username}/badges`, { retries: 3, delayMs: 2000 }),
-      fetchJson(`/${username}/calendar`, { retries: 3, delayMs: 2000 }),
-      fetchJson(`/${username}/progress`, { retries: 3, delayMs: 2000 }),
-    ]);
+  // Fetch optional secondary endpoints concurrently with host fallback
+  const [contestResult, badgesResult, calendarResult, progressResult] = await Promise.allSettled([
+    fetchSecondary(username, '/contest'),
+    fetchSecondary(username, '/badges'),
+    fetchSecondary(username, '/calendar'),
+    fetchSecondary(username, '/progress'),
+  ]);
 
-    const contest = contestResult.status === 'fulfilled'
-      ? contestResult.value
-      : { contestParticipation: [] };
-    const badges = badgesResult.status === 'fulfilled'
-      ? badgesResult.value
-      : { badgesCount: 0, badges: [], upcomingBadges: [] };
-    const calendar = calendarResult.status === 'fulfilled' ? calendarResult.value : {};
-    const progress = progressResult.status === 'fulfilled' ? progressResult.value : null;
+  const contest = contestResult.status === 'fulfilled' && contestResult.value
+    ? contestResult.value
+    : { contestParticipation: [] };
 
-    const dashboard = buildDashboard(username, profile, contest, badges, calendar, progress);
-    setCachedDashboard(username, dashboard);
-    console.log('✅ Dashboard fetched and cached successfully');
-    return dashboard;
-  } catch (error) {
-    console.error('❌ Primary API failed:', error.message);
-    
-    // Fallback: Try GraphQL API as alternative
-    console.log('🔄 Attempting GraphQL API fallback...');
-    const graphqlData = await fetchLeetCodeGraphQL(username);
-    
-    if (graphqlData) {
-      const fallbackDashboard = {
-        username,
-        profileUrl: LEETCODE_PROFILE_URL,
-        contest: parseContest({}, graphqlData.profile?.ranking),
-        problems: {
-          totalSolved: graphqlData.submitStats?.acSubmissionNum?.reduce((sum, s) => sum + s.count, 0) || 0,
-          totalQuestions: graphqlData.submitStats?.totalSubmissionNum?.reduce((sum, s) => sum + s.count, 0) || 0,
-          easy: graphqlData.submitStats?.acSubmissionNum?.find(s => s.difficulty === 'Easy')?.count || 0,
-          medium: graphqlData.submitStats?.acSubmissionNum?.find(s => s.difficulty === 'Medium')?.count || 0,
-          hard: graphqlData.submitStats?.acSubmissionNum?.find(s => s.difficulty === 'Hard')?.count || 0,
-          ranking: graphqlData.profile?.ranking || null,
-          acceptanceRate: null,
-        },
-        badges: {
-          count: graphqlData.badges?.length || 0,
-          recent: graphqlData.badges?.[0] || null,
-          featured: graphqlData.badges?.slice(0, 3) || [],
-          upcoming: [],
-        },
-        activity: {
-          submissionsPastYear: 0,
-          totalActiveDays: graphqlData.userCalendar?.totalActiveDays || 0,
-          currentStreak: graphqlData.userCalendar?.streak || 0,
-          maxStreak: 0,
-          heatmap: [],
-          calendar: parseSubmissionCalendar(graphqlData.userCalendar?.submissionCalendar),
-        }
-      };
-      setCachedDashboard(username, fallbackDashboard);
-      console.log('✅ Fallback GraphQL data cached');
-      return fallbackDashboard;
-    }
+  const badges = badgesResult.status === 'fulfilled' && badgesResult.value
+    ? badgesResult.value
+    : { badgesCount: 0, badges: [], upcomingBadges: [] };
 
-    throw new Error(`All APIs failed. Last error: ${error.message}`);
-  }
+  const calendar = calendarResult.status === 'fulfilled' && calendarResult.value
+    ? calendarResult.value
+    : {};
+
+  const progress = progressResult.status === 'fulfilled' && progressResult.value
+    ? progressResult.value
+    : null;
+
+  const dashboard = buildDashboard(username, profile, contest, badges, calendar, progress);
+  setCachedDashboard(username, dashboard);
+  return dashboard;
 }
 
+// ─── Formatters ───────────────────────────────────────────────────────────────
 export function formatRanking(ranking) {
   if (ranking == null) return '—';
   return ranking.toLocaleString('en-US');
@@ -477,10 +387,4 @@ export function formatRanking(ranking) {
 export function formatNumber(value) {
   if (value == null) return '—';
   return value.toLocaleString('en-US');
-}
-
-// Helper: Clear cache if needed (call this on retry button click)
-export function clearLeetCodeCache(username = LEETCODE_USERNAME) {
-  clearCache(username);
-  console.log(`✓ Cache cleared for ${username}`);
 }

@@ -8,7 +8,7 @@ import {
   heatmapLevel,
   LEETCODE_PROFILE_URL,
   LEETCODE_USERNAME,
-} from '../lib/leetcode';
+} from '../lib/leetcode'; // Update path if needed
 import './Progress.css';
 
 function DonutChart({ solved, total }) {
@@ -288,7 +288,8 @@ export default function Progress() {
           setError(false);
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('Failed to fetch LeetCode dashboard:', err);
         if (!cancelled) setError(true);
       })
       .finally(() => {

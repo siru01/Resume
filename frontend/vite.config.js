@@ -7,10 +7,17 @@ export default defineConfig({
     host: true,
     port: 5173,
     proxy: {
-      //'/api': 'http://127.0.0.1:8000', // only works locally, ignored in build
-    },
+      // Dev proxy: rewrites /api/leetcode/* → https://leetcode-api-faisalshohag.vercel.app/*
+      // Production: handled by vercel.json rewrites instead
+      '/api/leetcode': {
+        target: 'https://leetcode-api-faisalshohag.vercel.app',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/leetcode/, ''),
+        secure: false,
+      }
+    }
   },
   build: {
     outDir: 'dist',
   }
-})
+})

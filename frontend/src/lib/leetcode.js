@@ -1,26 +1,10 @@
-// ─── API Hosts ──────────────────────────────────────────────────────────────
-// Profile: faisalshohag vercel returns all needed fields in one call.
-// Secondary (contest/badges/calendar): alfa-leetcode-api-three vercel.
-// Fallback hosts are tried in order if the primary fails.
-
-const PROFILE_HOSTS = [
-  (u) => `https://leetcode-api-faisalshohag.vercel.app/${u}`,
-  (u) => `https://alfa-leetcode-api-three.vercel.app/userProfile/${u}`,
-  (u) => `https://alfa-leetcode-api.onrender.com/userProfile/${u}`,
-];
-
-const SECONDARY_HOSTS = [
-  'https://alfa-leetcode-api-three.vercel.app',
-  'https://alfa-leetcode-api.onrender.com',
-];
-
+// ─── Config ───────────────────────────────────────────────────────────────────
 export const LEETCODE_USERNAME = 'SIRU10';
 export const LEETCODE_PROFILE_URL = 'https://leetcode.com/u/SIRU10/';
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-function byDifficulty(entries, difficulty) {
-  return entries?.find((entry) => entry.difficulty === difficulty);
-}
+// Use Vite proxy path to bypass CSP/CORS restrictions
+// In vite.config.js: proxy /api/leetcode -> https://leetcode-api-faisalshohag.vercel.app
+const LEETCODE_API_BASE = '/api/leetcode';
 
 // ─── Cache ───────────────────────────────────────────────────────────────────
 const CACHE_KEY_PREFIX = 'leetcode-dashboard';
@@ -60,52 +44,7 @@ export function clearLeetCodeCache(username = LEETCODE_USERNAME) {
   }
 }
 
-// ─── Fetch helpers ────────────────────────────────────────────────────────────
-async function getJson(url, timeoutMs = 8000) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const res = await fetch(url, { signal: controller.signal });
-    clearTimeout(timer);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch (err) {
-    clearTimeout(timer);
-    throw err;
-  }
-}
-
-/** Fetch the LeetCode profile, trying each host in turn. */
-async function fetchProfile(username) {
-  let lastErr;
-  for (const getUrl of PROFILE_HOSTS) {
-    try {
-      const data = await getJson(getUrl(username), 8000);
-      // Validate that this looks like real profile data
-      if (data && (data.totalSolved !== undefined || data.matchedUserStats)) {
-        return data;
-      }
-    } catch (err) {
-      lastErr = err;
-    }
-  }
-  throw lastErr ?? new Error('All profile hosts failed');
-}
-
-/** Fetch a secondary endpoint (/contest, /badges, etc.) with host fallback. */
-async function fetchSecondary(username, path) {
-  for (const host of SECONDARY_HOSTS) {
-    try {
-      const data = await getJson(`${host}/${username}${path}`, 6000);
-      if (data) return data;
-    } catch {
-      // try next host
-    }
-  }
-  return null;
-}
-
-// ─── Calendar / streak utilities ──────────────────────────────────────────────
+// ─── Calendar / Streak Utilities ──────────────────────────────────────────────
 export function parseSubmissionCalendar(raw) {
   if (!raw) return {};
   if (typeof raw === 'string') {
@@ -135,17 +74,14 @@ export function computeMaxStreak(calendar) {
 
   let max = 1;
   let current = 1;
-
   for (let i = 1; i < days.length; i += 1) {
-    const diff = (days[i] - days[i - 1]) / 86400000;
-    if (diff === 1) {
+    if ((days[i] - days[i - 1]) / 86400000 === 1) {
       current += 1;
       max = Math.max(max, current);
     } else {
       current = 1;
     }
   }
-
   return max;
 }
 
@@ -250,132 +186,106 @@ export function badgeIconUrl(icon) {
   return `https://leetcode.com${icon}`;
 }
 
-// ─── Parsers ──────────────────────────────────────────────────────────────────
-function parseContest(contestData, profileRanking) {
-  const hasContests = Boolean(contestData?.contestAttend);
-
-  const ratingHistory = (contestData?.contestParticipation ?? [])
-    .filter((entry) => entry.attended && entry.rating && entry.contest?.startTime)
-    .sort((a, b) => a.contest.startTime - b.contest.startTime)
-    .map((entry) => ({
-      rating: Math.round(entry.rating),
-      date: new Date(entry.contest.startTime * 1000),
-      label: new Date(entry.contest.startTime * 1000).getFullYear().toString(),
-    }));
-
-  return {
-    hasContests,
-    rating: hasContests ? Math.round(contestData.contestRating) : null,
-    badge: contestData?.contestBadges?.name ?? null,
-    globalRank: contestData?.contestGlobalRanking ?? null,
-    totalParticipants: contestData?.totalParticipants ?? null,
-    contestsAttended: contestData?.contestAttend ?? 0,
-    topPercentage: contestData?.contestTopPercentage ?? null,
-    profileRanking,
-    ratingHistory: ratingHistory.slice(-24),
-  };
-}
-
-function parseProblems(profileData, progressData) {
-  const progress = progressData?.numAcceptedQuestions ?? {};
-  const failed = progress.numFailedQuestions ?? [];
-  const attempting = failed.reduce((sum, item) => sum + (item.count ?? 0), 0);
-
-  const acAll = byDifficulty(profileData.matchedUserStats?.acSubmissionNum, 'All');
-  const totalAll = byDifficulty(profileData.matchedUserStats?.totalSubmissionNum, 'All');
-  const acceptanceRate =
-    acAll && totalAll && totalAll.submissions > 0
-      ? Math.round((acAll.submissions / totalAll.submissions) * 100)
-      : null;
-
-  return {
-    totalSolved: profileData.totalSolved ?? 0,
-    totalQuestions: profileData.totalQuestions ?? 0,
-    easy: profileData.easySolved ?? 0,
-    totalEasy: profileData.totalEasy ?? 0,
-    medium: profileData.mediumSolved ?? 0,
-    totalMedium: profileData.totalMedium ?? 0,
-    hard: profileData.hardSolved ?? 0,
-    totalHard: profileData.totalHard ?? 0,
-    attempting,
-    ranking: profileData.ranking ?? null,
-    acceptanceRate,
-  };
-}
-
-function parseBadges(badgesData) {
-  const badges = badgesData?.badges ?? [];
-  const recent = badges[0] ?? badgesData?.activeBadge ?? null;
-
-  return {
-    count: badgesData?.badgesCount ?? badges.length,
-    recent,
-    featured: badges.slice(0, 3),
-    upcoming: badgesData?.upcomingBadges ?? [],
-  };
-}
-
-function parseActivity(profileData, calendarData) {
-  const profileCalendar = parseSubmissionCalendar(profileData.submissionCalendar);
-  const endpointCalendar = parseSubmissionCalendar(calendarData?.submissionCalendar);
-  const calendar = Object.keys(endpointCalendar).length ? endpointCalendar : profileCalendar;
-
-  return {
-    submissionsPastYear: totalSubmissionsInYear(calendar),
-    totalActiveDays: calendarData?.totalActiveDays ?? Object.keys(calendar).length,
-    currentStreak: calendarData?.streak ?? computeCurrentStreak(calendar),
-    maxStreak: computeMaxStreak(calendar),
-    heatmap: buildHeatmap(calendar),
-    calendar,
-  };
-}
-
-function buildDashboard(username, profile, contest, badges, calendar, progress) {
-  return {
-    username,
-    profileUrl: LEETCODE_PROFILE_URL,
-    contest: parseContest(contest, profile.ranking),
-    problems: parseProblems(profile, progress),
-    badges: parseBadges(badges),
-    activity: parseActivity(profile, calendar),
-  };
-}
-
-// ─── Main export ──────────────────────────────────────────────────────────────
+// ─── Main Export ──────────────────────────────────────────────────────────────
 export async function fetchLeetCodeDashboard(username = LEETCODE_USERNAME) {
   const cached = getCachedDashboard(username);
-  if (cached) return cached;
+  if (cached) {
+    console.log('✅ Using cached LeetCode data');
+    return cached;
+  }
 
-  // Fetch profile (critical – throws if all hosts fail)
-  const profile = await fetchProfile(username);
+  try {
+    console.log(`🔄 Fetching LeetCode data for ${username}...`);
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-  // Fetch optional secondary endpoints concurrently with host fallback
-  const [contestResult, badgesResult, calendarResult, progressResult] = await Promise.allSettled([
-    fetchSecondary(username, '/contest'),
-    fetchSecondary(username, '/badges'),
-    fetchSecondary(username, '/calendar'),
-    fetchSecondary(username, '/progress'),
-  ]);
+    const res = await fetch(`${LEETCODE_API_BASE}/${username}`, {
+      headers: { 'Accept': 'application/json' },
+      signal: controller.signal,
+    });
 
-  const contest = contestResult.status === 'fulfilled' && contestResult.value
-    ? contestResult.value
-    : { contestParticipation: [] };
+    clearTimeout(timeoutId);
 
-  const badges = badgesResult.status === 'fulfilled' && badgesResult.value
-    ? badgesResult.value
-    : { badgesCount: 0, badges: [], upcomingBadges: [] };
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+    
+    const apiData = await res.json();
+    console.log('✅ LeetCode data fetched successfully');
 
-  const calendar = calendarResult.status === 'fulfilled' && calendarResult.value
-    ? calendarResult.value
-    : {};
+    const calendar = parseSubmissionCalendar(apiData.submissionCalendar || {});
+    
+    const acStats = apiData.matchedUserStats?.acSubmissionNum || [];
+    const acAll = acStats.find((e) => e.difficulty === 'All')?.count ?? apiData.totalSolved ?? 0;
+    const acEasy = acStats.find((e) => e.difficulty === 'Easy')?.count ?? apiData.easySolved ?? 0;
+    const acMedium = acStats.find((e) => e.difficulty === 'Medium')?.count ?? apiData.mediumSolved ?? 0;
+    const acHard = acStats.find((e) => e.difficulty === 'Hard')?.count ?? apiData.hardSolved ?? 0;
 
-  const progress = progressResult.status === 'fulfilled' && progressResult.value
-    ? progressResult.value
-    : null;
+    const totalStats = apiData.matchedUserStats?.totalSubmissionNum || [];
+    const totalAll = totalStats.find((e) => e.difficulty === 'All')?.count ?? apiData.totalSubmissions ?? 0;
+    const acceptanceRate = totalAll > 0 ? Math.round((acAll / totalAll) * 100) : null;
 
-  const dashboard = buildDashboard(username, profile, contest, badges, calendar, progress);
-  setCachedDashboard(username, dashboard);
-  return dashboard;
+    const dashboard = {
+      username,
+      profileUrl: LEETCODE_PROFILE_URL,
+      problems: {
+        totalSolved: acAll,
+        totalQuestions: apiData.totalQuestions ?? 4000,
+        easy: acEasy,
+        totalEasy: apiData.totalEasy ?? 950,
+        medium: acMedium,
+        totalMedium: apiData.totalMedium ?? 2000,
+        hard: acHard,
+        totalHard: apiData.totalHard ?? 950,
+        attempting: 0,
+        ranking: apiData.ranking ?? null,
+        acceptanceRate,
+      },
+      badges: {
+        count: apiData.badges?.length ?? 0,
+        recent: apiData.badges?.[0] ?? null,
+        featured: apiData.badges?.slice(0, 3) ?? [],
+        upcoming: apiData.upcomingBadges ?? [],
+      },
+      contest: {
+        hasContests: Boolean(apiData.userContestRanking?.attendedContestsCount),
+        rating: apiData.userContestRanking?.rating ?? null,
+        badge: apiData.userContestRanking?.badge?.name ?? null,
+        globalRank: apiData.userContestRanking?.globalRanking ?? null,
+        totalParticipants: apiData.userContestRanking?.totalParticipants ?? null,
+        contestsAttended: apiData.userContestRanking?.attendedContestsCount ?? 0,
+        topPercentage: apiData.userContestRanking?.topPercentage ?? null,
+        profileRanking: apiData.ranking ?? null,
+        ratingHistory: [],
+      },
+      activity: {
+        submissionsPastYear: totalSubmissionsInYear(calendar),
+        totalActiveDays: Object.keys(calendar).length,
+        currentStreak: computeCurrentStreak(calendar),
+        maxStreak: computeMaxStreak(calendar),
+        heatmap: buildHeatmap(calendar),
+        calendar,
+      },
+    };
+
+    setCachedDashboard(username, dashboard);
+    return dashboard;
+  } catch (err) {
+    console.error('❌ Error fetching LeetCode data:', err);
+    throw new Error(`Failed to fetch LeetCode stats: ${err.message}`);
+  }
+}
+
+export async function fetchLeetCodeStats(username = LEETCODE_USERNAME) {
+  const dashboard = await fetchLeetCodeDashboard(username);
+  return {
+    profileUrl: dashboard.profileUrl,
+    totalSolved: dashboard.problems.totalSolved,
+    ranking: dashboard.problems.ranking,
+    acceptanceRate: dashboard.problems.acceptanceRate,
+    easy: dashboard.problems.easy,
+    medium: dashboard.problems.medium,
+    hard: dashboard.problems.hard,
+  };
 }
 
 // ─── Formatters ───────────────────────────────────────────────────────────────

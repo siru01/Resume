@@ -369,6 +369,12 @@
   overflow-x: auto;
   padding-bottom: 0.25rem;
   background-color: #0d0d0d;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.prog-heatmap-wrap::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 :root[data-theme="light"] .prog-heatmap-wrap {

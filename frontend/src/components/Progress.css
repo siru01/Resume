@@ -406,7 +406,7 @@
 }
 
 :root[data-theme="light"] .prog-heatmap-cell {
-  background-color: #d4d4d4;
+  background-color: #ebedf0;
 }
 
 
@@ -414,10 +414,46 @@
   visibility: hidden;
 }
 
-.prog-heatmap-cell.level-1 { background-color: #4ade80; }
-.prog-heatmap-cell.level-2 { background-color: #22c55e; }
-.prog-heatmap-cell.level-3 { background-color: #16a34a; }
-.prog-heatmap-cell.level-4 { background-color: #15803d; }
+
+
+/* Define theme colors at root */
+:root[data-theme="dark"] {
+  --heatmap-empty: #1e1e1e;
+  --heatmap-lvl-1: #0e4429;
+  --heatmap-lvl-2: #006d32;
+  --heatmap-lvl-3: #26a641;
+  --heatmap-lvl-4: #39d353;
+}
+
+/* FIXED: Light mode heatmap colors for better contrast and visibility */
+:root[data-theme="light"] {
+  --heatmap-empty: #ebedf0;
+  --heatmap-lvl-1: #c6e48b;
+  --heatmap-lvl-2: #7bc96f;
+  --heatmap-lvl-3: #239a3b;
+  --heatmap-lvl-4: #196127;
+}
+
+
+.prog-heatmap-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 0px;
+  background-color: var(--heatmap-empty);
+}
+
+.prog-heatmap-cell.level-1 { background-color: var(--heatmap-lvl-1); }
+.prog-heatmap-cell.level-2 { background-color: var(--heatmap-lvl-2); }
+.prog-heatmap-cell.level-3 { background-color: var(--heatmap-lvl-3); }
+.prog-heatmap-cell.level-4 { background-color: var(--heatmap-lvl-4); }
+
+/* Ensure light mode level colors override any defaults */
+:root[data-theme="light"] .prog-heatmap-cell.level-1 { background-color: var(--heatmap-lvl-1) !important; }
+:root[data-theme="light"] .prog-heatmap-cell.level-2 { background-color: var(--heatmap-lvl-2) !important; }
+:root[data-theme="light"] .prog-heatmap-cell.level-3 { background-color: var(--heatmap-lvl-3) !important; }
+:root[data-theme="light"] .prog-heatmap-cell.level-4 { background-color: var(--heatmap-lvl-4) !important; }
+
+
 
 .prog-heatmap-month-label {
   font-size: 11px;

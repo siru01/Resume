@@ -91,13 +91,34 @@
   transition: opacity 0.3s, transform 0.2s, color 0.2s;
   display: flex;
   align-items: center;
+  /* Added keyframe animation */
+  animation: glowPulse 4s ease-in-out infinite;
+
 }
 
 .proj-live-icon:hover {
   opacity: 1;
   transform: scale(1.1);
   color: #4ade80;
+  /* Enhances the glow when hovered */
+  filter: drop-shadow(0 0 12px #4ade80);
 }
+
+/* Keyframes for the 2s glow / 2s fade loop */
+@keyframes glowPulse {
+  0%, 100% {
+    /* Faded state (2s mark and start/end) */
+    opacity: 0.4;
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  50% {
+    /* Full glow state (at 2s mark) */
+    opacity: 1;
+    filter: drop-shadow(0 0 10px #4ade80);
+  }
+}
+
+
 
 @media (max-width: 480px) {
   .proj-description-row {

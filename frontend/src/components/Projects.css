@@ -66,7 +66,7 @@
 }
 
 :root[data-theme="dark"] .proj-page .proj-description { color: #aaa; }
-:root[data-theme="light"] .proj-page .proj-description { color: #555; }
+:root[data-theme="light"] .proj-page .proj-description { color: #515151; }
 
 .proj-actions {
   display: flex;

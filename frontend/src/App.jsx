@@ -58,21 +58,21 @@ export default function App() {
   return (
     <>   
 
-    <div class="grid-container">
-  <div class="wave-overlay"></div>
+    <div className="grid-container">
+  <div className="wave-overlay"></div>
   
-  <div class="map-wrapper">
-    <div class="c na" title="North America"></div>
-    <div class="c ca" title="Central America"></div>
-    <div class="c sa" title="South America"></div>
-    <div class="c eu" title="Europe"></div>
-    <div class="c af" title="Africa"></div>
-    <div class="c as" title="Asia"></div>
-    <div class="c in" title="India"></div>
-    <div class="c sea" title="South East Asia"></div>
-    <div class="c au" title="Australia"></div>
-    <div class="c jp" title="Japan"></div>
-    <div class="c nz" title="New Zealand"></div>
+  <div className="map-wrapper">
+    <div className="c na" title="North America"></div>
+    <div className="c ca" title="Central America"></div>
+    <div className="c sa" title="South America"></div>
+    <div className="c eu" title="Europe"></div>
+    <div className="c af" title="Africa"></div>
+    <div className="c as" title="Asia"></div>
+    <div className="c in" title="India"></div>
+    <div className="c sea" title="South East Asia"></div>
+    <div className="c au" title="Australia"></div>
+    <div className="c jp" title="Japan"></div>
+    <div className="c nz" title="New Zealand"></div>
   </div>
 </div>
     <Analytics />

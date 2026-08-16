@@ -186,6 +186,50 @@ export function badgeIconUrl(icon) {
   return `https://leetcode.com${icon}`;
 }
 
+// ─── GraphQL Fetcher (LeetCode's own API, no rate limits) ────────────────────
+const GQL_QUERY = `
+  query getUserProfile($username: String!) {
+    allQuestionsCount { difficulty count }
+    matchedUser(username: $username) {
+      username
+      profile { ranking }
+      submitStatsGlobal {
+        acSubmissionNum { difficulty count submissions }
+        totalSubmissionNum { difficulty count submissions }
+      }
+      userCalendar { submissionCalendar }
+    }
+  }
+`;
+
+async function fetchViaGraphQL(username) {
+  const res = await fetch('/api/lc-graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Referer': 'https://leetcode.com',
+    },
+    body: JSON.stringify({ query: GQL_QUERY, variables: { username } }),
+  });
+  if (!res.ok) throw new Error(`GraphQL HTTP ${res.status}`);
+  const { data, errors } = await res.json();
+  if (errors?.length) throw new Error(`GraphQL error: ${errors[0].message}`);
+  if (!data?.matchedUser) throw new Error('User not found in GraphQL response');
+  return data;
+}
+
+async function fetchViaRestAPI(username) {
+  const res = await fetch(`${LEETCODE_API_BASE}/${username}`, {
+    headers: { 'Accept': 'application/json' },
+  });
+  if (res.status === 429) throw new Error('Rate limited (429)');
+  if (!res.ok) throw new Error(`REST HTTP ${res.status}`);
+  const data = await res.json();
+  if (!data || data.totalSolved === undefined) throw new Error('Unexpected REST response');
+  return data;
+}
+
 // ─── Main Export ──────────────────────────────────────────────────────────────
 export async function fetchLeetCodeDashboard(username = LEETCODE_USERNAME) {
   const cached = getCachedDashboard(username);
@@ -194,86 +238,112 @@ export async function fetchLeetCodeDashboard(username = LEETCODE_USERNAME) {
     return cached;
   }
 
+  let apiData = null;
+  let source = null;
+
+  // Strategy 1: LeetCode's own GraphQL (no third-party, no rate limits)
   try {
-    console.log(`🔄 Fetching LeetCode data for ${username}...`);
-    
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    console.log('🔄 Fetching LeetCode data via GraphQL...');
+    const gqlData = await fetchViaGraphQL(username);
+    const mu = gqlData.matchedUser;
+    const allQ = gqlData.allQuestionsCount || [];
 
-    const res = await fetch(`${LEETCODE_API_BASE}/${username}`, {
-      headers: { 'Accept': 'application/json' },
-      signal: controller.signal,
-    });
+    const acSub = mu.submitStatsGlobal?.acSubmissionNum || [];
+    const totSub = mu.submitStatsGlobal?.totalSubmissionNum || [];
 
-    clearTimeout(timeoutId);
-
-    if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
-    
-    const apiData = await res.json();
-    console.log('✅ LeetCode data fetched successfully');
-
-    const calendar = parseSubmissionCalendar(apiData.submissionCalendar || {});
-    
-    const acStats = apiData.matchedUserStats?.acSubmissionNum || [];
-    const acAll = acStats.find((e) => e.difficulty === 'All')?.count ?? apiData.totalSolved ?? 0;
-    const acEasy = acStats.find((e) => e.difficulty === 'Easy')?.count ?? apiData.easySolved ?? 0;
-    const acMedium = acStats.find((e) => e.difficulty === 'Medium')?.count ?? apiData.mediumSolved ?? 0;
-    const acHard = acStats.find((e) => e.difficulty === 'Hard')?.count ?? apiData.hardSolved ?? 0;
-
-    const totalStats = apiData.matchedUserStats?.totalSubmissionNum || [];
-    const totalAll = totalStats.find((e) => e.difficulty === 'All')?.count ?? apiData.totalSubmissions ?? 0;
-    const acceptanceRate = totalAll > 0 ? Math.round((acAll / totalAll) * 100) : null;
-
-    const dashboard = {
-      username,
-      profileUrl: LEETCODE_PROFILE_URL,
-      problems: {
-        totalSolved: acAll,
-        totalQuestions: apiData.totalQuestions ?? 4000,
-        easy: acEasy,
-        totalEasy: apiData.totalEasy ?? 950,
-        medium: acMedium,
-        totalMedium: apiData.totalMedium ?? 2000,
-        hard: acHard,
-        totalHard: apiData.totalHard ?? 950,
-        attempting: 0,
-        ranking: apiData.ranking ?? null,
-        acceptanceRate,
-      },
-      badges: {
-        count: apiData.badges?.length ?? 0,
-        recent: apiData.badges?.[0] ?? null,
-        featured: apiData.badges?.slice(0, 3) ?? [],
-        upcoming: apiData.upcomingBadges ?? [],
-      },
-      contest: {
-        hasContests: Boolean(apiData.userContestRanking?.attendedContestsCount),
-        rating: apiData.userContestRanking?.rating ?? null,
-        badge: apiData.userContestRanking?.badge?.name ?? null,
-        globalRank: apiData.userContestRanking?.globalRanking ?? null,
-        totalParticipants: apiData.userContestRanking?.totalParticipants ?? null,
-        contestsAttended: apiData.userContestRanking?.attendedContestsCount ?? 0,
-        topPercentage: apiData.userContestRanking?.topPercentage ?? null,
-        profileRanking: apiData.ranking ?? null,
-        ratingHistory: [],
-      },
-      activity: {
-        submissionsPastYear: totalSubmissionsInYear(calendar),
-        totalActiveDays: Object.keys(calendar).length,
-        currentStreak: computeCurrentStreak(calendar),
-        maxStreak: computeMaxStreak(calendar),
-        heatmap: buildHeatmap(calendar),
-        calendar,
+    apiData = {
+      totalSolved: acSub.find((e) => e.difficulty === 'All')?.count ?? 0,
+      easySolved: acSub.find((e) => e.difficulty === 'Easy')?.count ?? 0,
+      mediumSolved: acSub.find((e) => e.difficulty === 'Medium')?.count ?? 0,
+      hardSolved: acSub.find((e) => e.difficulty === 'Hard')?.count ?? 0,
+      totalQuestions: allQ.find((e) => e.difficulty === 'All')?.count ?? 4028,
+      totalEasy: allQ.find((e) => e.difficulty === 'Easy')?.count ?? 960,
+      totalMedium: allQ.find((e) => e.difficulty === 'Medium')?.count ?? 2103,
+      totalHard: allQ.find((e) => e.difficulty === 'Hard')?.count ?? 965,
+      ranking: mu.profile?.ranking ?? null,
+      submissionCalendar: mu.userCalendar?.submissionCalendar ?? '{}',
+      matchedUserStats: {
+        acSubmissionNum: acSub,
+        totalSubmissionNum: totSub,
       },
     };
+    source = 'GraphQL';
+    console.log('✅ LeetCode data fetched via GraphQL');
+  } catch (gqlErr) {
+    console.warn('⚠️ GraphQL failed, falling back to REST:', gqlErr.message);
 
-    setCachedDashboard(username, dashboard);
-    return dashboard;
-  } catch (err) {
-    console.error('❌ Error fetching LeetCode data:', err);
-    throw new Error(`Failed to fetch LeetCode stats: ${err.message}`);
+    // Strategy 2: REST wrapper (alfa-leetcode-api) — single attempt, no spam
+    try {
+      console.log('🔄 Fetching LeetCode data via REST fallback...');
+      apiData = await fetchViaRestAPI(username);
+      source = 'REST';
+      console.log('✅ LeetCode data fetched via REST');
+    } catch (restErr) {
+      console.error('❌ Both GraphQL and REST failed:', restErr.message);
+      throw new Error(`Failed to load LeetCode stats: ${restErr.message}`);
+    }
   }
+
+  const calendar = parseSubmissionCalendar(apiData.submissionCalendar || {});
+
+  const acStats = apiData.matchedUserStats?.acSubmissionNum || [];
+  const acAll = acStats.find((e) => e.difficulty === 'All')?.count ?? apiData.totalSolved ?? 0;
+  const acEasy = acStats.find((e) => e.difficulty === 'Easy')?.count ?? apiData.easySolved ?? 0;
+  const acMedium = acStats.find((e) => e.difficulty === 'Medium')?.count ?? apiData.mediumSolved ?? 0;
+  const acHard = acStats.find((e) => e.difficulty === 'Hard')?.count ?? apiData.hardSolved ?? 0;
+
+  const totalStats = apiData.matchedUserStats?.totalSubmissionNum || [];
+  const totalAll = totalStats.find((e) => e.difficulty === 'All')?.count ?? 0;
+  const acceptanceRate = totalAll > 0 ? Math.round((acAll / totalAll) * 100) : null;
+
+  const dashboard = {
+    username,
+    profileUrl: LEETCODE_PROFILE_URL,
+    source,
+    problems: {
+      totalSolved: acAll,
+      totalQuestions: apiData.totalQuestions ?? 4028,
+      easy: acEasy,
+      totalEasy: apiData.totalEasy ?? 960,
+      medium: acMedium,
+      totalMedium: apiData.totalMedium ?? 2103,
+      hard: acHard,
+      totalHard: apiData.totalHard ?? 965,
+      attempting: 0,
+      ranking: apiData.ranking ?? null,
+      acceptanceRate,
+    },
+    badges: {
+      count: apiData.badges?.length ?? 0,
+      recent: apiData.badges?.[0] ?? null,
+      featured: apiData.badges?.slice(0, 3) ?? [],
+      upcoming: apiData.upcomingBadges ?? [],
+    },
+    contest: {
+      hasContests: Boolean(apiData.userContestRanking?.attendedContestsCount),
+      rating: apiData.userContestRanking?.rating ?? null,
+      badge: apiData.userContestRanking?.badge?.name ?? null,
+      globalRank: apiData.userContestRanking?.globalRanking ?? null,
+      totalParticipants: apiData.userContestRanking?.totalParticipants ?? null,
+      contestsAttended: apiData.userContestRanking?.attendedContestsCount ?? 0,
+      topPercentage: apiData.userContestRanking?.topPercentage ?? null,
+      profileRanking: apiData.ranking ?? null,
+      ratingHistory: [],
+    },
+    activity: {
+      submissionsPastYear: totalSubmissionsInYear(calendar),
+      totalActiveDays: Object.keys(calendar).length,
+      currentStreak: computeCurrentStreak(calendar),
+      maxStreak: computeMaxStreak(calendar),
+      heatmap: buildHeatmap(calendar),
+      calendar,
+    },
+  };
+
+  setCachedDashboard(username, dashboard);
+  return dashboard;
 }
+
 
 export async function fetchLeetCodeStats(username = LEETCODE_USERNAME) {
   const dashboard = await fetchLeetCodeDashboard(username);

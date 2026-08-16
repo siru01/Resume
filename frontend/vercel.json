@@ -2,7 +2,11 @@
   "rewrites": [
     {
       "source": "/api/leetcode/:path*",
-      "destination": "https://leetcode-api-faisalshohag.vercel.app/:path*"
+      "destination": "https://alfa-leetcode-api.onrender.com/userProfile/:path*"
+    },
+    {
+      "source": "/api/lc-graphql",
+      "destination": "https://leetcode.com/graphql"
     },
     {
       "source": "/(.*)",

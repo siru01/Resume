@@ -8,6 +8,7 @@ import Resume from './components/Resume'
 import Progress from './components/Progress'
 import SearchPalette from './components/SearchPalette'
 import Assets from './components/Assets'
+import CodeCompiler from './components/CodeCompiler'
 import Footer from './components/Footer'
 //for analytical 
 import { Analytics } from '@vercel/analytics/react';
@@ -104,6 +105,7 @@ export default function App() {
         {page === 'resume' && <Resume />}
         {page === 'progress' && <Progress />}
         {page === 'assets' && <Assets />}
+        {page === 'code' && <CodeCompiler />}
       </div>
 
       <Footer setPage={setPage} />

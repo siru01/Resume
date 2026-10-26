@@ -10,6 +10,10 @@ export const searchData = [
   { title: "Resume", type: "Page", page: "resume" },
   { title: "Progress", type: "Page", page: "progress" },
   { title: "LeetCode", type: "Progress", page: "progress" },
+  { title: "Code", type: "Page", page: "code" },
+  { title: "Online Compiler", type: "Tool", page: "code" },
+  { title: "Python Compiler", type: "Code", page: "code" },
+  { title: "C++ Compiler", type: "Code", page: "code" },
 
   // Experience
   { title: "KGeN [INDGG]", type: "Experience", page: "experience" },

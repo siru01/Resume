@@ -22,6 +22,16 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api\/lc-graphql/, '/graphql'),
         secure: true,
+      },
+      // Proxy for Wandbox Online Compiler (100% free, public, no-auth execution)
+      '/api/wandbox': {
+        target: 'https://wandbox.org',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/wandbox/, '/api'),
+        secure: true,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
       }
     }
   },

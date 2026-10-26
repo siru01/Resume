@@ -16,6 +16,7 @@ export default function Footer({ setPage }) {
             {/*<li onClick={() => setPage('blog')}>Blog</li>*/}
             <li onClick={() => setPage('resume')}>Resume</li>
             <li onClick={() => setPage('progress')}>Progress</li>
+            <li onClick={() => setPage('code')}>Code</li>
           </ul>
         </div>
 

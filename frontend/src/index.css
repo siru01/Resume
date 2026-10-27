@@ -70,6 +70,11 @@ html::-webkit-scrollbar-thumb:hover {
   padding: 0 2rem 5rem 2rem;
   box-sizing: border-box;
   min-height: calc(100vh - 52px);
+  transition: max-width 0.2s ease;
+}
+
+.app-main-content:has(.compiler-page) {
+  max-width: 1350px;
 }
 
 .app-back-nav {

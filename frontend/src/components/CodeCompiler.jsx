@@ -377,14 +377,16 @@ export default function CodeCompiler() {
             disabled={isLoading}
             title="Execute code (Ctrl+Enter)"
           >
-            {isLoading ? (
-              <span className="compiler-spinner"></span>
-            ) : (
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-              </svg>
-            )}
-            <span>{isLoading ? 'Running...' : 'Run Code'}</span>
+            <span className="compiler-run-icon-slot">
+              {isLoading ? (
+                <span className="compiler-spinner"></span>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              )}
+            </span>
+            <span className="compiler-run-label">Run</span>
           </button>
         </div>
       </div>
@@ -418,10 +420,9 @@ export default function CodeCompiler() {
         {/* ── LEFT SIDEBAR ── */}
         <aside className="compiler-sidebar">
           
-          {/* YELLOW BOX: Selected Language */}
-          <div className="compiler-yellow-box">
+          {/* Language Selector Card */}
+          <div className="compiler-sidebar-card">
             <div className="sidebar-box-label">
-              <span className="box-indicator yellow-dot"></span>
               <span className="box-title">SELECTED LANGUAGE</span>
             </div>
             <div className="compiler-lang-selector-card">
@@ -448,11 +449,10 @@ export default function CodeCompiler() {
             </div>
           </div>
 
-          {/* BLUE BOX: File Heading, List of Files, + Add/Import Button */}
-          <div className="compiler-blue-box">
+          {/* File Heading, List of Files, + Add/Import Button */}
+          <div className="compiler-sidebar-card compiler-files-card">
             <div className="sidebar-box-label file-header-label">
               <div className="file-header-left">
-                <span className="box-indicator blue-dot"></span>
                 <span className="box-title">FILES / PROJECT</span>
               </div>
 
@@ -465,7 +465,7 @@ export default function CodeCompiler() {
                   title="Create new file or import"
                   aria-label="New file or import options"
                 >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>

@@ -13,7 +13,7 @@ export default function CodeCompiler() {
       id: 'main-1',
       name: `main.${SUPPORTED_LANGUAGES[0].extension}`,
       langId: SUPPORTED_LANGUAGES[0].id,
-      content: SUPPORTED_LANGUAGES[0].boilerplate
+      content: ''
     }
   ]);
   const [activeFileId, setActiveFileId] = useState('main-1');
@@ -61,8 +61,7 @@ export default function CodeCompiler() {
           return {
             ...f,
             langId: lang.id,
-            name: `${baseName}.${lang.extension}`,
-            content: f.content.trim() === '' ? lang.boilerplate : f.content
+            name: `${baseName}.${lang.extension}`
           };
         }
         return f;
@@ -118,7 +117,7 @@ export default function CodeCompiler() {
       id: `file-${Date.now()}`,
       name: defaultName,
       langId: matchedLang.id,
-      content: matchedLang.boilerplate || ''
+      content: ''
     };
 
     setFiles((prev) => [...prev, newFile]);
@@ -318,7 +317,7 @@ export default function CodeCompiler() {
   };
 
   const resetCode = () => {
-    handleCodeChange(selectedLang.boilerplate);
+    handleCodeChange('');
     setOutput(null);
     setExecTime(null);
   };
@@ -626,7 +625,6 @@ export default function CodeCompiler() {
         <div className="compiler-editor-container">
           <div className="compiler-window-bar">
             <div className="compiler-window-title">
-              <span className="compiler-file-icon">●</span>
               <span className="compiler-active-file-header">{activeFile.name}</span>
               <span className="compiler-lang-badge">{selectedLang.name}</span>
             </div>
@@ -666,22 +664,11 @@ export default function CodeCompiler() {
         <div className="compiler-output-container">
           <div className="compiler-window-bar output-bar">
             <div className="compiler-window-title">
-              <span className="compiler-terminal-icon">&gt;_</span>
               <span className="compiler-terminal-heading">TERMINAL OUTPUT</span>
-              {execTime && <span className="compiler-time-tag">{execTime}</span>}
-              {output && (
-                <span className={`compiler-mode-tag ${output.isWasm ? 'wasm' : 'cloud'}`}>
-                  {output.isWasm ? '⚡ Browser Wasm' : '☁️ Cloud'}
-                </span>
-              )}
-              {output && (
-                <span className={`compiler-status-tag ${output.code === 0 ? 'success' : 'error'}`}>
-                  Exit: {output.code}
-                </span>
-              )}
             </div>
 
-            <div className="compiler-window-actions">
+            <div className="compiler-terminal-actions">
+              {execTime && <span className="compiler-time-tag">{execTime}</span>}
               {output && (
                 <button
                   type="button"
@@ -689,7 +676,7 @@ export default function CodeCompiler() {
                   onClick={clearOutput}
                   title="Clear terminal output"
                 >
-                  Clear
+                  Clr
                 </button>
               )}
             </div>

@@ -47,7 +47,7 @@
   line-height: 1.5;
 }
 
-/* TOOLBAR CONTROLS: Only Run Button is Green */
+/* TOOLBAR CONTROLS */
 .compiler-run-zone {
   display: flex;
   align-items: center;
@@ -55,30 +55,39 @@
 }
 
 .compiler-action-btn {
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-light);
-  border-radius: 6px;
-  padding: 0.45rem 0.8rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 5px solid;
+  border-radius: 0px;
+  padding: 0.4rem 0.85rem;
   font-family: inherit;
-  font-size: 12.5px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+:root[data-theme="dark"] .compiler-action-btn {
+  background: #0d0d0d;
+  border-color: #2a2a2a;
+}
+
+:root[data-theme="light"] .compiler-action-btn {
+  background: #ffffff;
+  border-color: #525252;
 }
 
 .compiler-action-btn:hover {
-  background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border-color: var(--text-secondary);
+  background: var(--bg-secondary);
 }
 
 .compiler-action-btn.active {
   background: var(--bg-tertiary);
-  color: var(--text-primary);
-  border-color: #3b82f6;
+  border-color: var(--text-primary);
 }
 
-/* The Run Button inside the Green Box */
+/* The Run Button: Only green element, matching 5px border format */
 .compiler-run-btn {
   display: inline-flex;
   align-items: center;
@@ -86,23 +95,24 @@
   gap: 0.45rem;
   background: #238636;
   color: #ffffff;
-  border: 1px solid #2ea043;
-  border-radius: 6px;
-  padding: 0.45rem 0.95rem;
-  min-width: 82px;
-  width: 82px;
+  border: 5px solid #2ea043;
+  border-radius: 0px;
+  padding: 0.4rem 0.95rem;
+  min-width: 86px;
+  width: 86px;
   box-sizing: border-box;
   font-family: inherit;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(35, 134, 54, 0.35);
+  box-shadow: 0 2px 8px rgba(35, 134, 54, 0.25);
   transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .compiler-run-btn:hover:not(:disabled) {
   background: #2ea043;
-  box-shadow: 0 4px 14px rgba(46, 160, 67, 0.5);
+  border-color: #3fb950;
+  box-shadow: 0 4px 14px rgba(46, 160, 67, 0.4);
 }
 
 .compiler-run-btn:disabled {
@@ -143,12 +153,22 @@
 
 /* ── STDIN Input Drawer ── */
 .compiler-stdin-box {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
-  border-radius: 6px;
+  background: var(--bg-primary);
+  border: 5px solid;
+  border-radius: 0px;
   padding: 0.8rem 1rem;
   margin-bottom: 1.2rem;
   animation: compilerFadeIn 0.2s ease;
+}
+
+:root[data-theme="dark"] .compiler-stdin-box {
+  background: #0d0d0d;
+  border-color: #2a2a2a;
+}
+
+:root[data-theme="light"] .compiler-stdin-box {
+  background: #ffffff;
+  border-color: #525252;
 }
 
 .compiler-stdin-header {
@@ -157,14 +177,15 @@
   margin-bottom: 0.4rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-weight: 600;
 }
 
 .compiler-stdin-textarea {
   width: 100%;
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
   color: var(--text-primary);
   border: 1px solid var(--border-light);
-  border-radius: 4px;
+  border-radius: 0px;
   padding: 0.5rem 0.7rem;
   font-family: inherit;
   font-size: 13px;
@@ -188,8 +209,10 @@
   grid-template-columns: 260px 1.2fr 0.95fr;
   gap: 1rem;
   width: 100%;
-  min-height: 580px;
+  height: 540px;
+  max-height: 540px;
   align-items: stretch;
+  box-sizing: border-box;
 }
 
 /* Common Box Labels */
@@ -210,6 +233,9 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  height: 540px;
+  max-height: 540px;
+  box-sizing: border-box;
 }
 
 /* ── Unified Sidebar Card (5px border matching Progress card) ── */
@@ -405,6 +431,35 @@
   flex: 1;
   overflow-y: auto;
   max-height: 280px;
+
+  /* Scrollbar hidden by default, visible after 0.5s hover */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s ease 0.5s;
+}
+
+.compiler-file-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.compiler-file-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.compiler-file-list::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.2s ease 0.5s;
+}
+
+.compiler-file-list:hover {
+  scrollbar-color: rgba(120, 120, 120, 0.45) transparent;
+  transition-delay: 0.5s;
+}
+
+.compiler-file-list:hover::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.45);
+  transition-delay: 0.5s;
 }
 
 .compiler-file-item {
@@ -508,7 +563,9 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  min-height: 520px;
+  height: 540px;
+  max-height: 540px;
+  box-sizing: border-box;
 }
 
 :root[data-theme="dark"] .compiler-editor-container {
@@ -533,6 +590,7 @@
   box-sizing: border-box;
   border-bottom: 1px solid var(--border-light);
   user-select: none;
+  flex-shrink: 0;
 }
 
 .compiler-window-title {
@@ -570,7 +628,9 @@
   display: flex;
   flex: 1;
   background: var(--bg-primary);
-  min-height: 480px;
+  height: calc(540px - 48px - 10px);
+  max-height: calc(540px - 48px - 10px);
+  overflow: hidden;
 }
 
 .compiler-line-numbers {
@@ -584,6 +644,7 @@
   text-align: right;
   overflow: hidden;
   user-select: none;
+  flex-shrink: 0;
 }
 
 .compiler-line-number {
@@ -593,6 +654,7 @@
 .compiler-code-input {
   flex: 1;
   width: 100%;
+  height: 100%;
   background: transparent;
   color: var(--text-primary);
   border: none;
@@ -601,12 +663,42 @@
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   font-size: 13px;
   line-height: 1.6;
-  tab-size: 2;
+  tab-size: 4;
   white-space: pre;
   overflow-x: auto;
   overflow-y: auto;
   resize: none;
   box-sizing: border-box;
+
+  /* Scrollbar hidden by default, visible after 0.5s hover */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s ease 0.5s;
+}
+
+.compiler-code-input::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.compiler-code-input::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.compiler-code-input::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.2s ease 0.5s;
+}
+
+.compiler-code-input:hover {
+  scrollbar-color: rgba(120, 120, 120, 0.45) transparent;
+  transition-delay: 0.5s;
+}
+
+.compiler-code-input:hover::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.45);
+  transition-delay: 0.5s;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -619,7 +711,9 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  min-height: 520px;
+  height: 540px;
+  max-height: 540px;
+  box-sizing: border-box;
 }
 
 :root[data-theme="dark"] .compiler-output-container {
@@ -638,6 +732,7 @@
   height: 48px;
   min-height: 48px;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .compiler-terminal-heading {
@@ -708,14 +803,45 @@
   padding: 1rem;
   overflow-y: auto;
   overflow-x: auto;
-  min-height: 480px;
+  height: calc(540px - 48px - 10px);
+  max-height: calc(540px - 48px - 10px);
   box-sizing: border-box;
   font-size: 13px;
   line-height: 1.55;
+
+  /* Scrollbar hidden by default, visible after 0.5s hover */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s ease 0.5s;
 }
 
 :root[data-theme="light"] .compiler-output-body {
   background: #fbfbfb;
+}
+
+.compiler-output-body::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.compiler-output-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.compiler-output-body::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.2s ease 0.5s;
+}
+
+.compiler-output-body:hover {
+  scrollbar-color: rgba(120, 120, 120, 0.45) transparent;
+  transition-delay: 0.5s;
+}
+
+.compiler-output-body:hover::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.45);
+  transition-delay: 0.5s;
 }
 
 .compiler-output-idle {

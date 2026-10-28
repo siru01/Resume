@@ -78,28 +78,89 @@ export default function CodeCompiler() {
   };
 
   const handleKeyDown = (e) => {
+    // 1. Run on Ctrl+Enter or Cmd+Enter
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault();
       runCode();
       return;
     }
 
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      const textarea = textareaRef.current;
-      if (!textarea) return;
+    const textarea = textareaRef.current;
+    if (!textarea) return;
 
+    // 2. Smart Auto-indentation on Enter
+    if (e.key === 'Enter') {
+      e.preventDefault();
       const start = textarea.selectionStart;
       const end = textarea.selectionEnd;
-      const spaces = '  ';
+      const currentContent = activeFile.content || '';
 
-      const currentContent = activeFile.content;
+      // Find the current line text before cursor
+      const lineStart = currentContent.lastIndexOf('\n', start - 1) + 1;
+      const currentLine = currentContent.substring(lineStart, start);
+
+      // Determine existing indentation
+      const indentMatch = currentLine.match(/^(\s*)/);
+      let indent = indentMatch ? indentMatch[1] : '';
+
+      // Check if line ends with colon ':' (Python) or '{' (JS/C++/Java/etc.)
+      const trimmedBeforeCursor = currentLine.trimEnd();
+      const isColon = trimmedBeforeCursor.endsWith(':');
+      const isOpenBrace = trimmedBeforeCursor.endsWith('{');
+
+      // For Python, standard indentation step is 4 spaces (or 2 if using 2 spaces)
+      const indentStep = selectedLang.id === 'python' ? '    ' : '  ';
+
+      if (isColon || isOpenBrace) {
+        indent += indentStep;
+      }
+
+      const insertion = '\n' + indent;
+      const newCode = currentContent.substring(0, start) + insertion + currentContent.substring(end);
+      handleCodeChange(newCode);
+
+      setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = start + insertion.length;
+      }, 0);
+      return;
+    }
+
+    // 3. Tab key support (inserts 4 spaces for Python, 2 for others)
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const spaces = selectedLang.id === 'python' ? '    ' : '  ';
+
+      const currentContent = activeFile.content || '';
       const newCode = currentContent.substring(0, start) + spaces + currentContent.substring(end);
       handleCodeChange(newCode);
 
       setTimeout(() => {
         textarea.selectionStart = textarea.selectionEnd = start + spaces.length;
       }, 0);
+      return;
+    }
+
+    // 4. Backspace de-indent (delete 4 or 2 spaces at once if cursor is on leading indentation)
+    if (e.key === 'Backspace') {
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      if (start === end) {
+        const currentContent = activeFile.content || '';
+        const lineStart = currentContent.lastIndexOf('\n', start - 1) + 1;
+        const textBeforeCursorOnLine = currentContent.substring(lineStart, start);
+        const indentStep = selectedLang.id === 'python' ? 4 : 2;
+
+        if (textBeforeCursorOnLine.length > 0 && /^ +$/.test(textBeforeCursorOnLine) && textBeforeCursorOnLine.length % indentStep === 0) {
+          e.preventDefault();
+          const newCode = currentContent.substring(0, start - indentStep) + currentContent.substring(end);
+          handleCodeChange(newCode);
+          setTimeout(() => {
+            textarea.selectionStart = textarea.selectionEnd = start - indentStep;
+          }, 0);
+        }
+      }
     }
   };
 
@@ -685,7 +746,6 @@ export default function CodeCompiler() {
           <div className="compiler-output-body">
             {!output && !isLoading && (
               <div className="compiler-output-idle">
-                <div className="terminal-idle-icon">⚡</div>
                 <p>Output will appear here after clicking <strong>Run Code</strong>.</p>
                 <p className="compiler-idle-sub">Supports interactive inputs, WebAssembly speed, and standard errors.</p>
               </div>

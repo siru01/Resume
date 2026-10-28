@@ -1,22 +1,78 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { SUPPORTED_LANGUAGES } from '../data/compilerLanguages';
 import { runPythonInBrowser, runJavaScriptInBrowser } from '../utils/pyodideRunner';
 import './CodeCompiler.css';
 
+const SESSION_KEYS = {
+  FILES: 'code_compiler_files',
+  ACTIVE_FILE_ID: 'code_compiler_active_file_id',
+  SELECTED_LANG_ID: 'code_compiler_selected_lang_id',
+  STDIN: 'code_compiler_stdin',
+  SHOW_STDIN: 'code_compiler_show_stdin',
+  OUTPUT: 'code_compiler_output',
+  EXEC_TIME: 'code_compiler_exec_time'
+};
+
 export default function CodeCompiler() {
-  const [selectedLang, setSelectedLang] = useState(SUPPORTED_LANGUAGES[0]);
+  const [selectedLang, setSelectedLang] = useState(() => {
+    try {
+      // First try to match the active file's language if saved
+      const savedFiles = sessionStorage.getItem(SESSION_KEYS.FILES);
+      const savedActiveId = sessionStorage.getItem(SESSION_KEYS.ACTIVE_FILE_ID);
+      if (savedFiles) {
+        const parsedFiles = JSON.parse(savedFiles);
+        if (Array.isArray(parsedFiles) && parsedFiles.length > 0) {
+          const currentFile = parsedFiles.find((f) => f.id === savedActiveId) || parsedFiles[0];
+          if (currentFile?.langId) {
+            const found = SUPPORTED_LANGUAGES.find((l) => l.id === currentFile.langId);
+            if (found) return found;
+          }
+        }
+      }
+      const savedLangId = sessionStorage.getItem(SESSION_KEYS.SELECTED_LANG_ID);
+      if (savedLangId) {
+        const found = SUPPORTED_LANGUAGES.find((l) => l.id === savedLangId);
+        if (found) return found;
+      }
+    } catch (e) {
+      console.warn('Failed to load selectedLang from sessionStorage:', e);
+    }
+    return SUPPORTED_LANGUAGES[0];
+  });
 
   // Multiple files management
   // Each file has: id, name, langId, content
-  const [files, setFiles] = useState([
-    {
-      id: 'main-1',
-      name: `main.${SUPPORTED_LANGUAGES[0].extension}`,
-      langId: SUPPORTED_LANGUAGES[0].id,
-      content: ''
+  const [files, setFiles] = useState(() => {
+    try {
+      const savedFiles = sessionStorage.getItem(SESSION_KEYS.FILES);
+      if (savedFiles) {
+        const parsed = JSON.parse(savedFiles);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to load files from sessionStorage:', e);
     }
-  ]);
-  const [activeFileId, setActiveFileId] = useState('main-1');
+    return [
+      {
+        id: 'main-1',
+        name: `main.${SUPPORTED_LANGUAGES[0].extension}`,
+        langId: SUPPORTED_LANGUAGES[0].id,
+        content: ''
+      }
+    ];
+  });
+
+  const [activeFileId, setActiveFileId] = useState(() => {
+    try {
+      const savedActiveFileId = sessionStorage.getItem(SESSION_KEYS.ACTIVE_FILE_ID);
+      if (savedActiveFileId) return savedActiveFileId;
+    } catch (e) {
+      console.warn('Failed to load activeFileId from sessionStorage:', e);
+    }
+    return 'main-1';
+  });
 
   // New file modal / dropdown state
   const [showNewFileMenu, setShowNewFileMenu] = useState(false);
@@ -28,18 +84,130 @@ export default function CodeCompiler() {
   const [editingFileName, setEditingFileName] = useState('');
 
   // Execution state
-  const [stdin, setStdin] = useState('');
-  const [showStdin, setShowStdin] = useState(false);
-  const [output, setOutput] = useState(null);
+  const [stdin, setStdin] = useState(() => {
+    try {
+      return sessionStorage.getItem(SESSION_KEYS.STDIN) || '';
+    } catch {
+      return '';
+    }
+  });
+
+  const [showStdin, setShowStdin] = useState(() => {
+    try {
+      return sessionStorage.getItem(SESSION_KEYS.SHOW_STDIN) === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const [output, setOutput] = useState(() => {
+    try {
+      const savedOutput = sessionStorage.getItem(SESSION_KEYS.OUTPUT);
+      return savedOutput ? JSON.parse(savedOutput) : null;
+    } catch {
+      return null;
+    }
+  });
+
   const [isLoading, setIsLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState('Executing in sandbox environment…');
-  const [execTime, setExecTime] = useState(null);
+
+  const [execTime, setExecTime] = useState(() => {
+    try {
+      return sessionStorage.getItem(SESSION_KEYS.EXEC_TIME) || null;
+    } catch {
+      return null;
+    }
+  });
 
   const textareaRef = useRef(null);
   const lineNumbersRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  const activeFile = files.find((f) => f.id === activeFileId) || files[0];
+  const activeFile = files.find((f) => f.id === activeFileId) || files[0] || {
+    id: 'main-1',
+    name: `main.${selectedLang.extension}`,
+    langId: selectedLang.id,
+    content: ''
+  };
+
+  // Ensure activeFileId points to a valid file if files list changes
+  useEffect(() => {
+    if (files.length > 0 && !files.some((f) => f.id === activeFileId)) {
+      setActiveFileId(files[0].id);
+    }
+  }, [files, activeFileId]);
+
+  // Persist files in sessionStorage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(SESSION_KEYS.FILES, JSON.stringify(files));
+    } catch (e) {
+      console.warn('Failed to save files to sessionStorage:', e);
+    }
+  }, [files]);
+
+  // Persist activeFileId in sessionStorage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(SESSION_KEYS.ACTIVE_FILE_ID, activeFileId);
+    } catch (e) {
+      console.warn('Failed to save activeFileId to sessionStorage:', e);
+    }
+  }, [activeFileId]);
+
+  // Persist selectedLang in sessionStorage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(SESSION_KEYS.SELECTED_LANG_ID, selectedLang.id);
+    } catch (e) {
+      console.warn('Failed to save selectedLang to sessionStorage:', e);
+    }
+  }, [selectedLang]);
+
+  // Persist stdin in sessionStorage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(SESSION_KEYS.STDIN, stdin);
+    } catch (e) {
+      console.warn('Failed to save stdin to sessionStorage:', e);
+    }
+  }, [stdin]);
+
+  // Persist showStdin in sessionStorage
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(SESSION_KEYS.SHOW_STDIN, String(showStdin));
+    } catch (e) {
+      console.warn('Failed to save showStdin to sessionStorage:', e);
+    }
+  }, [showStdin]);
+
+  // Persist output in sessionStorage
+  useEffect(() => {
+    try {
+      if (output) {
+        sessionStorage.setItem(SESSION_KEYS.OUTPUT, JSON.stringify(output));
+      } else {
+        sessionStorage.removeItem(SESSION_KEYS.OUTPUT);
+      }
+    } catch (e) {
+      console.warn('Failed to save output to sessionStorage:', e);
+    }
+  }, [output]);
+
+  // Persist execTime in sessionStorage
+  useEffect(() => {
+    try {
+      if (execTime) {
+        sessionStorage.setItem(SESSION_KEYS.EXEC_TIME, execTime);
+      } else {
+        sessionStorage.removeItem(SESSION_KEYS.EXEC_TIME);
+      }
+    } catch (e) {
+      console.warn('Failed to save execTime to sessionStorage:', e);
+    }
+  }, [execTime]);
 
   // Sync line numbers scroll with textarea
   const handleScroll = () => {

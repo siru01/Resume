@@ -151,7 +151,7 @@
   }
 }
 
-/* ── STDIN Input Drawer ── */
+/* ── STDIN Input Drawer ──
 .compiler-stdin-box {
   background: var(--bg-primary);
   border: 5px solid;
@@ -159,7 +159,7 @@
   padding: 0.8rem 1rem;
   margin-bottom: 1.2rem;
   animation: compilerFadeIn 0.2s ease;
-}
+} */
 
 :root[data-theme="dark"] .compiler-stdin-box {
   background: #0d0d0d;

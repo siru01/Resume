@@ -193,11 +193,35 @@ const GQL_QUERY = `
     matchedUser(username: $username) {
       username
       profile { ranking }
+      badges {
+        id
+        displayName
+        icon
+        creationDate
+      }
+      upcomingBadges {
+        name
+        icon
+      }
       submitStatsGlobal {
         acSubmissionNum { difficulty count submissions }
         totalSubmissionNum { difficulty count submissions }
       }
       userCalendar { submissionCalendar }
+    }
+    userContestRanking(username: $username) {
+      attendedContestsCount
+      rating
+      globalRanking
+      totalParticipants
+      topPercentage
+      badge { name }
+    }
+    userContestRankingHistory(username: $username) {
+      attended
+      rating
+      ranking
+      contest { title startTime }
     }
   }
 `;
@@ -251,6 +275,10 @@ export async function fetchLeetCodeDashboard(username = LEETCODE_USERNAME) {
     const acSub = mu.submitStatsGlobal?.acSubmissionNum || [];
     const totSub = mu.submitStatsGlobal?.totalSubmissionNum || [];
 
+    const contestHistory = (gqlData.userContestRankingHistory ?? [])
+      .filter((h) => h.attended && h.rating > 0)
+      .map((h) => ({ rating: h.rating, date: new Date(h.contest.startTime * 1000) }));
+
     apiData = {
       totalSolved: acSub.find((e) => e.difficulty === 'All')?.count ?? 0,
       easySolved: acSub.find((e) => e.difficulty === 'Easy')?.count ?? 0,
@@ -262,6 +290,11 @@ export async function fetchLeetCodeDashboard(username = LEETCODE_USERNAME) {
       totalHard: allQ.find((e) => e.difficulty === 'Hard')?.count ?? 965,
       ranking: mu.profile?.ranking ?? null,
       submissionCalendar: mu.userCalendar?.submissionCalendar ?? '{}',
+      badges: mu.badges ?? [],
+      upcomingBadges: mu.upcomingBadges ?? [],
+      userContestRanking: gqlData.userContestRanking ?? null,
+      _contestHistory: contestHistory,
+      _rawContestHistory: gqlData.userContestRankingHistory ?? [],
       matchedUserStats: {
         acSubmissionNum: acSub,
         totalSubmissionNum: totSub,
@@ -319,17 +352,27 @@ export async function fetchLeetCodeDashboard(username = LEETCODE_USERNAME) {
       featured: apiData.badges?.slice(0, 3) ?? [],
       upcoming: apiData.upcomingBadges ?? [],
     },
-    contest: {
-      hasContests: Boolean(apiData.userContestRanking?.attendedContestsCount),
-      rating: apiData.userContestRanking?.rating ?? null,
-      badge: apiData.userContestRanking?.badge?.name ?? null,
-      globalRank: apiData.userContestRanking?.globalRanking ?? null,
-      totalParticipants: apiData.userContestRanking?.totalParticipants ?? null,
-      contestsAttended: apiData.userContestRanking?.attendedContestsCount ?? 0,
-      topPercentage: apiData.userContestRanking?.topPercentage ?? null,
-      profileRanking: apiData.ranking ?? null,
-      ratingHistory: [],
-    },
+    contest: (() => {
+      const ranking = apiData.userContestRanking ?? null;
+      const history = apiData._contestHistory ?? [];
+      // LeetCode only fills userContestRanking after 5+ contests.
+      // The history rating is the PRE-contest rating (not the final), so we
+      // cannot rely on it for the true current rating — show null so the UI
+      // displays "—" and links to the profile instead of a wrong number.
+      const attendedFromHistory = (apiData._rawContestHistory ?? []).filter((h) => h.attended).length;
+      return {
+        hasContests: Boolean(ranking?.attendedContestsCount) || attendedFromHistory > 0,
+        rating: ranking?.rating ?? null,          // null until 5+ contests
+        ratingLocked: !ranking && attendedFromHistory > 0, // flag: attended but rating unavailable
+        badge: ranking?.badge?.name ?? null,
+        globalRank: ranking?.globalRanking ?? null,
+        totalParticipants: ranking?.totalParticipants ?? null,
+        contestsAttended: ranking?.attendedContestsCount ?? attendedFromHistory,
+        topPercentage: ranking?.topPercentage ?? null,
+        profileRanking: apiData.ranking ?? null,
+        ratingHistory: history,
+      };
+    })(),
     activity: {
       submissionsPastYear: totalSubmissionsInYear(calendar),
       totalActiveDays: Object.keys(calendar).length,

@@ -39,6 +39,8 @@ function DonutChart({ solved, total }) {
 }
 
 function RatingChart({ history }) {
+  const [hoverIdx, setHoverIdx] = useState(null);
+
   if (!history.length) {
     return (
       <div className="prog-chart-empty">
@@ -47,35 +49,128 @@ function RatingChart({ history }) {
     );
   }
 
-  const width = 320;
-  const height = 120;
-  const padding = 16;
-  const ratings = history.map((point) => point.rating);
-  const min = Math.min(...ratings) - 40;
-  const max = Math.max(...ratings) + 40;
+  const W = 320;
+  const H = 140;
+  const padL = 4;
+  const padR = 8;
+  const padT = 12;
+  const padB = 24;
 
-  const points = history.map((point, index) => {
-    const x = padding + (index / Math.max(history.length - 1, 1)) * (width - padding * 2);
-    const y = height - padding - ((point.rating - min) / Math.max(max - min, 1)) * (height - padding * 2);
-    return `${x},${y}`;
-  });
+  const ratings = history.map((p) => p.rating);
+  const minR = Math.min(...ratings) - 50;
+  const maxR = Math.max(...ratings) + 50;
+  const range = Math.max(maxR - minR, 1);
 
-  const years = [...new Set(history.map((point) => point.date.getFullYear()))];
+  const toX = (i) => padL + (i / Math.max(history.length - 1, 1)) * (W - padL - padR);
+  const toY = (r) => padT + (1 - (r - minR) / range) * (H - padT - padB);
+
+  const pts = history.map((p, i) => ({ x: toX(i), y: toY(p.rating) }));
+
+  // Smooth cubic bezier path
+  const linePath = pts.reduce((d, pt, i) => {
+    if (i === 0) return `M ${pt.x},${pt.y}`;
+    const prev = pts[i - 1];
+    const cpx = (prev.x + pt.x) / 2;
+    return `${d} C ${cpx},${prev.y} ${cpx},${pt.y} ${pt.x},${pt.y}`;
+  }, '');
+
+  const areaPath = `${linePath} L ${pts[pts.length - 1].x},${H - padB} L ${pts[0].x},${H - padB} Z`;
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const svgX = ((e.clientX - rect.left) / rect.width) * W;
+    let closest = 0;
+    let minDist = Infinity;
+    pts.forEach((pt, i) => {
+      const d = Math.abs(pt.x - svgX);
+      if (d < minDist) { minDist = d; closest = i; }
+    });
+    setHoverIdx(closest);
+  };
+
+  const hovered = hoverIdx !== null ? history[hoverIdx] : null;
 
   return (
     <div className="prog-rating-chart">
-      <svg viewBox={`0 0 ${width} ${height}`} className="prog-rating-svg" aria-hidden="true">
-        <polyline points={points.join(' ')} className="prog-rating-line" />
-        {history.map((point, index) => {
-          const x = padding + (index / Math.max(history.length - 1, 1)) * (width - padding * 2);
-          const y = height - padding - ((point.rating - min) / Math.max(max - min, 1)) * (height - padding * 2);
-          return <circle key={`${point.date}-${index}`} cx={x} cy={y} r="2.5" className="prog-rating-dot" />;
-        })}
-      </svg>
-      <div className="prog-rating-years">
-        {years.map((year) => (
-          <span key={year}>{year}</span>
-        ))}
+      <div className="prog-rating-chart-inner">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="prog-rating-svg"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setHoverIdx(null)}
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="ratingAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.02" />
+            </linearGradient>
+          </defs>
+
+          {/* Subtle grid lines */}
+          {[0.25, 0.5, 0.75].map((frac) => (
+            <line
+              key={frac}
+              x1={padL}
+              y1={padT + frac * (H - padT - padB)}
+              x2={W - padR}
+              y2={padT + frac * (H - padT - padB)}
+              className="prog-rating-grid"
+            />
+          ))}
+
+          {/* Gradient area fill */}
+          <path d={areaPath} fill="url(#ratingAreaGrad)" />
+
+          {/* Smooth line */}
+          <path d={linePath} fill="none" className="prog-rating-line" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+
+          {/* Hover vertical cursor */}
+          {hoverIdx !== null && (
+            <line
+              x1={pts[hoverIdx].x}
+              y1={padT}
+              x2={pts[hoverIdx].x}
+              y2={H - padB}
+              className="prog-rating-cursor"
+            />
+          )}
+
+          {/* Dots — show all small, hovered one bigger */}
+          {pts.map((pt, i) => (
+            <circle
+              key={i}
+              cx={pt.x}
+              cy={pt.y}
+              r={hoverIdx === i ? 5 : 2.5}
+              className={`prog-rating-dot${hoverIdx === i ? ' is-active' : ''}`}
+              style={{ opacity: hoverIdx === null || hoverIdx === i ? 1 : 0.35 }}
+            />
+          ))}
+
+          {/* X-axis labels: first, last (and middle if many) */}
+          {[0, history.length - 1].filter((v, i, a) => a.indexOf(v) === i).map((i) => (
+            <text key={i} x={toX(i)} y={H - 6} textAnchor={i === 0 ? 'start' : 'end'} className="prog-rating-axis-label">
+              {history[i].date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })}
+            </text>
+          ))}
+        </svg>
+
+        {/* Floating tooltip */}
+        {hoverIdx !== null && hovered && (
+          <div
+            className="prog-rating-tooltip"
+            style={{
+              left: `${(pts[hoverIdx].x / W) * 100}%`,
+              top: `${(pts[hoverIdx].y / H) * 100}%`,
+            }}
+          >
+            <span className="prog-rating-tooltip-date">
+              {hovered.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+            <strong className="prog-rating-tooltip-val">Rating: {Math.round(hovered.rating)}</strong>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -115,9 +210,21 @@ function ContestCard({ contest }) {
         <div className="prog-contest-left">
           <div className="prog-contest-rating-block">
             <span className="prog-contest-rating-label">Contest Rating</span>
-            <span className="prog-contest-rating-value">
-              {contest.rating != null ? formatNumber(contest.rating) : '—'}
-            </span>
+            {contest.ratingLocked ? (
+              <a
+                href={LEETCODE_PROFILE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="prog-contest-rating-value prog-contest-rating-link"
+                title="Rating unavailable via public API — click to view on LeetCode"
+              >
+                See on LeetCode ↗
+              </a>
+            ) : (
+              <span className="prog-contest-rating-value">
+                {contest.rating != null ? formatNumber(contest.rating) : '—'}
+              </span>
+            )}
           </div>
 
           <div className="prog-contest-meta">
@@ -128,17 +235,24 @@ function ContestCard({ contest }) {
               </span>
             )}
             <span>
-              {contest.hasContests
+              {contest.hasContests && contest.globalRank
                 ? `${formatRanking(contest.globalRank)} / ${formatRanking(contest.totalParticipants)}`
                 : `Global rank ${formatRanking(contest.profileRanking)}`}
             </span>
-            <span>{contest.contestsAttended} contests attended</span>
+            <span>{contest.contestsAttended} contest{contest.contestsAttended !== 1 ? 's' : ''} attended</span>
+            {contest.contestsAttended > 0 && contest.contestsAttended < 5 && (
+              <span className="prog-contest-unlock-hint">
+                {5 - contest.contestsAttended} more to unlock global ranking
+              </span>
+            )}
           </div>
         </div>
 
         <div className="prog-contest-charts">
           <RatingChart history={contest.ratingHistory} />
-          <PercentileBars topPercentage={contest.topPercentage} />
+          {contest.topPercentage != null && (
+            <PercentileBars topPercentage={contest.topPercentage} />
+          )}
         </div>
       </div>
     </article>

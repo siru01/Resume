@@ -98,6 +98,17 @@
   line-height: 1;
   color: #3b82f6;
 }
+.prog-contest-rating-link {
+  text-decoration: none;
+  font-size: 1rem;
+  border-bottom: 1px dashed currentColor;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.prog-contest-rating-link:hover {
+  opacity: 1;
+}
+
 
 .prog-contest-meta {
   display: flex;
@@ -115,6 +126,12 @@
   color: #232121;
 }
 
+
+.prog-contest-unlock-hint {
+  font-size: 13px;
+  opacity: 0.65;
+  font-style: italic;
+}
 .prog-contest-badge {
   display: inline-flex;
   align-items: center;
@@ -135,35 +152,98 @@
 
 .prog-rating-chart {
   min-width: 0;
+  flex: 1;
+}
+
+.prog-rating-chart-inner {
+  position: relative;
 }
 
 .prog-rating-svg {
   width: 100%;
   height: auto;
   display: block;
+  overflow: visible;
 }
 
+/* Smooth bezier line */
 .prog-rating-line {
   fill: none;
   stroke: #3b82f6;
   stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
+/* Subtle horizontal grid */
+.prog-rating-grid {
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 1;
+}
+:root[data-theme="light"] .prog-rating-grid {
+  stroke: rgba(0, 0, 0, 0.07);
+}
+
+/* Dots */
 .prog-rating-dot {
   fill: #3b82f6;
+  transition: r 0.15s ease;
+}
+.prog-rating-dot.is-active {
+  fill: #fff;
+  stroke: #3b82f6;
+  stroke-width: 2;
+}
+
+/* Vertical hover cursor */
+.prog-rating-cursor {
+  stroke: #3b82f6;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.55;
+}
+
+/* X-axis labels */
+.prog-rating-axis-label {
+  font-size: 9px;
+  fill: currentColor;
+  opacity: 0.5;
+  font-family: monospace;
+}
+
+/* Tooltip */
+.prog-rating-tooltip {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 10px));
+  background: #1e293b;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  border-radius: 6px;
+  padding: 6px 10px;
+  pointer-events: none;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+:root[data-theme="light"] .prog-rating-tooltip {
+  background: #fff;
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.prog-rating-tooltip-date {
+  font-size: 11px;
+  opacity: 0.65;
+}
+.prog-rating-tooltip-val {
+  font-size: 13px;
+  color: #3b82f6;
 }
 
 :root[data-theme="dark"] .prog-donut-track,
 :root[data-theme="dark"] .prog-rating-svg {
   color: #333;
-}
-
-.prog-rating-years {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  margin-top: 0.35rem;
-  opacity: 0.65;
 }
 
 .prog-chart-empty {

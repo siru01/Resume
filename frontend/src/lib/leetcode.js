@@ -7,41 +7,62 @@ export const LEETCODE_PROFILE_URL = 'https://leetcode.com/u/SIRU10/';
 const LEETCODE_API_BASE = '/api/leetcode';
 
 // ─── Cache ───────────────────────────────────────────────────────────────────
+// Two-tier cache:
+//   localStorage  → survives full page reloads (TTL: 2 hours)
+//   sessionStorage → fast in-tab cache (TTL: 30 min), checked first
 const CACHE_KEY_PREFIX = 'leetcode-dashboard';
-const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
+const SESSION_TTL_MS = 30 * 60 * 1000;   // 30 minutes (sessionStorage)
+const LOCAL_TTL_MS  = 2 * 60 * 60 * 1000; // 2 hours    (localStorage)
 
-function getCachedDashboard(username) {
+function readCache(storage, key, ttl) {
   try {
-    const raw = sessionStorage.getItem(`${CACHE_KEY_PREFIX}:${username}`);
+    const raw = storage.getItem(key);
     if (!raw) return null;
     const { savedAt, data } = JSON.parse(raw);
-    if (Date.now() - savedAt > CACHE_TTL_MS) {
-      sessionStorage.removeItem(`${CACHE_KEY_PREFIX}:${username}`);
-      return null;
-    }
+    if (Date.now() - savedAt > ttl) { storage.removeItem(key); return null; }
     return data;
-  } catch {
-    return null;
+  } catch { return null; }
+}
+
+function writeCache(storage, key, data) {
+  try {
+    storage.setItem(key, JSON.stringify({ savedAt: Date.now(), data }));
+  } catch { /* quota – ignore */ }
+}
+
+function reviveDates(data) {
+  // JSON.stringify turns Date objects into ISO strings.
+  // Revive them so components always get proper Date instances.
+  if (data?.contest?.ratingHistory) {
+    data.contest.ratingHistory = data.contest.ratingHistory.map((p) => ({
+      ...p,
+      date: p.date instanceof Date ? p.date : new Date(p.date),
+    }));
   }
+  return data;
+}
+
+function getCachedDashboard(username) {
+  const key = `${CACHE_KEY_PREFIX}:${username}`;
+  // 1. Fast in-tab check
+  const session = readCache(sessionStorage, key, SESSION_TTL_MS);
+  if (session) return reviveDates(session);
+  // 2. Reload-safe fallback
+  const local = readCache(localStorage, key, LOCAL_TTL_MS);
+  if (local) return reviveDates(local);
+  return null;
 }
 
 function setCachedDashboard(username, data) {
-  try {
-    sessionStorage.setItem(
-      `${CACHE_KEY_PREFIX}:${username}`,
-      JSON.stringify({ savedAt: Date.now(), data }),
-    );
-  } catch {
-    // Ignore storage quota errors.
-  }
+  const key = `${CACHE_KEY_PREFIX}:${username}`;
+  writeCache(sessionStorage, key, data);
+  writeCache(localStorage,   key, data);
 }
 
 export function clearLeetCodeCache(username = LEETCODE_USERNAME) {
-  try {
-    sessionStorage.removeItem(`${CACHE_KEY_PREFIX}:${username}`);
-  } catch {
-    // ignore
-  }
+  const key = `${CACHE_KEY_PREFIX}:${username}`;
+  try { sessionStorage.removeItem(key); } catch { /* ignore */ }
+  try { localStorage.removeItem(key);   } catch { /* ignore */ }
 }
 
 // ─── Calendar / Streak Utilities ──────────────────────────────────────────────

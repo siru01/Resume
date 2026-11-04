@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Component } from 'react'
 import Navbar from './components/Navbar'     
 import Home from './components/Home'     
 import Experience from './components/Experience'
@@ -14,6 +14,44 @@ import Footer from './components/Footer'
 import { Analytics } from '@vercel/analytics/react';
 
 console.log('App component loading...');
+
+// Error boundary — catches any render crash and shows a simple reload button
+// instead of a completely blank page.
+class AppErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, info) {
+    console.error('App render error:', error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: 'center', height: '100vh', gap: '1rem',
+          fontFamily: 'JetBrains Mono, monospace', background: '#0d0d0d', color: '#fff'
+        }}>
+          <p style={{ color: '#ef4444' }}>Something went wrong.</p>
+          <pre style={{ fontSize: '12px', opacity: 0.6, maxWidth: '80vw', overflowX: 'auto' }}>
+            {this.state.error?.message}
+          </pre>
+          <button
+            onClick={() => { this.setState({ hasError: false }); window.location.reload(); }}
+            style={{ padding: '8px 20px', background: '#3b82f6', border: 'none', borderRadius: '6px', color: '#fff', cursor: 'pointer' }}
+          >
+            Reload
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 export default function App() {
   // Initialize page from localStorage, default to 'home'
@@ -57,6 +95,7 @@ export default function App() {
   }, [page]);
 
   return (
+    <AppErrorBoundary>
     <>   
 
     <div className="grid-container">
@@ -103,7 +142,7 @@ export default function App() {
         {page === 'projects' && <Projects />}
         {page === 'blog' && <Blog />}
         {page === 'resume' && <Resume />}
-        {page === 'progress' && <Progress />}
+        {page === 'progress' && <AppErrorBoundary><Progress /></AppErrorBoundary>}
         {page === 'assets' && <Assets />}
         {page === 'code' && <CodeCompiler />}
       </div>
@@ -111,6 +150,7 @@ export default function App() {
       <Footer setPage={setPage} />
     </div>
     </>
+    </AppErrorBoundary>
   )
 }
 

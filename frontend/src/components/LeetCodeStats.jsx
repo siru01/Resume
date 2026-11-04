@@ -54,7 +54,7 @@ export default function LeetCodeStats() {
               rel="noreferrer"
               className="prog-leetcode-profile-link"
             >
-              View profile on LeetCode ↗
+              View profile on LeetCode 
             </a>
           </div>
         )}

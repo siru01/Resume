@@ -49,6 +49,12 @@ function RatingChart({ history }) {
     );
   }
 
+  // Dates survive JSON round-trips as ISO strings — normalize back to Date objects.
+  history = history.map((p) => ({
+    ...p,
+    date: p.date instanceof Date ? p.date : new Date(p.date),
+  }));
+
   const W = 320;
   const H = 140;
   const padL = 4;
@@ -218,7 +224,7 @@ function ContestCard({ contest }) {
                 className="prog-contest-rating-value prog-contest-rating-link"
                 title="Rating unavailable via public API — click to view on LeetCode"
               >
-                See on LeetCode ↗
+                See on LeetCode 
               </a>
             ) : (
               <span className="prog-contest-rating-value">
@@ -392,7 +398,9 @@ export default function Progress() {
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
+    // Only blank out during first load — on reload the localStorage cache
+    // kicks in instantly so existing data stays visible while refreshing.
+    if (!data) setLoading(true);
     setError(false);
 
     fetchLeetCodeDashboard()
@@ -404,7 +412,8 @@ export default function Progress() {
       })
       .catch((err) => {
         console.error('Failed to fetch LeetCode dashboard:', err);
-        if (!cancelled) setError(true);
+        // Keep showing stale data if we have it; only show error card if empty.
+        if (!cancelled && !data) setError(true);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -436,7 +445,7 @@ export default function Progress() {
               Retry
             </button>
             <a href={LEETCODE_PROFILE_URL} target="_blank" rel="noreferrer" className="prog-profile-link">
-              View @{LEETCODE_USERNAME} on LeetCode ↗
+              View @{LEETCODE_USERNAME} on LeetCode 
             </a>
           </div>
         </div>
@@ -459,7 +468,7 @@ export default function Progress() {
             rel="noreferrer"
             className="prog-profile-link"
           >
-            @{LEETCODE_USERNAME} on LeetCode ↗
+            @{LEETCODE_USERNAME} on LeetCode 
           </a>
         </>
       )}
